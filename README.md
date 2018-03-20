@@ -1,10 +1,24 @@
-## Welcome to Tungsten Fabric
-
-<img src="https://avatars3.githubusercontent.com/u/36871657?s=200&v=4" width="100">
+## Welcome to Tungsten Fabric 
+<img src="https://avatars3.githubusercontent.com/u/36871657?s=200&v=4" width="50">
 
 ----
 
-Tungsten Fabric is an open-source network virtualization platform for the cloud.
+Tungsten Fabric is an open source network virtualization solution for
+providing connectivity and security for workloads. The workloads could
+be physical, virtual or containerized and could be running on on-prem 
+or public clouds.
+
+Tungsten Fabric supports integrations with the following orchestrators:
+```
+Openstack
+Kubernetes
+Openshift
+vCenter
+BYOO [Bring your own orchestrator]
+```
+
+Tungsten Fabric is part of the Linux Foundation under a new entity
+[LF Networking Fund - LFN]
 
 ----
 
@@ -40,3 +54,5 @@ Your Pages site will use the layout and styles from the Jekyll theme you have se
 ### Support or Contact
 
 Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+
+[LF Networking Fund - LFN]: https://www.linuxfoundation.org/projects/networking/
