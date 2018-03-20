@@ -18,6 +18,6 @@ BYOO [Bring your own orchestrator]
 ```
 
 Tungsten Fabric is part of the Linux Foundation under a new entity
-[LF Networking Fund - LFN]
+LF Networking Fund [(LFN)]
 
-[LF Networking Fund - LFN]: https://www.linuxfoundation.org/projects/networking/
+[(LFN)]: https://www.linuxfoundation.org/projects/networking/
