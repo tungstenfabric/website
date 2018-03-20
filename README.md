@@ -1,5 +1,8 @@
 ## Welcome to Tungsten Fabric
 
+<img src="https://avatars3.githubusercontent.com/u/36871657?s=200&v=4" width="100">
+
+Tungsten Fabric pro
 You can use the [editor on GitHub](https://github.com/tungstenfabric/website/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
