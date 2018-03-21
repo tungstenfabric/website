@@ -1,4 +1,3 @@
-## Welcome to Tungsten Fabric 
 <img src="https://avatars3.githubusercontent.com/u/36871657?s=200&v=4" width="50">
 
 ----
