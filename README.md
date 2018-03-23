@@ -1,4 +1,4 @@
-<img src="https://avatars3.githubusercontent.com/u/36871657?s=200&v=4" width="50">
+<img src="https://github.com/tungstenfabric/website/raw/master/TungstenFabric_Gradient_RGB-03.png" height="75">
 
 ----
 
