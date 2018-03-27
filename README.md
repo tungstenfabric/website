@@ -15,8 +15,7 @@ vCenter
 BYOO [Bring your own orchestrator]
 ```
 
-Tungsten Fabric is part of the Linux Foundation under a new entity
-LF Networking Fund [(LFN)]
+Tungsten Fabric is now part of the Linux Foundation.
 
 
 ---
