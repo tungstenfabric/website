@@ -29,6 +29,11 @@ Tungsten Fabric is now part of the Linux Foundation.
 
 [Debug Tungsten Fabric]
 
+### Development Timeline
+| Release | Blueprint Due | Specification Due | Dev Complete | GA Release |
+| ------- | ------------- | ----------------- | ------------ | ---------- |
+|   5.0   |               |                   |              | 2018-04-23 |
+|   5.1   |  2018-05-03   |     2018-05-24    |  2018-08-23  | 2018-10-29 |
 
 [(LFN)]: https://www.linuxfoundation.org/projects/networking/
 [Deploy Tungsten Fabric with Openstack]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-with-Kolla-Ocata
