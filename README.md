@@ -30,6 +30,7 @@ Tungsten Fabric is now part of the Linux Foundation.
 [Debug Tungsten Fabric]
 
 ### Development Timeline
+
 | Release | Blueprint Due | Specification Due | Dev Complete | GA Release |
 | ------- | ------------- | ----------------- | ------------ | ---------- |
 |   5.0   |               |                   |              | 2018-04-23 |
