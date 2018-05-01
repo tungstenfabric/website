@@ -34,6 +34,7 @@ Tungsten Fabric is now part of the Linux Foundation.
 | Release | Blueprint Due | Specification Due | Dev Complete | GA Release |
 | ------- | ------------- | ----------------- | ------------ | ---------- |
 |   5.0   |               |                   |              | 2018-04-23 |
+|  5.0.1  |               |                   |              | 2018-07-16 |
 |   5.1   |  2018-05-03   |     2018-05-24    |  2018-08-23  | 2018-10-29 |
 
 [(LFN)]: https://www.linuxfoundation.org/projects/networking/
