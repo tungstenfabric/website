@@ -48,7 +48,7 @@ describing which feature do you propose, why it is good to have it in Tungsten F
 specification document. However, these specifications don't go to the Launchpad: they ends up in the dedicated repository, [contrail-specs](https://github.com/Juniper/contrail-specs).
 
 * Although contrail-specs and other Tungsten Fabric repositories are hosted on [Github](http://www.github.com/), they are managed with Gerrit. Please don't send Pull Requests to
-the Github repositories, and go to https://review.opencontrail.org instead. Blueprint specs are submitted this way as well.
+the Github repositories, and go to [https://review.opencontrail.org](https://review.opencontrail.org) instead. Blueprint specs are submitted this way as well.
 
 * Login to Gerrit with your Launchpad account. Before you push anything, you'll need to sign a Contributor License Agreement or CLA: either Individual CLA (ICLA) if you are an independent
 contributor, or Corporate CLA (CCLA). We suggest you sign a CCLA if you are employed at a company which pays you for your Tungsten Fabric-related work. CCLA also simplifies things if your teammates
