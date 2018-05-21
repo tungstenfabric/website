@@ -33,8 +33,7 @@ Whether you want to fix a typo in comments or introduce a brand new feature, the
 connects you with peer Tungsen Fabric developers but also gets you an access to the [Tungsten Fabric Community Drive](https://drive.google.com/drive/folders/0AM-bGoKiRBuTUk9PVA).
 There you can find legal and technical docs, event decks and similar resources to boost your understanding of Tungsten Fabric.
 
-* [Join Slack](https://join.slack.com/t/tungstenfabric/shared_invite/enQtMzM0MjMyMDIzMzk3LTZjM2JmMWZlOGMyM2RlZDAxM2RiYjE0YWZlMTAyYWIzYmNmYmY4MTc5MzIzNjk5YWY2N2JmNzIzNzJlZmMzMzU).
-Post your questions to relevant channels, don't abuse @here, get help and help others. The mailing list works best for long-running discussions;
+* [Join Slack](https://tungsten.io/slack). Post your questions to relevant channels, don't abuse @here, get help and help others. The mailing list works best for long-running discussions;
 Slack is great for ad-hoc conversations.
 
 * Create a [Launchpad account](https://login.launchpad.net/iwoFJXFITJbWRFUj/+decide), if you don't have one yet. Tungsten Fabric uses Launchpad as a tracker and 
