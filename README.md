@@ -73,7 +73,7 @@ in the contrail-community-docs repo. And of course, feel free to ask questions o
 |   5.1   |  2018-05-03   |     2018-05-24    |  2018-08-23  | 2018-10-29 |
 
 [(LFN)]: https://www.linuxfoundation.org/projects/networking/
-[Deploy Tungsten Fabric in 10 minutes on AWS with Kubernetes]: https://github.com/tungstenfabric/website/wiki/Tungsten-Fabric:-10-minute-deployment-with-k8s-on-AWS
+[Deploy Tungsten Fabric in 10 minutes on AWS with Kubernetes]: Tungsten-Fabric-10-minute-deployment-with-k8s-on-AWS.md
 [Deploy Tungsten Fabric On-Prem with Openstack]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-with-Kolla-Ocata
 [Build Tungsten Fabric]: https://github.com/Juniper/contrail-dev-env
 [Debug Tungsten Fabric]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Debugging-contrail-code-in-contrail-microservices
