@@ -9,7 +9,57 @@
   height: 22px;
 }
 
-img {
-  -webkit-box-shadow: 0;
-  box-shadow: 0;
+#tungsten_header {
+  background-color: #0d123d;
+  border: 0;
+  height: 70px;
+}
+
+.container {
+  width: 1200px;
+  max-width: 90%;
+  margin: 0 auto;
+}
+
+ul.menu {
+  padding: 0px;
+  list-style: none;
+  text-align: center;
+}
+
+li.menu {
+  position: relative;
+  font-family: 'Roboto', sans-serif;
+  font-size: 13px;
+  display: inline-block;
+  padding: 0px 15px;
+}
+
+a.menu-item {
+  text-decoration: none;
+  position: relative;
+  color: #fff;
+}
+
+a.menu-item:after {
+  content: '';
+  position: absolute;
+  width: 0; height: 2px;
+  display: block;
+  margin-top: 5px;
+  left: 0;
+  background: #fff;
+  transition: width .3s ease;
+  -webkit-transition: width .3s ease;
+}
+
+a.menu-item:hover {
+  color: #e22529;
+}
+
+a.menu-item:hover:after {
+  width: 100%;
+  right: 0;
+  background: #e22529;
+  color: #e22529;
 }
