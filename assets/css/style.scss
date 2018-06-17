@@ -3,9 +3,7 @@
 
 @import "{{ site.theme }}";
 
-.testStyle { color: black; }
-
-div.lf_header {
+#lf_header {
   background-color: #000000;
   border: 0;
   height: 22px;
