@@ -15,7 +15,7 @@ This wiki will describe the most simplest of all: **A single yaml based install*
 
    The latest kernel module is compiled against 3.10.0-862.3.2 kernel.
 
-# Installation
+## Installation
   Installation of Tungsten Fabric is a **1**-step process.
 
   Note: Replace x.x.x.x with the IP of your Kubernetes Master node.
@@ -24,7 +24,7 @@ This wiki will describe the most simplest of all: **A single yaml based install*
 K8S_MASTER_IP=x.x.x.x;  mkdir -pm 777 /var/lib/contrail/kafka-logs; curl https://github.com/Juniper/contrail-controller/wiki/contrail.yml | awk '/<pre><code>/{flag=1;next}/<\/pre>/{flag=0}flag' | sed "s/{{ K8S_MASTER_IP }}/$K8S_MASTER_IP/g" | kubectl apply -f -
 ```
 
-# What just happened ?
+## What just happened ?
 
 **Hurray! Welcome to Tungsten Fabric.**
 
@@ -37,7 +37,7 @@ K8S_MASTER_IP=x.x.x.x;  mkdir -pm 777 /var/lib/contrail/kafka-logs; curl https:/
 https://x.x.x.x:8143
 Default credentials: admin/contrail123
 ```
-# Check Tungsten Fabric Status
+## Check Tungsten Fabric Status
 
 You can get the status of Tungsten Fabric components, by running "contrail-status" command line tool in your Kubernetes master node. This will list all Tungsten Fabric components running in your system.
 ```
@@ -116,7 +116,7 @@ schema: active
 
 ```
 
-# Get to know Tungsten Fabric more
+## Get to know Tungsten Fabric more
 
 [All about Tungsten Fabric](https://www.juniper.net/documentation/en_US/release-independent/contrail/information-products/pathway-pages/index.html)
 
