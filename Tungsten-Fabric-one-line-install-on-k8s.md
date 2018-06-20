@@ -5,7 +5,7 @@ This wiki will describe the most simplest of all: **A single yaml based install*
 ## Pre-requisites
 1. **A running Kubernetes cluster**
 
-   There are multiple options available to user to install Kubernetes. The most simplest being [kubeadm](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/)
+   There are multiple options available to a user to install Kubernetes. The most simplest being [kubeadm](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/)
 
    Alternatively if you would like to install Tungsten Fabric and K8s cluster together, you can use [Tungsten Fabric Ansible Deployer](https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-microservice-installation-with-kubernetes). 
 
