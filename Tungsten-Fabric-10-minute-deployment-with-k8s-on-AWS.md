@@ -107,3 +107,15 @@ If, instead of using a root account, you are signing with an IAM user, you need 
 ```
 
 - Review policy. Add policy name. Create policy.
+
+## Get to know Tungsten Fabric more
+
+[All about Tungsten Fabric](https://www.juniper.net/documentation/en_US/release-independent/contrail/information-products/pathway-pages/index.html)
+
+[Tungsten Fabric and Kubernetes Intro](https://github.com/Juniper/contrail-controller/wiki/Kubernetes)
+
+[Install Kubernetes using Kubeadm](https://github.com/Juniper/contrail-controller/wiki/Install-K8s-using-Kubeadm)
+
+[Deploy Tungsten Fabric on Kubernetes in 1-step command](Tungsten-Fabric-one-line-install-on-k8s.md)
+
+
