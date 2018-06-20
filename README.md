@@ -23,6 +23,8 @@ Tungsten Fabric is now part of the Linux Foundation.
 ## Start using Tungsten Fabric
 [Deploy Tungsten Fabric in 10 minutes on AWS with Kubernetes]
 
+[Deploy Tungsten Fabric on Kubernetes in 1-step command](Tungsten-Fabric-one-line-install-on-k8s.md)
+
 [Deploy Tungsten Fabric On-Prem with Openstack]
 
 ## Becoming a contributor
