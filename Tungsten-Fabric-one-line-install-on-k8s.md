@@ -1,109 +1,125 @@
-## Introduction
+Tungsten Fabric CNI can be installed on a Kubernetes cluster through multiple provisioning schemes.
 
-This document contains instructions to deploy a Tungsten Fabric cluster that interconnects PODs orchestrated by Kubernetes. The Tungsten Fabric cluster is composed of one controller and two compute nodes that run as EC2 VMs.
+This wiki will describe the most simplest of all: **A single yaml based install**
 
-## Requirements
+## Pre-requisites
+1. **A running Kubernetes cluster**
 
-Before you start using this CloudFormation template, it is necessary to subscribe to the official image of CentOS 7 x86_64 HVM.
+   There are multiple options available to a user to install Kubernetes. The most simplest being [kubeadm](https://kubernetes.io/docs/setup/independent/create-cluster-kubeadm/)
 
-Once you have signed into the AWS console, go to the following URL: <a href="https://aws.amazon.com/marketplace/pp/B00O7WM7QW/" target="_blank">AWS Marketplace</a>
+   Alternatively if you would like to install Tungsten Fabric and K8s cluster together, you can use [Tungsten Fabric Ansible Deployer](https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-microservice-installation-with-kubernetes). 
 
-Press "Continue to Subscribe", then "Accept Terms".
+2. **Linux kernel version 3.10.0-862.3.2**
 
-*If you are connected as an IAM user, and you can not to perform a task in AWS Marketplace, check the Appendix at the end of the document.
+   Tungsten Fabric forwarding uses a kernel module to provide high throughput, low latency networking.
 
-## Procedure
+   The latest kernel module is compiled against 3.10.0-862.3.2 kernel.
 
-1. Just click on this button to create the stack:
+## Installation
+  Installation of Tungsten Fabric is a **1**-step process.
 
-<a href="https://console.aws.amazon.com/cloudformation/home#/stacks/new?stackName=tungstenfabric-k8s&amp;templateURL=https://s3-us-west-2.amazonaws.com/tungsten-fabric-sandbox/tungsten_fabric_stack_template.yaml" target="_blank"><img alt="Launch Stack" src="https://cdn.rawgit.com/buildkite/cloudformation-launch-stack-button-svg/master/launch-stack.svg"></a>
-
-2. Press Next.
-3. Specify:
- * Your admin password for Sandbox UI
- * <a href="https://aws.amazon.com/ec2/instance-types" target="_blank">EC2 Instance type</a>
- * <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html" target="_blank">Key Pair</a> (required to access command-line utilities)
- *  Deploy WordPress using Helm charts (optionally).
-4. Press Next twice.
-5. Set checkbox "Acknowledge..." at the bottom of the page.
-6. Press Create.
-7. Reload Stacks page and wait for Stack CREATE_COMPLETE status.
-8. Select the Stack (checkbox) and check "Output" tab in the bottom pane to find Sandbox UI URL.
-9. Go to Sandbox UI URL and wait for the deployment (site will be available 2-3 minutes after the creation of the stack).
-10. After a successful deployment, the sandbox interface will provide information to connect to Contrail and Kubernetes services.
-11. Use  Contrail UI URLs, login and password to start.
-
-IMPORTANT: When you've finished using the sandbox you can use the DELETE SANDBOX button to clear all of the used resources. For double safety you can check the remaining resources in the AWS Interface.
-
-## Accessing the cluster:
-
-You can use the ssh key specified during the launch of the stack to access any VM with the "centos" username.
+  Note: Replace x.x.x.x with the IP of your Kubernetes Master node.
 
 ```
-ssh centos@<ip>   # <ip> can be the public IP or the private IP of the controller/compute VM, both work
-sudo -s
-```
-**Accessing the Contrail webUI:**
-
-```
-https://<controller-public-ip>:8143      admin / contrail123
+K8S_MASTER_IP=x.x.x.x;  mkdir -pm 777 /var/lib/contrail/kafka-logs; curl https://github.com/Juniper/contrail-controller/wiki/contrail.yml | awk '/<pre><code>/{flag=1;next}/<\/pre>/{flag=0}flag' | sed "s/{{ K8S_MASTER_IP }}/$K8S_MASTER_IP/g" | kubectl apply -f -
 ```
 
-**Accessing the Kubernetes dashboard:**
+## What just happened ?
 
-On the controller:
+**Hurray! Welcome to Tungsten Fabric.**
+
+1. You installed Tungsten Fabric CNI in your Kubernetes node. If new compute nodes are added to your Kubernetes cluster, Tungsten Fabric CNI will be propogated to them auto-magically as it is backed by a Kubernetes DaemaonSet.
+
+2. You installed entire Tungsten Fabric Networking suite with rich Networking, Analytics, Security, Visualization functions, to name a few.
+
+3. Tungsten Fabric UI is available on port 8143 of your node.  Feel free to play around. [About Tungsten Fabric](https://www.juniper.net/documentation/en_US/release-independent/contrail/information-products/pathway-pages/index.html)
+```
+https://x.x.x.x:8143
+Default credentials: admin/contrail123
+```
+## Check Tungsten Fabric Status
+
+You can get the status of Tungsten Fabric components, by running "contrail-status" command line tool in your Kubernetes master node. This will list all Tungsten Fabric components running in your system.
+```
+[root@foo ~]# contrail-status
+Pod         Service         Original Name                          State    Status         
+            zookeeper       contrail-external-zookeeper            running  Up 35 minutes  
+analytics   alarm-gen       contrail-analytics-alarm-gen           running  Up 35 minutes  
+analytics   api             contrail-analytics-api                 running  Up 35 minutes  
+analytics   collector       contrail-analytics-collector           running  Up 35 minutes  
+analytics   nodemgr         contrail-nodemgr                       running  Up 33 minutes  
+analytics   query-engine    contrail-analytics-query-engine        running  Up 35 minutes  
+analytics   snmp-collector  contrail-analytics-snmp-collector      running  Up 35 minutes  
+analytics   topology        contrail-analytics-topology            running  Up 34 minutes  
+config      api             contrail-controller-config-api         running  Up 35 minutes  
+config      cassandra       contrail-external-cassandra            running  Up 35 minutes  
+config      device-manager  contrail-controller-config-devicemgr   running  Up 35 minutes  
+config      nodemgr         contrail-nodemgr                       running  Up 33 minutes  
+config      rabbitmq        contrail-external-rabbitmq             running  Up 35 minutes  
+config      schema          contrail-controller-config-schema      running  Up 35 minutes  
+config      svc-monitor     contrail-controller-config-svcmonitor  running  Up 35 minutes  
+control     control         contrail-controller-control-control    running  Up 35 minutes  
+control     dns             contrail-controller-control-dns        running  Up 35 minutes  
+control     named           contrail-controller-control-named      running  Up 35 minutes  
+control     nodemgr         contrail-nodemgr                       running  Up 33 minutes  
+database    cassandra       contrail-external-cassandra            running  Up 35 minutes  
+database    kafka           contrail-external-kafka                running  Up 35 minutes  
+database    nodemgr         contrail-nodemgr                       running  Up 34 minutes  
+kubernetes  kube-manager    contrail-kubernetes-kube-manager       running  Up 35 minutes  
+vrouter     agent           contrail-vrouter-agent                 running  Up 34 minutes  
+vrouter     nodemgr         contrail-nodemgr                       running  Up 33 minutes  
+webui       job             contrail-controller-webui-job          running  Up 35 minutes  
+webui       web             contrail-controller-webui-web          running  Up 35 minutes  
+
+WARNING: container with original name 'contrail-external-zookeeper' have Pod os Service empty. Pod: '' / Service: 'zookeeper'. Please pass NODE_TYPE with pod name to container's env
+
+vrouter kernel module is PRESENT
+== Contrail control ==
+control: active
+nodemgr: initializing (NTP state unsynchronized. ) . <-- Safe to ignore
+named: active
+dns: active
+
+== Contrail kubernetes ==
+kube-manager: active
+
+== Contrail database ==
+kafka: active
+nodemgr: initializing (NTP state unsynchronized. ) . <-- Safe to ignore
+zookeeper: inactive                                  <-- Safe to ignore
+cassandra: active
+
+== Contrail analytics ==
+nodemgr: initializing (NTP state unsynchronized. ) . <-- Safe to ignore
+api: active
+collector: active
+query-engine: active
+alarm-gen: active
+
+== Contrail webui ==
+web: active
+job: active
+
+== Contrail vrouter ==
+nodemgr: initializing (NTP state unsynchronized. )    <-- Safe to ignore
+agent: active
+
+== Contrail config ==
+api: active
+zookeeper: inactive                                   <-- Safe to ignore
+svc-monitor: active
+nodemgr: initializing (NTP state unsynchronized. ) .  <-- Safe to ignore
+device-manager: active
+cassandra: active
+rabbitmq: active
+schema: active
 
 ```
-kubectl get pods -n kube-system -o wide | grep dashboard
-```
 
-Check the IP column. It tells you the private IP address of the compute node where the dashboard POD is running. You need to find out the associated public IP address (it is left to you as an exercise). Once you know it, you can connect to the URL:
+## Get to know Tungsten Fabric more
 
-```
-https://<public-ip>:8443
-```
+[All about Tungsten Fabric](https://www.juniper.net/documentation/en_US/release-independent/contrail/information-products/pathway-pages/index.html)
 
-Select the token option. Where can you get the token from? There is one on the controller’s file /root/k8s_dashboard_token.txt , but it only allows to visualize. If you want read-write access do the following:
+[Tungsten Fabric and Kubernetes Intro](https://github.com/Juniper/contrail-controller/wiki/Kubernetes)
 
-```
-kubectl get secret -n contrail | grep kubemanager
-kubectl describe secret <name> -n contrail | grep "token:" | awk '{print $2}'
-```
-
-Take your time to browse the dashboard. During the next exercises, you can choose to do some tasks on the web instead of (or in addition to) the CLI.
-
-
-## Appendix: IAM Users
-
-If, instead of using a root account, you are signing with an IAM user, you need to grant additional privileges for the user.
-
-- Log on to the AWS console.
-- In the AWS services search at the top left of the console, look for IAM and select it.
-- On the left navigation bar, click on the user whose privileges you need to change.
-- At the right bottom, click Add inline policy.
-- Go to the JSON tab, and replace the content with the following policy:
-
-```
-{
-    "Version": "2012-10-17",
-    "Statement": [
-        {
-            "Effect": "Allow",
-            "Action": [
-                "cloudformation:*",
-                "aws-marketplace:*",
-                "sns:*",
-                "s3:*",
-                "ec2:*",
-                "elasticloadbalancing:*",
-                "cloudwatch:*",
-                "autoscaling:*",
-                "iam:*"
-            ],
-            "Resource": "*"
-        }
-    ]
-}
-```
-
-- Review policy. Add policy name. Create policy.
+[Install Kubernetes using Kubeadm](https://github.com/Juniper/contrail-controller/wiki/Install-K8s-using-Kubeadm)
