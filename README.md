@@ -62,6 +62,14 @@ repository, [contrail-specs].
 Github repositories, and go to [https://review.opencontrail.org] instead.
 Blueprint specs are submitted this way as well.
 
+* After getting Gerrit access as described below, clone the specs repository
+with the command:
+```git clone https://review.opencontrail.org/Juniper/contrail-specs```
+and install the [git-review extension] which will allow you to submit specs as
+well as code changes. In order to write a spec, start by copying the template
+`blueprint_template.md` to a meaningful name in the appropriate subdirectory
+for the release that you would like to target.
+
 * Login to Gerrit with your Launchpad account. Before you push anything, you'll
 need to sign a Contributor License Agreement or CLA: either Individual CLA
 (ICLA) if you are an independent contributor, or Corporate CLA (CCLA). We
@@ -103,6 +111,7 @@ mailing list and in Slack channels!
 [Launchpad account]: https://login.launchpad.net/iwoFJXFITJbWRFUj/+decide
 [contrail-specs]: https://github.com/Juniper/contrail-specs
 [Github]: http://www.github.com/
+[git-review extension]: https://docs.openstack.org/infra/git-review/
 [https://review.opencontrail.org]: https://review.opencontrail.org
 [Tungsten Fabric Community Drive]: https://drive.google.com/drive/folders/11uNo0C1erBT02_qKmgoXOTDoi3SyewZg
 [here]: https://github.com/Juniper/contrail-community-docs/blob/master/Contributor/GettingStarted/getting-started-with-opencontrail-development.md
