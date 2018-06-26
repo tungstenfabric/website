@@ -95,11 +95,32 @@ mailing list and in Slack channels!
 
 ### Development Timeline
 
+NOTE: The columns and dates below are subject to change. An effort is still
+underway to reconcile Tungsten Fabric processes and previously established
+Juniper practices with respect to Contrail development timelines.
+
 | Release | Blueprint Due | Specification Due | Dev Complete | GA Release |
 | ------- | ------------- | ----------------- | ------------ | ---------- |
 |   5.0   |               |                   |              | 2018-04-23 |
 |  5.0.1  |               |                   |              | 2018-07-16 |
-|   5.1   |  2018-05-03   |     2018-05-24    |  2018-08-23  | 2018-10-29 |
+|   5.1   |  2018-06-30   |     2018-07-15    |  2018-08-22  | 2018-11-15 |
+
+#### Column Meanings
+* Release: The numeric identifier of the release
+* Blueprint Due: Tungsten Fabric currently uses Launchpad, so the blueprint
+due here refers to the [Launchpad Blueprint] which will be reviewed by the TSC
+for strategic alignment and release planning.
+* Specification Due: The specification or "spec" is design document with
+section headings that should be filled in, or at least though about and decided
+to be non-applicable. Specs should be submitted as described earlier in this
+document.
+* Dev Complete: This column may be considered synonymous with "feature freeze"
+and is intended to mark the transition from "new development" to "testing,
+debugging and making production-ready".
+* GA Release: This column is the target release date. Historically Contrail has
+usually missed release dates in order to finish incomplete features. Tungsten
+Fabric will attempt to move to a time based release model, but this is still
+under discussion.
 
 [(LFN)]: https://www.linuxfoundation.org/projects/networking/
 [Deploy Tungsten Fabric in 10 minutes on AWS with Kubernetes]: Tungsten-Fabric-10-minute-deployment-with-k8s-on-AWS.md
@@ -117,4 +138,4 @@ mailing list and in Slack channels!
 [here]: https://github.com/Juniper/contrail-community-docs/blob/master/Contributor/GettingStarted/getting-started-with-opencontrail-development.md
 [Build Tungsten Fabric]: https://github.com/Juniper/contrail-dev-env
 [Debug Tungsten Fabric]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Debugging-contrail-code-in-contrail-microservices
-
+[Launchpad Blueprint]: https://blueprints.launchpad.net/opencontrail
