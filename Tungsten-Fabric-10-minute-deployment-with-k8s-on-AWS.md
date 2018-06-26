@@ -37,7 +37,7 @@ Press "Continue to Subscribe", then "Accept Terms".
 
 IMPORTANT: When you've finished using the sandbox you can use the DELETE SANDBOX button to clear all of the used resources.
 
-[ ![](images/) ](images/delete_stack_1400x900.png)
+[ ![](images/delete_stack_small.png) ](images/delete_stack_1400x900.png)
 
 For double safety you can check the remaining resources in the AWS Interface.
 
