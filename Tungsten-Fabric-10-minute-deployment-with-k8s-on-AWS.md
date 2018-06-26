@@ -10,7 +10,7 @@ Once you have signed into the AWS console, go to the following URL: <a href="htt
 
 Press "Continue to Subscribe", then "Accept Terms".
 
-*If you are connected as an IAM user, and you can not to perform a task in AWS Marketplace, check the Appendix at the end of the document.
+*If you are connected as an IAM user, and you can not perform a task in AWS Marketplace, check the Appendix at the end of the document.
 
 ## Procedure
 
@@ -23,17 +23,23 @@ Press "Continue to Subscribe", then "Accept Terms".
  * Your admin password for Sandbox UI
  * <a href="https://aws.amazon.com/ec2/instance-types" target="_blank">EC2 Instance type</a>
  * <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html" target="_blank">Key Pair</a> (required to access command-line utilities)
- *  Deploy WordPress using Helm charts (optionally).
 4. Press Next twice.
 5. Set checkbox "Acknowledge..." at the bottom of the page.
 6. Press Create.
 7. Reload Stacks page and wait for Stack CREATE_COMPLETE status.
 8. Select the Stack (checkbox) and check "Output" tab in the bottom pane to find Sandbox UI URL.
+
+[ ![](images/status_stack_small.png) ](images/status_stack_1400x900.png)
+
 9. Go to Sandbox UI URL and wait for the deployment (site will be available 2-3 minutes after the creation of the stack).
 10. After a successful deployment, the sandbox interface will provide information to connect to Contrail and Kubernetes services.
 11. Use  Contrail UI URLs, login and password to start.
 
-IMPORTANT: When you've finished using the sandbox you can use the DELETE SANDBOX button to clear all of the used resources. For double safety you can check the remaining resources in the AWS Interface.
+IMPORTANT: When you've finished using the sandbox you can use the DELETE SANDBOX button to clear all of the used resources.
+
+[ ![](images/) ](images/delete_stack_1400x900.png)
+
+For double safety you can check the remaining resources in the AWS Interface.
 
 ## Accessing the cluster:
 
