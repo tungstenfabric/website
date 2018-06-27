@@ -21,7 +21,7 @@ Tungsten Fabric is now part of the Linux Foundation.
 ---
 
 ## Start using Tungsten Fabric
-[Deploy Tungsten Fabric in 10 minutes on AWS with Kubernetes]
+[Deploy Tungsten Fabric in 15 minutes on AWS with Kubernetes]
 
 [Deploy Tungsten Fabric on Kubernetes in 1-step command]
 
@@ -123,7 +123,7 @@ Fabric will attempt to move to a time based release model, but this is still
 under discussion.
 
 [(LFN)]: https://www.linuxfoundation.org/projects/networking/
-[Deploy Tungsten Fabric in 10 minutes on AWS with Kubernetes]: Tungsten-Fabric-10-minute-deployment-with-k8s-on-AWS.md
+[Deploy Tungsten Fabric in 15 minutes on AWS with Kubernetes]: Tungsten-Fabric-15-minute-deployment-with-k8s-on-AWS.md
 [Deploy Tungsten Fabric on Kubernetes in 1-step command]: Tungsten-Fabric-one-line-install-on-k8s.md
 [Deploy Tungsten Fabric On-Prem with Openstack]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-with-Kolla-Ocata
 [tungsten-dev@googlegroups.com]: https://groups.google.com/forum/#!forum/tungsten-dev
