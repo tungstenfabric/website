@@ -124,4 +124,4 @@ schema: active
 
 [Install Kubernetes using Kubeadm](https://github.com/Juniper/contrail-controller/wiki/Install-K8s-using-Kubeadm)
 
-[Install Tungsten Farbric on AWS](Tungsten-Fabric-10-minute-deployment-with-k8s-on-AWS.md)
+[Install Tungsten Farbric on AWS](Tungsten-Fabric-15-minute-deployment-with-k8s-on-AWS.md)
