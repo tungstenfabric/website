@@ -103,7 +103,7 @@ Juniper practices with respect to Contrail development timelines.
 | ------- | ------------- | ----------------- | ------------ | ---------- |
 |   5.0   |               |                   |              | 2018-04-23 |
 |  5.0.1  |               |                   |              | 2018-07-16 |
-|   5.1   |  2018-06-30   |     2018-07-15    |  2018-08-22  | 2018-11-15 |
+|   5.1   |  2018-07-15   |     2018-08-22    |     TBD      | 2018-11-15 |
 
 #### Column Meanings
 * Release: The numeric identifier of the release
