@@ -32,11 +32,14 @@ Tungsten Fabric is now part of the Linux Foundation.
 Whether you want to fix a typo in comments or introduce a brand new feature,
 there are a few steps which make the process smoother:
 
-* Subscribe to the [tungsten-dev@googlegroups.com] mailing list. Not only it
-connects you with peer Tungsen Fabric developers but also gets you an access to
-the [Tungsten Fabric Community Drive]. There you can find legal and technical
-docs, event decks and similar resources to boost your understanding of Tungsten
-Fabric.
+* Subscribe to the [dev@lists.tungsten.io] mailing list.
+
+* Temporarily, subscribe to the [tungsten-dev@googlegroups.com] mailing list
+in order to get access to the [Tungsten Fabric Community Drive]. There you can
+find legal and technical docs, event decks and similar resources to boost your
+understanding of Tungsten Fabric. This material will eventually be moving to
+[https://wiki.tungsten.io] or Git repositories but currently there is useful
+info that is only available on the Community Drive.
 
 * [Join Slack]. Post your questions to relevant channels, don't abuse @here,
 get help and help others. The mailing list works best for long-running
@@ -127,6 +130,7 @@ under discussion.
 [Deploy Tungsten Fabric on Kubernetes in 1-step command]: Tungsten-Fabric-one-line-install-on-k8s.md
 [Deploy Tungsten Fabric On-Prem with Openstack]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-with-Kolla-Ocata
 [tungsten-dev@googlegroups.com]: https://groups.google.com/forum/#!forum/tungsten-dev
+[dev@lists.tungsten.io]: https://lists.tungsten.io/g/dev
 [Tungsten Fabric Community Drive]: https://drive.google.com/drive/folders/0AM-bGoKiRBuTUk9PVA
 [Join Slack]: https://tungsten.io/slack
 [Launchpad account]: https://login.launchpad.net/iwoFJXFITJbWRFUj/+decide
