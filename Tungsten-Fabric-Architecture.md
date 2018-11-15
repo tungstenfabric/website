@@ -126,7 +126,7 @@ At the end of this procedure, the routes in the VRFs of all the vRouters in the 
 
 This section describes the architecture of the Tungsten Fabric vRouter in more detail. A conceptual view of the functional components of the Tungsten Fabric vRouter is shown below. 
 
-![](images/TFA_vrouter.png)
+![](images/TFA_vrouter2.png)
 
 The vRouter agent runs in the user space of the host operating system, while the forwarder can run as a kernel module, in user space when DPDK is used, or can run in a programmable network interface card, also known as a "smart NIC". These options are described in more detail in the section [Deployment Options for vRouter]. The more commonly use kernel module option is illustrated here.
 
