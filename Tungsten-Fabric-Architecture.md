@@ -1,6 +1,6 @@
 ## Tungsten Fabric Architecture
 
-Detailed Technical Description of the Virtual Networking and Security Platform
+###Detailed Technical Description of the Virtual Networking and Security Platform
 
 Stuart Mackie
 
@@ -73,7 +73,7 @@ This section describes the software architecture of the Tungsten Fabric controll
 
 ### Tungsten Fabric Working with An Orchestrator
 
-The Tungsten Fabric controller integrated with cloud management systems such as OpenStack or Kubernetes. Its function is to ensure that when a virtual machine (VM) or container is created, it is provided with network connectivity according to the network and security policies specified in the controller or orchestrator. 
+The Tungsten Fabric controller is integrated with cloud management systems such as OpenStack or Kubernetes. Its function is to ensure that when a virtual machine (VM) or container is created, it is provided with network connectivity according to the network and security policies specified in the controller or orchestrator. 
 
 Tungsten Fabric consists of two primary pieces of software
 *   _Tungsten Fabric Controller_– a set of software services that maintains a model of networks and network policies, typically running on several servers for high availability
