@@ -4,11 +4,7 @@
 
 &nbsp;
 
-&nbsp;
-
 Stuart Mackie
-
-&nbsp;
 
 &nbsp;
 
