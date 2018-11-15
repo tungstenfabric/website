@@ -16,90 +16,59 @@ _[Key Features of Tungsten Fabric](#key-features)_
 _[Tungsten Fabric Working with An Orchestrator](#tf-with-orchestrator)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
 _[Interaction With An Orchestrator](#working-with-orchestrator)_  
-**[Architecture Details of vRouter](#vrouter-details)**
-
+**[Architecture Details of vRouter](#vrouter-details)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Detailed Packet Processing Logic In a vRouter](#packet-processing)_
-
+  _[Detailed Packet Processing Logic In a vRouter](#packet-processing)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Packet Flow Between VMs In The Same Subnet](#packet-flow-same-subnet)_
-
+  _[Packet Flow Between VMs In The Same Subnet](#packet-flow-same-subnet)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Packet Flow Between VMs In Different Subnets](#packet-flow-different-subnet)_
-  
-**[Service Chains](#service-chains)**
-
+  _[Packet Flow Between VMs In Different Subnets](#packet-flow-different-subnet)_  
+**[Service Chains](#service-chains)**   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Basic Service Chain](#basic-service-chain)_
-
+  _[Basic Service Chain](#basic-service-chain)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Scaled-out Services](#scaled-out-service)_
-  
+  _[Scaled-out Services](#scaled-out-service)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Policy-based Steering](#policy-based-steering)_
-  
-**[Application-based Security Policies](#application-policies)**
-
+  _[Policy-based Steering](#policy-based-steering)_  
+**[Application-based Security Policies](#application-policies)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Creating an Application Policy](#creating-policy)_
-  
+  _[Creating an Application Policy](#creating-policy)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Controlling Flows Between Deployments](#flows-between-deployment)_
-  
+  _[Controlling Flows Between Deployments](#flows-between-deployment)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Advanced Application Policies](#advanced-policies)_
-  
-**[Deployment Options for vRouter](#vrouter-deployment-options)**
-
+  _[Advanced Application Policies](#advanced-policies)_  
+**[Deployment Options for vRouter](#vrouter-deployment-options)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Kernel Module vRouter](#kernel-module-vrouter)_
-  
+  _[Kernel Module vRouter](#kernel-module-vrouter)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[DPDK vRouter](#dpdk-vrouter)_
-
+  _[DPDK vRouter](#dpdk-vrouter)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[SR-IOV (Single Root – Input/Output Virtualization)](#sriov-vrouter)_
-  
+  _[SR-IOV (Single Root – Input/Output Virtualization)](#sriov-vrouter)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Smart NIC vRouter](#smartnic-vrouter)_
-
-**[Tungsten Fabric Collection and Analytics](#tf-analytics)**
-
-**[Tungsten Fabric Deployment](#tf-deployment)**
-
-**[Tungsten Fabric APIs](#tf-apis)**
-
+  _[Smart NIC vRouter](#smartnic-vrouter)_  
+**[Tungsten Fabric Collection and Analytics](#tf-analytics)**  
+**[Tungsten Fabric Deployment](#tf-deployment)**  
+**[Tungsten Fabric APIs](#tf-apis)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Controller Configuration REST API](#tf-rest-apis)_
-  
+  _[Controller Configuration REST API](#tf-rest-apis)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Python Bindings](#tf-python)_
-  
+  _[Python Bindings](#tf-python)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Analytics REST API](#tf-analytics-rest-api)_
-  
-**[Orchestrators](#tf-orchestrators)**
-
+  _[Analytics REST API](#tf-analytics-rest-api)_  
+**[Orchestrators](#tf-orchestrators)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[OpenStack with Tungsten Fabric](#tf-openstack)_
-  
+  _[OpenStack with Tungsten Fabric](#tf-openstack)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Kubernetes Containers with Tungsten Fabric](#tf-kubernetes)_
-  
+  _[Kubernetes Containers with Tungsten Fabric](#tf-kubernetes)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Tungsten Fabric and VMware vCenter](#tf-vcenter)_
-
+  _[Tungsten Fabric and VMware vCenter](#tf-vcenter)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Nested Kubernetes with OpenStack or vCenter](#tf-nested-kubernetes)_
-  
-**[Connecting to Physical Networks](#tf-physical)**
-
+  _[Nested Kubernetes with OpenStack or vCenter](#tf-nested-kubernetes)_  
+**[Connecting to Physical Networks](#tf-physical)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[BGP-Enabled Gateway](#tf-bgp-gateway)_
-  
+  _[BGP-Enabled Gateway](#tf-bgp-gateway)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Source NAT](#tf-source-nat)_
-  
+  _[Source NAT](#tf-source-nat)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Routing in Underlay](#tf-underlay-routing)_
 
