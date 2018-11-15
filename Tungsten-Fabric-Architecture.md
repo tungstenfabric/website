@@ -148,10 +148,6 @@ When a packet is sent from a VM through a virtual interface, it is received by t
 
 ![](images/TFA_vm_packet.png)
 
-<div align="center">
-<i> Logic for a packet arriving in a vRouter from the physical network </i>
-</div>
-
 When a packet arrives from the physical network, the vRouter first checks if the packet has a supported encapsulation or not. If not, the packet is sent to the host operating system. For MPLS over UDP and MPLS over GRE, the label identifies the VM interface directly, but VXLAN requires that the destination MAC address in the inner header be looked up in the VRF identified by the VLAN Network Identifier (VNI). Once the interface is identified, the vRouter can forward the packet immediately if there is no policy flag set for the interface (indicating that all protocols and all TCP/UDP ports are permitted). Otherwise the 5-tuple is used to look up the flow in the flow table and the same logic as described for an outgoing packet is used.
 
 
