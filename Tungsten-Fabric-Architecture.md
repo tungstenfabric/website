@@ -33,6 +33,7 @@ These use cases can be deployed in any combination to address the specific requi
 
 <img src="images/TFA_feature_set2.png" />
 
+
 The key feature areas that enable support of the main use cases are:
 
 *   Virtual networking using encapsulation tunnels between virtualized hosts
