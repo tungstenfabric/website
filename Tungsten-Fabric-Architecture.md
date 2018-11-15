@@ -1,4 +1,4 @@
-#Tungsten Fabric Architecture
+###Tungsten Fabric Architecture
 
 Detailed Technical Description of the Virtual Networking and Security Platform
 
@@ -79,10 +79,9 @@ This section describes the software architecture of the Tungsten Fabric controll
 
 ### Tungsten Fabric Working with An Orchestrator
 
+The Tungsten Fabric controller integrated with cloud management systems such as OpenStack or Kubernetes. Its function is to ensure that when a virtual machine (VM) or container is created, it is provided with network connectivity according to the network and security policies specified in the controller or orchestrator. 
+
 Tungsten Fabric consists of two primary pieces of software
-
-
-
 *   _Tungsten Fabric Controller_– a set of software services that maintains a model of networks and network policies, typically running on several servers for high availability
 *   _Tungsten Fabric vRouter_– installed in each host that runs workloads (virtual machines or containers), the vRouter performings packet forwarding and enforces network and security policies.
 
@@ -95,9 +94,8 @@ A typical deployment of Tungsten Fabric is shown below.
 <i> Tungsten Fabric uses encapsulation tunnels between virtual workloads </i>
 </div>
 
-The Tungsten Fabric controller is integrated with a cloud management system such as OpenStack or Kubernetes. Its function is to ensure that when a virtual machine (VM) or container is created, it is provided with network connectivity according to the network and security policies specified in the controller or orchestrator. 
 
-The Tungsten Fabric controller integrates with the orchestrator via a software plugin that implements the networking service of the orchestrator. For instance, the Tungsten Fabric plugin for OpenStack implements the Neutron API, and the _kube-network-manager _and _CNI_(container network interface) components listen to network-related events using the Kubernetes k8s API.
+The Tungsten Fabric controller integrates with an orchestrator via a software plugin that implements the networking service of the orchestrator. For instance, the Tungsten Fabric plugin for OpenStack implements the Neutron API, and the _kube-network-manager_ and _CNI_(container network interface) components listen to network-related events using the Kubernetes k8s API.
 
 The Tungsten Fabric vRouter replaces Linux bridge and IP tables, or Open vSwitch networking on the compute hosts, and the controller configures the vRouters to implement the desired networking and security policies.
 
