@@ -7,21 +7,15 @@
 
 
 **[Introduction](#introduction)**  
-
 &nbsp;&nbsp;&nbsp;&nbsp;
 _[Use Cases](#use-cases)_  
-
 &nbsp;&nbsp;&nbsp;&nbsp;
 _[Key Features of Tungsten Fabric](#key-features)_  
-  
 **[How Tungsten Fabric Works](#how-tf-works)**  
-  
 &nbsp;&nbsp;&nbsp;&nbsp;
 _[Tungsten Fabric Working with An Orchestrator](#tf-with-orchestrator)_  
-  
 &nbsp;&nbsp;&nbsp;&nbsp;
 _[Interaction With An Orchestrator](#working-with-orchestrator)_  
-  
 **[Architecture Details of vRouter](#vrouter-details)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
