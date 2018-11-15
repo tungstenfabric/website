@@ -17,57 +17,57 @@ _[Key Features of Tungsten Fabric](#key-features)_
 **[How Tungsten Fabric Works](#how-tf-works)**
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-[Tungsten Fabric Working with An Orchestrator](#tf-with-orchestrator)
+_[Tungsten Fabric Working with An Orchestrator](#tf-with-orchestrator)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-[Interaction With An Orchestrator](#working-with-orchestrator)
+_[Interaction With An Orchestrator](#working-with-orchestrator)_
   
 **[Architecture Details of vRouter](#vrouter-details)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Detailed Packet Processing Logic In a vRouter](#packet-processing)
+  _[Detailed Packet Processing Logic In a vRouter](#packet-processing)_
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Packet Flow Between VMs In The Same Subnet](#packet-flow-same-subnet)
+  _[Packet Flow Between VMs In The Same Subnet](#packet-flow-same-subnet)_
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Packet Flow Between VMs In Different Subnets](#packet-flow-different-subnet)
+  _[Packet Flow Between VMs In Different Subnets](#packet-flow-different-subnet)_
   
 **[Service Chains](#service-chains)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Basic Service Chain](#basic-service-chain)
+  _[Basic Service Chain](#basic-service-chain)_
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Scaled-out Services](#scaled-out-service)
+  _[Scaled-out Services](#scaled-out-service)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Policy-based Steering](#policy-based-steering)
+  _[Policy-based Steering](#policy-based-steering)_
   
 **[Application-based Security Policies](#application-policies)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Creating an Application Policy](#creating-policy)
+  _[Creating an Application Policy](#creating-policy)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Controlling Flows Between Deployments](#flows-between-deployment)
+  _[Controlling Flows Between Deployments](#flows-between-deployment)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Advanced Application Policies](#advanced-policies)
+  _[Advanced Application Policies](#advanced-policies)_
   
 **[Deployment Options for vRouter](#vrouter-deployment-options)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Kernel Module vRouter](#kernel-module-vrouter)
+  _[Kernel Module vRouter](#kernel-module-vrouter)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [DPDK vRouter](#dpdk-vrouter)
+  _[DPDK vRouter](#dpdk-vrouter)_
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [SR-IOV (Single Root – Input/Output Virtualization)](#sriov-vrouter)
+  _[SR-IOV (Single Root – Input/Output Virtualization)](#sriov-vrouter)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Smart NIC vRouter](#smartnic-vrouter)
+  _[Smart NIC vRouter](#smartnic-vrouter)_
 
 **[Tungsten Fabric Collection and Analytics](#tf-analytics)**
 
@@ -76,37 +76,37 @@ _[Key Features of Tungsten Fabric](#key-features)_
 **[Tungsten Fabric APIs](#tf-apis)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Controller Configuration REST API](#tf-rest-apis)
+  _[Controller Configuration REST API](#tf-rest-apis)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Python Bindings](#tf-python)
+  _[Python Bindings](#tf-python)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Analytics REST API](#tf-analytics-rest-api)
+  _[Analytics REST API](#tf-analytics-rest-api)_
   
 **[Orchestrators](#tf-orchestrators)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [OpenStack with Tungsten Fabric](#tf-openstack)
+  _[OpenStack with Tungsten Fabric](#tf-openstack)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Kubernetes Containers with Tungsten Fabric](#tf-kubernetes)
+  _[Kubernetes Containers with Tungsten Fabric](#tf-kubernetes)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Tungsten Fabric and VMware vCenter](#tf-vcenter)
-  
+  _[Tungsten Fabric and VMware vCenter](#tf-vcenter)_
+
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Nested Kubernetes with OpenStack or vCenter](#tf-nested-kubernetes)
+  _[Nested Kubernetes with OpenStack or vCenter](#tf-nested-kubernetes)_
   
 **[Connecting to Physical Networks](#tf-physical)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [BGP-Enabled Gateway](#tf-bgp-gateway)
+  _[BGP-Enabled Gateway](#tf-bgp-gateway)_
   
-  [Source NAT](#tf-source-nat)
+  _[Source NAT](#tf-source-nat)_
   
 &nbsp;&nbsp;&nbsp;&nbsp;
-  [Routing in Underlay](#tf-underlay-routing)
+  _[Routing in Underlay](#tf-underlay-routing)_
 
 &nbsp;
 
