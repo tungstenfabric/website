@@ -2,7 +2,7 @@
 
 ### Detailed Technical Description of the Virtual Networking and Security Platform
 
----
+
 **[Introduction](#introduction)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
 _[Use Cases](#use-cases)_  
@@ -79,7 +79,6 @@ _[Interaction With An Orchestrator](#working-with-orchestrator)_
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Routing in Underlay](#tf-underlay-routing)_
 
----
 
 ## Introduction {#introduction}
 
