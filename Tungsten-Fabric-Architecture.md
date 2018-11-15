@@ -4,13 +4,14 @@
 
 &nbsp;
 
-Stuart Mackie
-
 &nbsp;
 
 &nbsp;
+[Introduction](#introduction)
+[Use Cases](#use-cases)
+[Key Features of Tungsten Fabric](#key-features)
 
-## Introduction
+## Introduction {#introduction}
 
 This document describes how Tungsten Fabric provides a scalable virtual networking platform that works with a variety of virtual machine and container orchestrators, and can integrate with physical networking and compute infrastructure. Tungsten fabric uses networking industry standards such as BGP EVPN control plane and VXLAN overlays to seamlessly connect workloads in different orchestrator domains. E.g. Virtual machines managed by VMware vCenter and containers managed by Kubernetes.
 
@@ -19,7 +20,7 @@ As virtualization becomes a key technology for delivery of both public and priva
 Since there are very few datacenter deployments that are truly "greenfield", there are nearly always requirements to integrate workloads deployed on new infrastructure with workloads and networks that have been previously deployed. This document describes a set of scenarios for deployments where new cloud infrastructure will be deployed, and where coexistence with existing infrastructure is also needed.
 
 
-### Use Cases
+### Use Cases {#use-cases}
 
 The following common use cases are covered in this document:
 
@@ -45,7 +46,7 @@ The key feature areas that enable support of the main use cases are:
 Since the same controller and forwarding components are used in every implementation, Tungsten Fabric provides a consistent interface for managing connectivity in all the environments it supports, and is able to provide seamless connectivity between workloads managed by different orchestrators, whether virtual machines or containers, and to destinations in external networks.
 
 
-### Key Features of Tungsten Fabric
+### Key Features of Tungsten Fabric {#key-features}
 
 Tungsten Fabric manages and implements virtual networking in cloud environments using OpenStack and Kubernetes orchestrators. Tungsten Fabric uses overlay networks between vRouters that run on each host. It is based on proven, standards-based networking technologies that today support the wide-area networks of the world's major service providers, but repurposed to work with virtualized workloads and cloud automation in data centers that can range from large scale enterprise data centers to much smaller telco POPs. It provides many enhanced features over the native networking implementations of orchestrators, including:
 
