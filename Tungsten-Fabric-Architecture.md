@@ -53,7 +53,9 @@ _[Interaction With An Orchestrator](#working-with-orchestrator)_
   _[Smart NIC vRouter](#smartnic-vrouter)_  
   
 **[Tungsten Fabric Collection and Analytics](#tf-analytics)**  
+
 **[Tungsten Fabric Deployment](#tf-deployment)**  
+
 **[Tungsten Fabric APIs](#tf-apis)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Controller Configuration REST API](#tf-rest-apis)_  
