@@ -25,6 +25,7 @@ _[Interaction With An Orchestrator](#working-with-orchestrator)_
   _[Packet Flow Between VMs In The Same Subnet](#packet-flow-same-subnet)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Packet Flow Between VMs In Different Subnets](#packet-flow-different-subnet)_  
+  
 **[Service Chains](#service-chains)**   
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Basic Service Chain](#basic-service-chain)_  
@@ -32,6 +33,7 @@ _[Interaction With An Orchestrator](#working-with-orchestrator)_
   _[Scaled-out Services](#scaled-out-service)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Policy-based Steering](#policy-based-steering)_  
+  
 **[Application-based Security Policies](#application-policies)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Creating an Application Policy](#creating-policy)_  
@@ -39,6 +41,7 @@ _[Interaction With An Orchestrator](#working-with-orchestrator)_
   _[Controlling Flows Between Deployments](#flows-between-deployment)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Advanced Application Policies](#advanced-policies)_  
+  
 **[Deployment Options for vRouter](#vrouter-deployment-options)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Kernel Module vRouter](#kernel-module-vrouter)_  
@@ -48,6 +51,7 @@ _[Interaction With An Orchestrator](#working-with-orchestrator)_
   _[SR-IOV (Single Root – Input/Output Virtualization)](#sriov-vrouter)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Smart NIC vRouter](#smartnic-vrouter)_  
+  
 **[Tungsten Fabric Collection and Analytics](#tf-analytics)**  
 **[Tungsten Fabric Deployment](#tf-deployment)**  
 **[Tungsten Fabric APIs](#tf-apis)**  
@@ -57,6 +61,7 @@ _[Interaction With An Orchestrator](#working-with-orchestrator)_
   _[Python Bindings](#tf-python)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Analytics REST API](#tf-analytics-rest-api)_  
+  
 **[Orchestrators](#tf-orchestrators)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[OpenStack with Tungsten Fabric](#tf-openstack)_  
@@ -66,6 +71,7 @@ _[Interaction With An Orchestrator](#working-with-orchestrator)_
   _[Tungsten Fabric and VMware vCenter](#tf-vcenter)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[Nested Kubernetes with OpenStack or vCenter](#tf-nested-kubernetes)_  
+  
 **[Connecting to Physical Networks](#tf-physical)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[BGP-Enabled Gateway](#tf-bgp-gateway)_  
