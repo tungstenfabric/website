@@ -32,7 +32,7 @@ The following common use cases are covered in this document:
 These use cases can be deployed in any combination to address the specific requirements in a variety of deployment scenarios. The main feature areas of Tungsten Fabric are illustrated below.
 
 
-<img src="images/TFA_feature_set2.png" />
+<img src="images/TFA_feature_set.png" />
 
 
 The key feature areas that enable support of the main use cases are:
@@ -84,7 +84,7 @@ Tungsten Fabric consists of two primary pieces of software
 
 A typical deployment of Tungsten Fabric is shown below.
 
-![](images/TFA_private_cloud2.png)
+![](images/TFA_private_cloud.png)
 
 The Tungsten Fabric controller integrates with an orchestrator via a software plugin that implements the networking service of the orchestrator. For instance, the Tungsten Fabric plugin for OpenStack implements the Neutron API, and the _kube-network-manager_ and _CNI_ (container network interface) components listen to network-related events using the Kubernetes k8s API.
 
@@ -99,7 +99,7 @@ A key feature of cloud automation is that users can request resources for their 
 
 The architecture of the Tungsten Fabric controller and vRouter, and the interaction with an orchestrator is shown below. 
 
-![](images/TFA_routes2.png)
+![](images/TFA_routes.png)
 
 The diagram shows an orchestrator working hypervisors and virtual machines, but the flow of information is similar for a container orchestrator, such as Kubernetes (see XXX [Kubernetes Containers with Tungsten Fabric]. Each interface of the workload running on the host is connected to a VRF that contains L2 and L3 forwarding tables for the corresponding network that contains the IP address of that interface. The vRouter implements the classic Integrated Bridgine and Routing (IRB) function that physical routers perform. A vRouter only has VRFs for networks that have interfaces in them on that host, including the Fabric VRF that connects to the physical interface of the host. The use of VRFs allows different virtual networks to have overlapping IP and MAC addresses, providing no network policies are defined to allow traffic between them. Tungsten Fabric virtual networking uses encapsulation tunneling to transport packets between VMs on different hosts, and the encapsulation and decapsulation happens between the Fabric VRF and the VM VRFs. This is explained in more detail in the next section.
 
@@ -127,7 +127,7 @@ At the end of this procedure, the routes in the VRFs of all the vRouters in the 
 
 This section describes the architecture of the Tungsten Fabric vRouter in more detail. A conceptual view of the functional components of the Tungsten Fabric vRouter is shown below. 
 
-![](images/TFA_vrouter2.png)
+![](images/TFA_vrouter.png)
 
 The vRouter agent runs in the user space of the host operating system, while the forwarder can run as a kernel module, in user space when DPDK is used, or can run in a programmable network interface card, also known as a "smart NIC". These options are described in more detail in the section [Deployment Options for vRouter]. The more commonly use kernel module option is illustrated here.
 
