@@ -1,6 +1,6 @@
 ## Tungsten Fabric Architecture
 
-###Detailed Technical Description of the Virtual Networking and Security Platform
+### Detailed Technical Description of the Virtual Networking and Security Platform
 
 Stuart Mackie
 
