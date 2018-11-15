@@ -6,15 +6,15 @@
 
 
 
-*[Introduction](#introduction)*
+**[Introduction](#introduction)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-[Use Cases](#use-cases)
+_[Use Cases](#use-cases)_
 
 &nbsp;&nbsp;&nbsp;&nbsp;
-[Key Features of Tungsten Fabric](#key-features)
+_[Key Features of Tungsten Fabric](#key-features)_
   
-[How Tungsten Fabric Works](#how-tf-works)
+**[How Tungsten Fabric Works](#how-tf-works)**
   
 &nbsp;&nbsp;&nbsp;&nbsp;
 [Tungsten Fabric Working with An Orchestrator](#tf-with-orchestrator)
@@ -22,7 +22,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;
 [Interaction With An Orchestrator](#working-with-orchestrator)
   
-[Architecture Details of vRouter](#vrouter-details)
+**[Architecture Details of vRouter](#vrouter-details)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Detailed Packet Processing Logic In a vRouter](#packet-processing)
@@ -33,7 +33,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Packet Flow Between VMs In Different Subnets](#packet-flow-different-subnet)
   
-[Service Chains](#service-chains)
+**[Service Chains](#service-chains)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Basic Service Chain](#basic-service-chain)
@@ -44,7 +44,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Policy-based Steering](#policy-based-steering)
   
-[Application-based Security Policies](#application-policies)
+**[Application-based Security Policies](#application-policies)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Creating an Application Policy](#creating-policy)
@@ -55,7 +55,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Advanced Application Policies](#advanced-policies)
   
-[Deployment Options for vRouter](#vrouter-deployment-options)
+**[Deployment Options for vRouter](#vrouter-deployment-options)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Kernel Module vRouter](#kernel-module-vrouter)
@@ -69,11 +69,11 @@
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Smart NIC vRouter](#smartnic-vrouter)
 
-[Tungsten Fabric Collection and Analytics](#tf-analytics)
+**[Tungsten Fabric Collection and Analytics](#tf-analytics)**
 
-[Tungsten Fabric Deployment](#tf-deployment)
+**[Tungsten Fabric Deployment](#tf-deployment)**
 
-[Tungsten Fabric APIs](#tf-apis)
+**[Tungsten Fabric APIs](#tf-apis)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Controller Configuration REST API](#tf-rest-apis)
@@ -84,7 +84,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Analytics REST API](#tf-analytics-rest-api)
   
-[Orchestrators](#tf-orchestrators)
+**[Orchestrators](#tf-orchestrators)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
   [OpenStack with Tungsten Fabric](#tf-openstack)
@@ -98,7 +98,7 @@
 &nbsp;&nbsp;&nbsp;&nbsp;
   [Nested Kubernetes with OpenStack or vCenter](#tf-nested-kubernetes)
   
-[Connecting to Physical Networks](#tf-physical)
+**[Connecting to Physical Networks](#tf-physical)**
 
 &nbsp;&nbsp;&nbsp;&nbsp;
   [BGP-Enabled Gateway](#tf-bgp-gateway)
