@@ -254,7 +254,7 @@ The sequence when sending packets to destinations in a different subnet is ident
 
 ## Service Chains {#service-chains}
 
-A service chain is formed when a network policy specifies that traffic between two networks has to flow through one or more network services, (e.g. firewall, TCP-proxy, load-balancer, …) , also termed Virtual Network Functions (VNF). The network services are implemented in VMs which are identified in Tungsten Fabric as services which are then included in policies. Tungsten Fabric supports service chains in both OpenStack and vCenter environments. A simple service chain between two VMs is shown in below.
+A service chain is formed when a network policy specifies that traffic between two networks has to flow through one or more network services, (e.g. firewall, TCP-proxy, load-balancer, …) , also termed Virtual Network Functions (VNF). The network services are implemented in VMs which are identified in Tungsten Fabric as services which are then included in policies. Tungsten Fabric supports service chains in both OpenStack and VMware vCenter environments. A simplified view of the routes that implement a service chain between two VMs is shown in below (in the actual Tungsten Fabric implementation, special "service" VRFs contain the routes through the service chain).
 
 
 ![](images/TFA_service_chain.png)
