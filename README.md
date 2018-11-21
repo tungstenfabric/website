@@ -15,7 +15,7 @@ vCenter
 BYOO [Bring your own orchestrator]
 ```
 
-Tungsten Fabric is now part of the Linux Foundation.
+Tungsten Fabric is a part of the [Linux Foundation Networking Fund], a project of the [Linux Foundation].
 
 
 ---
@@ -143,3 +143,5 @@ under discussion.
 [Build Tungsten Fabric]: https://github.com/Juniper/contrail-dev-env
 [Debug Tungsten Fabric]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Debugging-contrail-code-in-contrail-microservices
 [Launchpad Blueprint]: https://blueprints.launchpad.net/opencontrail
+[Linux Foundation Networking Fund]: https://www.lfnetworking.org
+[Linux Foundation]: http://linuxfoundation.org
