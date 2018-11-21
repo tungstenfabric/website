@@ -61,8 +61,8 @@ specifications don't go to the Launchpad: they ends up in the dedicated
 repository, [contrail-specs].
 
 * Although contrail-specs and other Tungsten Fabric repositories are hosted on
-[Github], they are managed with Gerrit. Please don't send Pull Requests to the
-Github repositories, and go to [https://review.opencontrail.org] instead.
+[GitHub], they are managed with Gerrit. Please don't send Pull Requests to the
+GitHub repositories, and go to [https://review.opencontrail.org] instead.
 Blueprint specs are submitted this way as well.
 
 * After getting Gerrit access as described below, clone the specs repository
@@ -135,7 +135,7 @@ under discussion.
 [Join Slack]: https://tungsten.io/slack
 [Launchpad account]: https://login.launchpad.net/iwoFJXFITJbWRFUj/+decide
 [contrail-specs]: https://github.com/Juniper/contrail-specs
-[Github]: http://www.github.com/
+[GitHub]: http://github.com/tungstenfabric
 [git-review extension]: https://docs.openstack.org/infra/git-review/
 [https://review.opencontrail.org]: https://review.opencontrail.org
 [Tungsten Fabric Community Drive]: https://drive.google.com/drive/folders/11uNo0C1erBT02_qKmgoXOTDoi3SyewZg
