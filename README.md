@@ -45,6 +45,16 @@ info that is only available on the Community Drive.
 get help and help others. The mailing list works best for long-running
 discussions; Slack is great for ad-hoc conversations.
 
+* Before you push anything, you'll need to sign a Contributor License Agreement 
+or CLA: either Individual CLA (ICLA) if you are an independent contributor, or 
+Corporate CLA (CCLA). We suggest you sign a CCLA if you are employed at a company 
+which pays you for your Tungsten Fabric-related work. CCLA also simplifies things 
+if your teammates plan to contribute as well. Both ICLA and CCLA are legal documents.
+Please read them carefully. It's usually smart to run the document past your 
+company's legal department before signing and submitting it, if only to verify
+that your contribution will be within your company's policy. You can find all 
+ICLA/CCLA documents in the [Tungsten Fabric Community Drive].
+
 * Create a [Launchpad account], if you don't have one yet. Tungsten Fabric uses
 Launchpad as a tracker and planning vehicle.
 
@@ -72,16 +82,6 @@ and install the [git-review extension] which will allow you to submit specs as
 well as code changes. In order to write a spec, start by copying the template
 `blueprint_template.md` to a meaningful name in the appropriate subdirectory
 for the release that you would like to target.
-
-* Login to Gerrit with your Launchpad account. Before you push anything, you'll
-need to sign a Contributor License Agreement or CLA: either Individual CLA
-(ICLA) if you are an independent contributor, or Corporate CLA (CCLA). We
-suggest you sign a CCLA if you are employed at a company which pays you for
-your Tungsten Fabric-related work. CCLA also simplifies things if your
-teammates plan to contribute as well. Both ICLA and CCLA are legal documents,
-and you may want to read them carefully or pass to your company's legal
-department for analysis. You can find the documents in the
-[Tungsten Fabric Community Drive].
 
 With all of these in place, you are now ready to submit your specs and code to
 Tungsten Fabric! How to write these specs and code is a different story though,
