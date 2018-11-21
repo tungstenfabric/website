@@ -52,13 +52,11 @@ Launchpad as a tracker and planning vehicle.
 Launchpad. Be sure to describe both expected and actual behavior. You'll need
 the bug ID later, so please do this even if you feel the change is trivial.
 
-* If you plan to develop a new feature, go to Launchpad as well, but this time
-create a blueprint and a ticket associated with it. A blueprint is a short
-piece of text describing which feature do you propose, why it is good to have
-it in Tungsten Fabric, and who will be developing it. Blueprints should link to
-a more technical and more detailed specification document. However, these
-specifications don't go to the Launchpad: they ends up in the dedicated
-repository, [contrail-specs].
+* If you plan to develop a new feature, you must create or provide three things:
+    * [A Launchpad blueprint]. A blueprint is a short piece of text describing which feature do you propose, why it is good to have it in Tungsten Fabric, and who will be developing it. Blueprints are very important as they are used to plan future releases of Tungsten Fabric.
+    * [A detailed technical spec]. Each blueprint should link to a more detailed technical specification document. These specifications must be submitted to the [contrail-specs] GitHub repository. They are not stored or tracked in Launchpad.
+    * [A Launchpad bug ticket]. While the blueprint brielfly describes the work that will be done, the ticket is where the work actually happens (commits get linked to the ticket).
+    * Here is [an example of a complete Launchpad blueprint].
 
 * Although contrail-specs and other Tungsten Fabric repositories are hosted on
 [Github], they are managed with Gerrit. Please don't send Pull Requests to the
@@ -143,3 +141,7 @@ under discussion.
 [Build Tungsten Fabric]: https://github.com/Juniper/contrail-dev-env
 [Debug Tungsten Fabric]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Debugging-contrail-code-in-contrail-microservices
 [Launchpad Blueprint]: https://blueprints.launchpad.net/opencontrail
+[A Launchpad blueprint]: https://blueprints.launchpad.net/opencontrail/+addspec
+[A detailed technical spec]: https://github.com/Juniper/contrail-specs
+[A Launchpad bug ticket]: https://bugs.launchpad.net/opencontrail
+[an example of a complete Launchpad blueprint]: https://blueprints.launchpad.net/opencontrail/+spec/ip6-arpa-zone
