@@ -48,7 +48,7 @@ discussions; Slack is great for ad-hoc conversations.
 * Create a [Launchpad account], if you don't have one yet. Tungsten Fabric uses
 Launchpad as a tracker and planning vehicle.
 
-* If you've found a bug, file a bug report against the respective release at
+* If you've found a bug, [file a bug report] against the respective release at
 Launchpad. Be sure to describe both expected and actual behavior. You'll need
 the bug ID later, so please do this even if you feel the change is trivial.
 
@@ -143,3 +143,4 @@ under discussion.
 [Build Tungsten Fabric]: https://github.com/Juniper/contrail-dev-env
 [Debug Tungsten Fabric]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Debugging-contrail-code-in-contrail-microservices
 [Launchpad Blueprint]: https://blueprints.launchpad.net/opencontrail
+[file a bug report]: https://bugs.launchpad.net/opencontrail
