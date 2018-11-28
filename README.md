@@ -27,6 +27,8 @@ Tungsten Fabric is now part of the Linux Foundation.
 
 [Deploy Tungsten Fabric On-Prem with Openstack]
 
+[Tungsten Fabric Detailed Architecture Document]
+
 ## Becoming a contributor
 
 Whether you want to fix a typo in comments or introduce a brand new feature,
@@ -129,6 +131,7 @@ under discussion.
 [Deploy Tungsten Fabric in 15 minutes on AWS with Kubernetes]: Tungsten-Fabric-15-minute-deployment-with-k8s-on-AWS.md
 [Deploy Tungsten Fabric on Kubernetes in 1-step command]: Tungsten-Fabric-one-line-install-on-k8s.md
 [Deploy Tungsten Fabric On-Prem with Openstack]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-with-Kolla-Ocata
+[Tungsten Fabric Detailed Architecture Document]: Tungsten-Fabric-Architecture.md
 [tungsten-dev@googlegroups.com]: https://groups.google.com/forum/#!forum/tungsten-dev
 [dev@lists.tungsten.io]: https://lists.tungsten.io/g/dev
 [Tungsten Fabric Community Drive]: https://drive.google.com/drive/folders/0AM-bGoKiRBuTUk9PVA
