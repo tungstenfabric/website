@@ -27,6 +27,8 @@ Tungsten Fabric is now part of the Linux Foundation.
 
 [Deploy Tungsten Fabric On-Prem with Openstack]
 
+[Tungsten Fabric Detailed Architecture Document]
+
 ## Becoming a contributor
 
 Whether you want to fix a typo in comments or introduce a brand new feature,
@@ -48,14 +50,14 @@ discussions; Slack is great for ad-hoc conversations.
 * Create a [Launchpad account], if you don't have one yet. Tungsten Fabric uses
 Launchpad as a tracker and planning vehicle.
 
-* If you've found a bug, file a bug report against the respective release at
+* If you've found a bug, [file a bug report] against the respective release at
 Launchpad. Be sure to describe both expected and actual behavior. You'll need
 the bug ID later, so please do this even if you feel the change is trivial.
 
 * If you plan to develop a new feature, you must create or provide three things:
     * [A Launchpad blueprint]. A blueprint is a short piece of text describing which feature do you propose, why it is good to have it in Tungsten Fabric, and who will be developing it. Blueprints are very important as they are used to plan future releases of Tungsten Fabric.
     * [A detailed technical spec]. Each blueprint should link to a more detailed technical specification document. These specifications must be submitted to the [contrail-specs] GitHub repository. They are not stored or tracked in Launchpad.
-    * [A Launchpad bug ticket]. While the blueprint brielfly describes the work that will be done, the ticket is where the work actually happens (commits get linked to the ticket).
+    * [A Launchpad bug ticket]. While the blueprint briefly describes the work that will be done, the ticket is where the work actually happens (commits get linked to the ticket).
     * Here is [an example of a complete Launchpad blueprint].
 
 * Although contrail-specs and other Tungsten Fabric repositories are hosted on
@@ -127,11 +129,12 @@ under discussion.
 [Deploy Tungsten Fabric in 15 minutes on AWS with Kubernetes]: Tungsten-Fabric-15-minute-deployment-with-k8s-on-AWS.md
 [Deploy Tungsten Fabric on Kubernetes in 1-step command]: Tungsten-Fabric-one-line-install-on-k8s.md
 [Deploy Tungsten Fabric On-Prem with Openstack]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-with-Kolla-Ocata
+[Tungsten Fabric Detailed Architecture Document]: Tungsten-Fabric-Architecture.md
 [tungsten-dev@googlegroups.com]: https://groups.google.com/forum/#!forum/tungsten-dev
 [dev@lists.tungsten.io]: https://lists.tungsten.io/g/dev
 [Tungsten Fabric Community Drive]: https://drive.google.com/drive/folders/0AM-bGoKiRBuTUk9PVA
 [Join Slack]: https://tungsten.io/slack
-[Launchpad account]: https://login.launchpad.net/iwoFJXFITJbWRFUj/+decide
+[Launchpad account]: https://login.launchpad.net/
 [contrail-specs]: https://github.com/Juniper/contrail-specs
 [Github]: http://www.github.com/
 [git-review extension]: https://docs.openstack.org/infra/git-review/
@@ -145,3 +148,4 @@ under discussion.
 [A detailed technical spec]: https://github.com/Juniper/contrail-specs
 [A Launchpad bug ticket]: https://bugs.launchpad.net/opencontrail
 [an example of a complete Launchpad blueprint]: https://blueprints.launchpad.net/opencontrail/+spec/ip6-arpa-zone
+[file a bug report]: https://bugs.launchpad.net/opencontrail
