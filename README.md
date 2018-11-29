@@ -136,7 +136,7 @@ under discussion.
 [dev@lists.tungsten.io]: https://lists.tungsten.io/g/dev
 [Tungsten Fabric Community Drive]: https://drive.google.com/drive/folders/0AM-bGoKiRBuTUk9PVA
 [Join Slack]: https://tungsten.io/slack
-[Launchpad account]: https://login.launchpad.net/iwoFJXFITJbWRFUj/+decide
+[Launchpad account]: https://login.launchpad.net/
 [contrail-specs]: https://github.com/Juniper/contrail-specs
 [Github]: http://www.github.com/
 [git-review extension]: https://docs.openstack.org/infra/git-review/
