@@ -23,7 +23,9 @@ Tungsten Fabric is a part of the [Linux Foundation Networking Fund], a project o
 ## Start using Tungsten Fabric
 [Deploy Tungsten Fabric in 15 minutes on AWS with Kubernetes]
 
-[Deploy Tungsten Fabric on Kubernetes in 1-step command]
+[Deploy Tungsten Fabric on Kubernetes in 1-step command - Centos]
+
+[Deploy Tungsten Fabric on Kubernetes in 1-step command - Ubuntu]
 
 [Deploy Tungsten Fabric On-Prem with Openstack]
 
@@ -127,7 +129,8 @@ under discussion.
 
 [(LFN)]: https://www.linuxfoundation.org/projects/networking/
 [Deploy Tungsten Fabric in 15 minutes on AWS with Kubernetes]: Tungsten-Fabric-15-minute-deployment-with-k8s-on-AWS.md
-[Deploy Tungsten Fabric on Kubernetes in 1-step command]: Tungsten-Fabric-one-line-install-on-k8s.md
+[Deploy Tungsten Fabric on Kubernetes in 1-step command - Centos]: Tungsten-Fabric-Centos-one-line-install-on-k8s.md
+[Deploy Tungsten Fabric on Kubernetes in 1-step command - Ubuntu]: Tungsten-Fabric-Ubuntu-one-line-install-on-k8s.md
 [Deploy Tungsten Fabric On-Prem with Openstack]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-with-Kolla-Ocata
 [Tungsten Fabric Detailed Architecture Document]: Tungsten-Fabric-Architecture.md
 [tungsten-dev@googlegroups.com]: https://groups.google.com/forum/#!forum/tungsten-dev

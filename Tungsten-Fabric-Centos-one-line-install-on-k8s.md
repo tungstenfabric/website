@@ -9,11 +9,13 @@ This wiki will describe the most simplest of all: **A single yaml based install*
 
    Alternatively if you would like to install Tungsten Fabric and K8s cluster together, you can use [Tungsten Fabric Ansible Deployer](https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-microservice-installation-with-kubernetes). 
 
-2. **Linux kernel version 3.10.0-862.3.2**
+2. **Docker version on all nodes should be >= 1.24**
+
+3. **Linux kernel version 3.10.0-957**
 
    Tungsten Fabric forwarding uses a kernel module to provide high throughput, low latency networking.
 
-   The latest kernel module is compiled against 3.10.0-862.3.2 kernel.
+   The latest kernel module is compiled against 3.10.0-957 kernel.
 
 ## Installation
   Installation of Tungsten Fabric is a **1**-step process.
@@ -21,7 +23,7 @@ This wiki will describe the most simplest of all: **A single yaml based install*
   Note: Replace x.x.x.x with the IP of your Kubernetes Master node.
 
 ```
-K8S_MASTER_IP=x.x.x.x;  mkdir -pm 777 /var/lib/contrail/kafka-logs; curl https://github.com/Juniper/contrail-controller/wiki/contrail.yml | awk '/<pre><code>/{flag=1;next}/<\/pre>/{flag=0}flag' | sed "s/{{ K8S_MASTER_IP }}/$K8S_MASTER_IP/g" | kubectl apply -f -
+K8S_MASTER_IP=x.x.x.x; CONTRAIL_REPO="docker.io\/opencontrailnightly"; CONTRAIL_RELEASE="latest"; mkdir -pm 777 /var/lib/contrail/kafka-logs; curl https://raw.githubusercontent.com/Juniper/contrail-kubernetes-docs/master/install/kubernetes/templates/contrail-single-step-cni-install-centos.yaml | sed "s/{{ K8S_MASTER_IP }}/$K8S_MASTER_IP/g; s/{{ CONTRAIL_REPO }}/$CONTRAIL_REPO/g; s/{{ CONTRAIL_RELEASE }}/$CONTRAIL_RELEASE/g" | kubectl apply -f -
 ```
 
 ## What just happened ?
