@@ -44,7 +44,7 @@ there are a few steps which make the process smoother:
 in order to get access to the [Tungsten Fabric Community Drive]. There you can
 find legal and technical docs, event decks and similar resources to boost your
 understanding of Tungsten Fabric. This material will eventually be moving to
-[https://wiki.tungsten.io] or Git repositories but currently there is useful
+[the wiki] or Git repositories but currently there is useful
 info that is only available on the Community Drive.
 
 * [Join Slack]. Post your questions to relevant channels, don't abuse @here,
@@ -154,3 +154,4 @@ under discussion.
 [Linux Foundation ID]: https://identity.linuxfoundation.org
 [several other mailing lists]: https://lists.tungsten.io
 [A blueprint]: https://jira.tungsten.io/projects/TFP/issues/TFP-6?filter=allopenissues
+[the wiki]: https://wiki.tungsten.io
