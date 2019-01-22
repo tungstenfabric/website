@@ -36,13 +36,15 @@ Tungsten Fabric is a part of the [Linux Foundation Networking Fund], a project o
 Whether you want to fix a typo in comments or introduce a brand new feature,
 there are a few steps which make the process smoother:
 
-* Subscribe to the [dev@lists.tungsten.io] mailing list.
+* Create a [Linux Foundation ID], if you don't have one yet. You'll need this to subscribe to the mailing lists and to access the bugs and blueprints.
 
-* Temporarily, subscribe to the [tungsten-dev@googlegroups.com] mailing list
+* Subscribe to the [dev@lists.tungsten.io] mailing list. If you wish, there are also [several other mailing lists] you can join as well.
+
+* Temporarily, subscribe to the [tungsten-dev@googlegroups.com] Google Group 
 in order to get access to the [Tungsten Fabric Community Drive]. There you can
 find legal and technical docs, event decks and similar resources to boost your
 understanding of Tungsten Fabric. This material will eventually be moving to
-[https://wiki.tungsten.io] or Git repositories but currently there is useful
+[the wiki] or Git repositories but currently there is useful
 info that is only available on the Community Drive.
 
 * [Join Slack]. Post your questions to relevant channels, don't abuse @here,
@@ -59,18 +61,15 @@ company's legal department before signing and submitting it, if only to verify
 that your contribution will be within your company's policy. You can find all 
 ICLA/CCLA documents in the [Tungsten Fabric Community Drive].
 
-* Create a [Launchpad account], if you don't have one yet. Tungsten Fabric uses
-Launchpad as a tracker and planning vehicle.
-
-* If you've found a bug, [file a bug report] against the respective release at
-Launchpad. Be sure to describe both expected and actual behavior. You'll need
+* If you've found a bug, [file a bug report] against the respective release in
+Jira. Be sure to describe both expected and actual behavior. You'll need
 the bug ID later, so please do this even if you feel the change is trivial.
 
 * If you plan to develop a new feature, you must create or provide three things:
-    * [A Launchpad blueprint]. A blueprint is a short piece of text describing which feature do you propose, why it is good to have it in Tungsten Fabric, and who will be developing it. Blueprints are very important as they are used to plan future releases of Tungsten Fabric.
-    * [A detailed technical spec]. Each blueprint should link to a more detailed technical specification document. These specifications must be submitted to the [contrail-specs] GitHub repository. They are not stored or tracked in Launchpad.
-    * [A Launchpad bug ticket]. While the blueprint briefly describes the work that will be done, the ticket is where the work actually happens (commits get linked to the ticket).
-    * Here is [an example of a complete Launchpad blueprint].
+    * [A blueprint]. A blueprint is a short piece of text describing which feature do you propose, why it is good to have it in Tungsten Fabric, and who will be developing it. Blueprints are very important as they are used to plan future releases of Tungsten Fabric.
+    * [A detailed technical spec]. Each blueprint should link to a more detailed technical specification document. These specifications must be submitted to the [contrail-specs] GitHub repository. They are not stored or tracked in Jira.
+    * [A Jira bug ticket]. While the blueprint briefly describes the work that will be done, the ticket is where the work actually happens (commits get linked to the ticket).
+    * Here is [an example of a complete Jira blueprint].
 
 * Although contrail-specs and other Tungsten Fabric repositories are hosted on
 [GitHub], they are managed with Gerrit. Please don't send Pull Requests to the
@@ -108,13 +107,12 @@ Juniper practices with respect to Contrail development timelines.
 | ------- | ------------- | ----------------- | ------------ | ---------- |
 |   5.0   |               |                   |              | 2018-04-23 |
 |  5.0.1  |               |                   |              | 2018-07-16 |
-|   5.1   |  2018-07-15   |     2018-08-22    |     TBD      | 2018-11-15 |
+|   5.1   |  2018-07-15   |     2018-08-22    |     TBD      |    Q1 2019 |
 
 #### Column Meanings
 * Release: The numeric identifier of the release
-* Blueprint Due: Tungsten Fabric currently uses Launchpad, so the blueprint
-due here refers to the [Launchpad Blueprint] which will be reviewed by the TSC
-for strategic alignment and release planning.
+* Blueprint Due: Tungsten Fabric currently uses Jira, so the blueprint
+due here refers to the [Jira Blueprint] which will be reviewed by the TSC for strategic alignment and release planning.
 * Specification Due: The specification or "spec" is design document with
 section headings that should be filled in, or at least though about and decided
 to be non-applicable. Specs should be submitted as described earlier in this
@@ -137,7 +135,6 @@ under discussion.
 [dev@lists.tungsten.io]: https://lists.tungsten.io/g/dev
 [Tungsten Fabric Community Drive]: https://drive.google.com/drive/folders/0AM-bGoKiRBuTUk9PVA
 [Join Slack]: https://tungsten.io/slack
-[Launchpad account]: https://login.launchpad.net/
 [contrail-specs]: https://github.com/Juniper/contrail-specs
 [GitHub]: http://github.com/tungstenfabric
 [git-review extension]: https://docs.openstack.org/infra/git-review/
@@ -146,11 +143,15 @@ under discussion.
 [here]: https://github.com/Juniper/contrail-community-docs/blob/master/Contributor/GettingStarted/getting-started-with-opencontrail-development.md
 [Build Tungsten Fabric]: https://github.com/Juniper/contrail-dev-env
 [Debug Tungsten Fabric]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Debugging-contrail-code-in-contrail-microservices
-[Launchpad Blueprint]: https://blueprints.launchpad.net/opencontrail
+[Jira Blueprint]: https://jira.tungsten.io/projects/TFP/issues/TFP-6?filter=allopenissues
 [Linux Foundation Networking Fund]: https://www.lfnetworking.org
 [Linux Foundation]: http://linuxfoundation.org
-[A Launchpad blueprint]: https://blueprints.launchpad.net/opencontrail/+addspec
+[A Jira blueprint]: https://jira.tungsten.io/projects/TFP/issues/TFP-6?filter=allopenissues
 [A detailed technical spec]: https://github.com/Juniper/contrail-specs
-[A Launchpad bug ticket]: https://bugs.launchpad.net/opencontrail
-[an example of a complete Launchpad blueprint]: https://blueprints.launchpad.net/opencontrail/+spec/ip6-arpa-zone
-[file a bug report]: https://bugs.launchpad.net/opencontrail
+[A Jira bug ticket]: https://jira.tungsten.io/projects/TFB/issues/TFB-15?filter=allopenissues
+[an example of a complete Jira blueprint]: https://jira.tungsten.io/browse/TFP-13
+[file a bug report]: https://jira.tungsten.io/projects/TFB/issues/TFB-15?filter=allopenissues
+[Linux Foundation ID]: https://identity.linuxfoundation.org
+[several other mailing lists]: https://lists.tungsten.io
+[A blueprint]: https://jira.tungsten.io/projects/TFP/issues/TFP-6?filter=allopenissues
+[the wiki]: https://wiki.tungsten.io
