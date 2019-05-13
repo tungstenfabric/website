@@ -129,7 +129,7 @@ under discussion.
 [Deploy Tungsten Fabric in 15 minutes on AWS with Kubernetes]: Tungsten-Fabric-15-minute-deployment-with-k8s-on-AWS.md
 [Deploy Tungsten Fabric on Kubernetes in 1-step command - Centos]: Tungsten-Fabric-Centos-one-line-install-on-k8s.md
 [Deploy Tungsten Fabric on Kubernetes in 1-step command - Ubuntu]: Tungsten-Fabric-Ubuntu-one-line-install-on-k8s.md
-[Deploy Tungsten Fabric On-Prem with Openstack]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-with-Kolla-Ocata
+[Deploy Tungsten Fabric On-Prem with Openstack]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Contrail-with-Openstack-Kolla
 [Tungsten Fabric Detailed Architecture Document]: Tungsten-Fabric-Architecture.md
 [tungsten-dev@googlegroups.com]: https://groups.google.com/forum/#!forum/tungsten-dev
 [dev@lists.tungsten.io]: https://lists.tungsten.io/g/dev
