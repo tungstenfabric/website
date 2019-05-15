@@ -589,7 +589,7 @@ The number of compute nodes is scaled according the the needs of the workloads t
 
 The layout of Tungsten Fabric services across servers is controlled by configuration files that are read by the deployment tool, which can be Ansible (using playbooks) or Helm (using charts). Example playbooks and charts are available that cover simple all-in-one deployments where all the services run in the same VM, to high-availability examples involving multiple VMs or bare metal servers. Examples are also provided where the orchestrator and Tungsten Fabric are running in a public cloud (e.g. Amazon Web Services, Google Cloud Engine, Microsoft Azure) and the workloads are also running there.
 
-More details on deployment tools and how to use them can be found at the Tungsten Fabric website ([www.tungstenfabric.io](http://www.tungstenfabric.io/)).
+More details on deployment tools and how to use them can be found at the Tungsten Fabric website ([www.tungsten.io](http://www.tungsten.io/)).
 
 
 ## Tungsten Fabric APIs {#tf-apis}
