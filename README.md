@@ -51,6 +51,7 @@ info that is only available on the Community Drive.
 get help and help others. The mailing list works best for long-running
 discussions; Slack is great for ad-hoc conversations.
 
+
 * Before you push anything, you'll need to sign a Contributor License Agreement 
 or CLA: either Individual CLA (ICLA) if you are an independent contributor, or 
 Corporate CLA (CCLA). 
@@ -62,12 +63,12 @@ Corporate CLA (CCLA).
     * We suggest you sign a CCLA if you are employed at a company 
       which pays you for your Tungsten Fabric-related work. 
       CCLA also simplifies things if your teammates plan to contribute as well. 
-    * The CCLA process is documented [here](https://docs.linuxfoundation.org/display/DOCS/CLA+Roles).
+    * The CCLA process is documented in [the Linux Foundation Confluence].
       To sign a CCLA you must:
         * Choose someone to sign on behalf of the company for just the Tungsten Fabric project (A *CLA signatory*)
         * Choose someone to manage signatories for all Linux Foundation projects (A *CLA manager*)
-        * Both people must have a Linux Foundation ID. You can create one [here](https://identity.linuxfoundation.org/).
-        * The CLA manager should go to [the CLA Corporate Console](https://corporate.lfcla.com/), and sign in using their Linux Foundation ID.
+        * Both people must have a Linux Foundation ID. You can create one at the [Linux Foundation ID site].
+        * The CLA manager should go to [the CLA Corporate Console], and sign in using their Linux Foundation ID.
         * They must Add a Company, and select "New CLA". Enter the name and email of the CLA signatory (which can be the same person).
         * The CLA signatory will receive an email from DocuSign. Once signed, the CLA Manager can add domains and email addresses and github addresses of the contributors to the whitelist in the Corporate Console.
         * The whitelist and the fact the agreement has been signed should be synced automatically to Gerrit.
@@ -166,3 +167,6 @@ under discussion.
 [several other mailing lists]: https://lists.tungsten.io
 [A blueprint]: https://jira.tungsten.io/projects/TFP/issues/TFP-6?filter=allopenissues
 [the wiki]: https://wiki.tungsten.io
+[Linux Foundation ID site]: https://identity.linuxfoundation.org/
+[the Linux Foundation Confluence]: https://docs.linuxfoundation.org/display/DOCS/CLA+Roles
+[the CLA Corporate Console]: https://corporate.lfcla.com/
