@@ -53,13 +53,24 @@ discussions; Slack is great for ad-hoc conversations.
 
 * Before you push anything, you'll need to sign a Contributor License Agreement 
 or CLA: either Individual CLA (ICLA) if you are an independent contributor, or 
-Corporate CLA (CCLA). We suggest you sign a CCLA if you are employed at a company 
-which pays you for your Tungsten Fabric-related work. CCLA also simplifies things 
-if your teammates plan to contribute as well. Both ICLA and CCLA are legal documents.
-Please read them carefully. It's usually smart to run the document past your 
-company's legal department before signing and submitting it, if only to verify
-that your contribution will be within your company's policy. You can find all 
-ICLA/CCLA documents in the [Tungsten Fabric Community Drive].
+Corporate CLA (CCLA). 
+    * Both ICLA and CCLA are legal documents.
+      Please read them carefully. 
+      It's usually smart to run the document past your company's legal 
+      department before signing and submitting it, if only to verify
+      that your contribution will be within your company's policy.
+    * We suggest you sign a CCLA if you are employed at a company 
+      which pays you for your Tungsten Fabric-related work. 
+      CCLA also simplifies things if your teammates plan to contribute as well. 
+    * The CCLA process is documented [here](https://docs.linuxfoundation.org/display/DOCS/CLA+Roles).
+      To sign a CCLA you must:
+        * Choose someone to sign on behalf of the company for just the Tungsten Fabric project (A *CLA signatory*)
+        * Choose someone to manage signatories for all Linux Foundation projects (A *CLA manager*)
+        * Both people must have a Linux Foundation ID. You can create one [here](https://identity.linuxfoundation.org/).
+        * The CLA manager should go to [the CLA Corporate Console](https://corporate.lfcla.com/), and sign in using their Linux Foundation ID.
+        * They must Add a Company, and select "New CLA". Enter the name and email of the CLA signatory (which can be the same person).
+        * The CLA signatory will receive an email from DocuSign. Once signed, the CLA Manager can add domains and email addresses and github addresses of the contributors to the whitelist in the Corporate Console.
+        * The whitelist and the fact the agreement has been signed should be synced automatically to Gerrit.
 
 * If you've found a bug, [file a bug report] against the respective release in
 Jira. Be sure to describe both expected and actual behavior. You'll need
