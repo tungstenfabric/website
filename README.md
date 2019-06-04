@@ -40,26 +40,23 @@ there are a few steps which make the process smoother:
 
 * Subscribe to the [dev@lists.tungsten.io] mailing list. If you wish, there are also [several other mailing lists] you can join as well.
 
-* Temporarily, subscribe to the [tungsten-dev@googlegroups.com] Google Group 
-in order to get access to the [Tungsten Fabric Community Drive]. There you can
-find legal and technical docs, event decks and similar resources to boost your
+* The wiki currently contains legal and technical docs, event decks and similar resources to boost your
 understanding of Tungsten Fabric. This material will eventually be moving to
-[the wiki] or Git repositories but currently there is useful
-info that is only available on the Community Drive.
+[the wiki] or Git repositories.
 
 * [Join Slack]. Post your questions to relevant channels, don't abuse @here,
 get help and help others. The mailing list works best for long-running
 discussions; Slack is great for ad-hoc conversations.
 
-* Before you push anything, you'll need to sign a Contributor License Agreement 
-or CLA: either Individual CLA (ICLA) if you are an independent contributor, or 
-Corporate CLA (CCLA). We suggest you sign a CCLA if you are employed at a company 
-which pays you for your Tungsten Fabric-related work. CCLA also simplifies things 
+* Before you push anything, you'll need to sign a Contributor License Agreement
+or CLA: either Individual CLA (ICLA) if you are an independent contributor, or
+Corporate CLA (CCLA). We suggest you sign a CCLA if you are employed at a company
+which pays you for your Tungsten Fabric-related work. CCLA also simplifies things
 if your teammates plan to contribute as well. Both ICLA and CCLA are legal documents.
-Please read them carefully. It's usually smart to run the document past your 
+Please read them carefully. It's usually smart to run the document past your
 company's legal department before signing and submitting it, if only to verify
-that your contribution will be within your company's policy. You can find all 
-ICLA/CCLA documents in the [Tungsten Fabric Community Drive].
+that your contribution will be within your company's policy. You can find all
+ICLA/CCLA documents in the [Tungsten Fabric CLA Wiki].
 
 * If you've found a bug, [file a bug report] against the respective release in
 Jira. Be sure to describe both expected and actual behavior. You'll need
@@ -75,6 +72,7 @@ the bug ID later, so please do this even if you feel the change is trivial.
 [GitHub], they are managed with Gerrit. Please don't send Pull Requests to the
 GitHub repositories, and go to [https://review.opencontrail.org] instead.
 Blueprint specs are submitted this way as well.
+* Note that Tungsten Fabric is currently migrating from Juniper owned [https://review.opencontrail.org] to [https://github.com/tungstenfabric/] email discuss@lists.tungsten.io for the latest information.
 
 * After getting Gerrit access as described below, clone the specs repository
 with the command:
@@ -133,13 +131,12 @@ under discussion.
 [Tungsten Fabric Detailed Architecture Document]: Tungsten-Fabric-Architecture.md
 [tungsten-dev@googlegroups.com]: https://groups.google.com/forum/#!forum/tungsten-dev
 [dev@lists.tungsten.io]: https://lists.tungsten.io/g/dev
-[Tungsten Fabric Community Drive]: https://drive.google.com/drive/folders/0AM-bGoKiRBuTUk9PVA
 [Join Slack]: https://tungsten.io/slack
 [contrail-specs]: https://github.com/Juniper/contrail-specs
 [GitHub]: http://github.com/tungstenfabric
 [git-review extension]: https://docs.openstack.org/infra/git-review/
 [https://review.opencontrail.org]: https://review.opencontrail.org
-[Tungsten Fabric Community Drive]: https://drive.google.com/drive/folders/11uNo0C1erBT02_qKmgoXOTDoi3SyewZg
+[Tungsten Fabric CLA Wiki]: https://wiki.tungsten.io/display/TUN/Contributor+License+Agreement
 [here]: https://github.com/Juniper/contrail-community-docs/blob/master/Contributor/GettingStarted/getting-started-with-opencontrail-development.md
 [Build Tungsten Fabric]: https://github.com/Juniper/contrail-dev-env
 [Debug Tungsten Fabric]: https://github.com/Juniper/contrail-ansible-deployer/wiki/Debugging-contrail-code-in-contrail-microservices
