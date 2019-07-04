@@ -100,7 +100,7 @@ _[和Orchestrator的互动](#working-with-orchestrator)_
 这些用例可以任意组合部署，以满足各种部署方案中的特定要求。 Tungsten Fabric的主要特征如下所示。
 
 
-<img src="images/TFA_feature_set.png" />
+<img src="../images/TFA_feature_set.png" />
 
 
 支持主要用例的关键功能是:
