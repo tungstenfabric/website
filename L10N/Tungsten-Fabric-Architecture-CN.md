@@ -13,7 +13,7 @@ _[Tungsten Fabric主要特点 ](#key-features)_
 &nbsp;&nbsp;&nbsp;&nbsp;
 _[Tungsten Fabric支持Orchestrator](#tf-with-orchestrator)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-_[I和Orchestrator的互动](#working-with-orchestrator)_  
+_[和Orchestrator的互动](#working-with-orchestrator)_  
 
 **[vRouter架构解说](#vrouter-details)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
@@ -39,80 +39,79 @@ _[I和Orchestrator的互动](#working-with-orchestrator)_
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[高级应用策略](#advanced-policies)_  
   
-**[Deployment Options for vRouter](#vrouter-deployment-options)**  
+**[vRouterd的部署选项](#vrouter-deployment-options)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Kernel Module vRouter](#kernel-module-vrouter)_  
+  _[内核模块的vRouter](#kernel-module-vrouter)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
   _[DPDK vRouter](#dpdk-vrouter)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[SR-IOV (Single Root – Input/Output Virtualization)](#sriov-vrouter)_  
+  _[SR-IOV (單一根I/O 虛擬化)](#sriov-vrouter)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Smart NIC vRouter](#smartnic-vrouter)_  
+  _[智能网卡的vRouter](#smartnic-vrouter)_  
   
-**[Tungsten Fabric Collection and Analytics](#tf-analytics)**  
+**[Tungsten Fabric的收集和分析](#tf-analytics)**  
 
-**[Tungsten Fabric Deployment](#tf-deployment)**  
+**[Tungsten Fabric的部署](#tf-deployment)**  
 
 **[Tungsten Fabric APIs](#tf-apis)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Controller Configuration REST API](#tf-rest-apis)_  
+  _[控制器配置 REST API](#tf-rest-apis)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Python Bindings](#tf-python)_  
+  _[Python语言的绑定](#tf-python)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Analytics REST API](#tf-analytics-rest-api)_  
+  _[分析的REST API](#tf-analytics-rest-api)_  
   
 **[Orchestrators](#tf-orchestrators)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[OpenStack with Tungsten Fabric](#tf-openstack)_  
+  _[OpenStack使用Tungsten Fabric](#tf-openstack)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Kubernetes Containers with Tungsten Fabric](#tf-kubernetes)_  
+  _[Kubernetes容器使用Tungsten Fabric](#tf-kubernetes)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Tungsten Fabric and VMware vCenter](#tf-vcenter)_  
+  _[Tungsten Fabric 和 VMware vCenter](#tf-vcenter)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Nested Kubernetes with OpenStack or vCenter](#tf-nested-kubernetes)_  
+  _[嵌套 Kubernetes with OpenStack or vCenter](#tf-nested-kubernetes)_  
   
-**[Connecting to Physical Networks](#tf-physical)**  
+**[连接到物理网络](#tf-physical)**  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[BGP-Enabled Gateway](#tf-bgp-gateway)_  
+  _[启用BGP的网关](#tf-bgp-gateway)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Source NAT](#tf-source-nat)_  
+  _[源NAT](#tf-source-nat)_  
 &nbsp;&nbsp;&nbsp;&nbsp;
-  _[Routing in Underlay](#tf-underlay-routing)_
+  _[在底层网络(Underlay)中的路由](#tf-underlay-routing)_
 
 
-## Introduction {#introduction}
+## 介绍 {#introduction}
 
-This document describes how Tungsten Fabric provides a scalable virtual networking platform that works with a variety of virtual machine and container orchestrators, and can integrate with physical networking and compute infrastructure. Tungsten fabric uses networking industry standards such as BGP EVPN control plane and VXLAN overlays to seamlessly connect workloads in different orchestrator domains. E.g. Virtual machines managed by VMware vCenter and containers managed by Kubernetes.
+本文档介绍了Tungsten Fabric如何提供可扩展的虚拟网络平台，该平台可与各种虚拟机和容器协调器配合使用，并可与物理网络和计算基础架构集成。 Tungsten Fabric使用网络行业标准（如BGP EVPN控制平面和VXLAN覆盖）来无缝连接不同协调器域中的工作负载。 例如。 由VMware vCenter管理的虚拟机和由Kubernetes管理的容器。
 
-As virtualization becomes a key technology for delivery of both public and private cloud services, issues of network scale are becoming apparent with the virtualization technologies that have been in widespread use to date (E.g. VMware with L2 networking, and OpenStack with stock Nova, Neutron or ML2 networking). Tungsten Fabric provides a highly scalable virtual networking platform that is designed to support multi-tenant networks in the largest environments while supporting multiple orchestrators simultaneously.
+随着虚拟化成为提供公共云和私有云服务的关键技术，迄今为止广泛使用的虚拟化技术（例如，使用L2网络的VMware，以及OpenStack的Nova，Neutron或ML2网络），网络规模问题日益明显。 Tungsten Fabric提供高度可扩展的虚拟网络平台，旨在支持最大环境中的多租户网络，同时支持多个协调器。
 
-Since there are very few datacenter deployments that are truly "greenfield", there are nearly always requirements to integrate workloads deployed on new infrastructure with workloads and networks that have been previously deployed. This document describes a set of scenarios for deployments where new cloud infrastructure will be deployed, and where coexistence with existing infrastructure is also needed.
+由于很少有数据中心部署是真正的“绿场”，因此几乎总是要求将部署在新基础架构上的工作负载与之前部署的工作负载和网络相集成。 本文档描述了一组部署方案，其中将部署新的云基础架构，并且还需要与现有基础架构共存。
 
+### 用例 {#use-cases}
 
-### Use Cases {#use-cases}
+本文档包含以下常见用例:
 
-The following common use cases are covered in this document:
+*   在OpenStack管理的数据中心中实现具有高可扩展性和灵活性的平台即服务和软件即服务
+*   使用Kubernetes容器管理系统的虚拟网络，包括Red Hat OpenShift
+*   允许运行VMware vCenter的新的或现有的虚拟化环境在虚拟机之间使用Tungsten Fabric虚拟网络
+*   直接通过数据中心底层网络使用BGP peering和网络覆盖与网关路由器将Tungsten Fabric虚拟网络连接到物理网络。
 
-*   Enable Platform-as-a-Service and Software-as-a-Service with high scalability and flexibility in OpenStack-managed datacenters
-*   Virtual networking with Kubernetes container management system, including with Red Hat OpenShift
-*   Allow new or existing virtualized environment running VMware vCenter to use Tungsten Fabric virtual networking between virtual machines
-*   Connect Tungsten Fabric virtual networks to physical networks using gateway routers with BGP peering with networking overlays, and directly through the data center underlay network
-
-These use cases can be deployed in any combination to address the specific requirements in a variety of deployment scenarios. The main feature areas of Tungsten Fabric are illustrated below.
+这些用例可以任意组合部署，以满足各种部署方案中的特定要求。 Tungsten Fabric的主要特征如下所示。
 
 
 <img src="images/TFA_feature_set.png" />
 
 
-The key feature areas that enable support of the main use cases are:
+支持主要用例的关键功能是:
 
-*   Virtual networking using encapsulation tunnels between virtualized hosts
-*   Plugins for open-source orchestrators for virtual machines and containers
-*   Application-based security policies based on tags
-*   Integration with VMware orchestration stack
-*   Connection to external networks using BGP, SNAT, and via the underlay network.
+*   虚拟网络使用虚拟主机之间的封装隧道
+*   用于虚拟机和容器的开源协调器的插件
+*   基于标签的基于应用程序的安全策略
+*   与VMware业务流程堆栈集成
+*   使用BGP，SNAT和底层网络连接到外部网络.
 
-Since the same controller and forwarding components are used in every implementation, Tungsten Fabric provides a consistent interface for managing connectivity in all the environments it supports, and is able to provide seamless connectivity between workloads managed by different orchestrators, whether virtual machines or containers, and to destinations in external networks.
+由于在每个实现中都使用相同的控制器和转发组件，因此Tungsten Fabric提供了一致的界面来管理其支持的所有环境中的连接，并且能够在不同的协调器（无论是虚拟机还是容器）管理的工作负载之间提供无缝连接，以及 到外部网络的目的地。
 
 
 ### Key Features of Tungsten Fabric {#key-features}
