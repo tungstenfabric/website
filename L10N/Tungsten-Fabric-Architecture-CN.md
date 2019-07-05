@@ -114,141 +114,140 @@ _[和Orchestrator的互动](#working-with-orchestrator)_
 由于在每个实现中都使用相同的控制器和转发组件，因此Tungsten Fabric提供了一致的界面来管理其支持的所有环境中的连接，并且能够在不同的协调器（无论是虚拟机还是容器）管理的工作负载之间提供无缝连接，以及 到外部网络的目的地。
 
 
-### Key Features of Tungsten Fabric {#key-features}
+### Tungsten Fabric主要特点 {#key-features}
 
-Tungsten Fabric manages and implements virtual networking in cloud environments using OpenStack and Kubernetes orchestrators. Tungsten Fabric uses overlay networks between vRouters that run on each host. It is based on proven, standards-based networking technologies that today support the wide-area networks of the world's major service providers, but repurposed to work with virtualized workloads and cloud automation in data centers that can range from large scale enterprise data centers to much smaller telco POPs. It provides many enhanced features over the native networking implementations of orchestrators, including:
-
-
-
-*   Highly scalable, multi-tenant networking
-*   Multi-tenant IP address management 
-*   DHCP, ARP proxies to avoid flooding into networks
-*   Efficient edge replication for broadcast and multicast traffic
-*   Local, per-tenant DNS resolution
-*   Distributed firewall with access control lists
-*   Application-based security policies
-*   Distributed load balancing across hosts
-*   Network address translation (1:1 floating IPs and distributed SNAT)
-*   Service chaining with virtual network functions
-*   Dual stack IPv4 and IPv6
-*   BGP peering with gateway routers
-*   BGP as a Service (BGPaaS) for distribution of routes between privately managed customer networks and service provider networks
-
-The following sections describe in detail how the controller interacts with an orchestrator and the vRouters, and how the above features are implemented and configured in the vRouter. 
-
-
-## How Tungsten Fabric Works {#how-tf-works}
-
-This section describes the software architecture of the Tungsten Fabric controller and of the vRouter, which forwards packets in each host, and describes the interaction between vRouters and the Tungsten Fabric controller when virtual machines or containers are started and then exchange packets with each other.
-
-
-### Tungsten Fabric Working with An Orchestrator {#tf-with-orchestrator}
-
-The Tungsten Fabric controller integrates with cloud management systems such as OpenStack or Kubernetes. Its function is to ensure that when a virtual machine (VM) or container is created, it is provided with network connectivity according to the network and security policies specified in the controller or orchestrator. 
-
-Tungsten Fabric consists of two primary pieces of software
-*   _Tungsten Fabric Controller_– a set of software services that maintains a model of networks and network policies, typically running on several servers for high availability
-*   _Tungsten Fabric vRouter_– installed in each host that runs workloads (virtual machines or containers), the vRouter performings packet forwarding and enforces network and security policies.
-
-A typical deployment of Tungsten Fabric is shown below.
-
-![](images/TFA_private_cloud.png)
-
-The Tungsten Fabric controller integrates with an orchestrator via a software plugin that implements the networking service of the orchestrator. For instance, the Tungsten Fabric plugin for OpenStack implements the Neutron API, and the _kube-network-manager_ and _CNI_ (container network interface) components listen to network-related events using the Kubernetes k8s API.
-
-The Tungsten Fabric vRouter replaces Linux bridge and IP tables, or Open vSwitch networking on the compute hosts, and the controller configures the vRouters to implement the desired networking and security policies.
-
-Packets from a VM on one host that have a destination running on a different host are encapsulated in MPLS over UDP/GRE or VXLAN where the destination of the outer header is the IP address of the host that the destination VM is running on. The controller is responsible for installing the set of routes in each VRF of each vRouter that implements network policies. E.g. by default, VMs in the same network can communicate with each other, but not with VMs in different networks, unless this is specifically enabled in a network policy. Communication between the controller and vRouters is via XMPP, a widely used and flexible messaging protocol.
-
-A key feature of cloud automation is that users can request resources for their applications without needing to understand details of how or even where resources will be provided. This is normally done via a portal that presents a set of service offerings from which a user can select, and which get translated into API calls into underlying systems including the cloud orchestrator to spin up virtual machines or containers with the necessary memory, disk and CPU capacity for the user's requirements. Service offerings can be as simple as a VM with specific memory, disk and CPU allocated to it, or may include an entire application stack composed of multiple pre-configured software instances.
-
-
-### Interaction With An Orchestrator {#working-with-orchestrator}
-
-The architecture of the Tungsten Fabric controller and vRouter, and the interaction with an orchestrator is shown below. 
-
-![](images/TFA_routes.png)
-
-The diagram shows an orchestrator working hypervisors and virtual machines, but the flow of information is similar for a container orchestrator, such as Kubernetes (see XXX [Kubernetes Containers with Tungsten Fabric]. Each interface of the workload running on the host is connected to a VRF that contains L2 and L3 forwarding tables for the corresponding network that contains the IP address of that interface. The vRouter implements the classic Integrated Bridgine and Routing (IRB) function that physical routers perform. A vRouter only has VRFs for networks that have interfaces in them on that host, including the Fabric VRF that connects to the physical interface of the host. The use of VRFs allows different virtual networks to have overlapping IP and MAC addresses, providing no network policies are defined to allow traffic between them. Tungsten Fabric virtual networking uses encapsulation tunneling to transport packets between VMs on different hosts, and the encapsulation and decapsulation happens between the Fabric VRF and the VM VRFs. This is explained in more detail in the next section.
-
-When a new virtual workload is created, an event is seen in the orchestrator-specific plugin and sent into the controller, which then sends requests to the agent for routes to be installed in the VRFs for virtual networks, and the agent then configures them in the forwarder.
-
-The logical flow for configuring networking on a new VM with a single interface is as follows:
+Tungsten Fabric使用OpenStack和Kubernetes协调器在云环境中管理和实施虚拟网络。 Tungsten Fabric在每台主机上运行的vRouters之间使用覆盖网络。 它基于成熟的和标准的网络技术，如今支持世界主要服务提供商的广域网，但重新用于数据中心的虚拟化工作负载和云自动化，范围从大型企业数据中心到 较小的电信公司POPs。 它在协调器的本机网络实现上提供了许多增强功能，包括：
 
 
 
-1.  Networks and network policies are defined in either the orchestrator or Tungsten Fabric using UI, CLI, or northbound REST API. A network is primarily defined as a pool of IP addresses which will be allocated to interfaces when VMs are created.
-2.   VM is requested to be launched by a user of the orchestrator, including which network its interface is in.
-3.  The orchestrator selects a host for the new VM to run on, and instructs the compute agent on that host to fetch its image and start the VM
-4.  The Tungsten Fabric plugin receives events or API calls from the networking service of the orchestrator instructing it to set up the networking for the interface of the new VM that will be started. These instructions are converted into Tungsten Fabric REST calls and sent to the Tungsten Fabric controller
-5.  The Tungsten Fabric controller sends a request to the vRouter agent for the new VM virtual interface to be connected to the specified virtual network. The vRouter agent instructs the vRouter Forwarder to connect the VM interface to the VRF for the virtual network. The VRF is created, if not present, and the interface is connected to it.
-6.  The compute agent starts the VM which will usually be configured to request IP addresses for each of its interfaces using DHCP. The vRouter proxies the DHCP requests and responds with the interface IP, default gateway and DNS server addresses. 
-7.  Once the interface is active and has an IP address from DHCP, the vRouter will install routes to the VM's IP and MAC addresses with a next hop of the VM virtual interface.
-8.  The vRouter assigns a label for the interface and installs a label route in the MPLS table. The vRouter sends an XMPP message to the controller containing a route to the new VM. The route has a next hop of the IP address of the server that the vRouter is running on, and specifies an encapsulation protocol using the label that was just allocated.
-9.  The controller distributes the route to the new VM to the other vRouters with VMs in the same network and in other networks, as allowed by network policy. 
-10.  The controller sends routes for the other VMs, as allowed by policy, to the vRouter of the new VM. 
+*   高度可扩展的多租户网络
+*   多租户IP地址管理
+*  DHCP，ARP代理，以避免泛滥到网络
+*   广播和多播流量的高效边缘复制
+*   本地，每个租户的DNS解析
+*   带访问控制列表的分布式防火墙
+*   基于应用程序的安全策略
+*  跨主机的分布式负载平衡
+*   网络地址转换（1：1浮动IP和分布式SNAT）
+*   使用服务链接进行虚拟网络功能
+*   IPv4和IPv6双栈支持
+*   BGP与网关路由器对等
+*   BGP即服务（BGPaaS），用于在私有管理的客户网络和服务提供商网络之间分配路由
 
-At the end of this procedure, the routes in the VRFs of all the vRouters in the datacenter have been updated to implement the configured network policies, taking account of the new VM.
-
-
-## Architecture Details of vRouter {#vrouter-details}
-
-This section describes the architecture of the Tungsten Fabric vRouter in more detail. A conceptual view of the functional components of the Tungsten Fabric vRouter is shown below. 
-
-![](images/TFA_vrouter.png)
-
-The vRouter agent runs in the user space of the host operating system, while the forwarder can run as a kernel module, in user space when DPDK is used, or can run in a programmable network interface card, also known as a "smart NIC". These options are described in more detail in the section [Deployment Options for vRouter]. The more commonly use kernel module option is illustrated here.
-
-The agent maintains a session with the controller and is sent information about VRFs, routes and access control lists (ACLs) that it needs. The agent stores the information in its own database, and uses the information to configure the forwarder.  Interfaces get connected into VRFs, and the forwarding information base (FIB) in each VRF is configured with forwarding entries.
-
-Each VRF has its own forwarding and flow tables, while the MPLS and VXLAN tables are global within the vRouter. The forwarding tables contain routes for both the IP and MAC addresses of destinations and the IP-to-MAC association is used to provide proxy ARP capability. The values of labels in the MPLS table are selected by the vRouter when VM interfaces come up, and are only locally significant to that vRouter. The VXLAN Network Identifiers are global across all the VRFs of the same virtual network in different vRouters within a Tungsten Fabric domain.
-
-Each virtual network has a default gateway address allocated to it, and each VM or container interface receives that address in the DHCP response it gets when initializing. When a workload sends a packet to an address outside its subnet, it will ARP for the MAC corresponding to the IP address of the gateway IP, and the vRouter responds with its own MAC address. Thus, the vRouters support a fully distributed default gateway function for all the virtual networks. 
+以下部分详细描述了控制器如何与协调器和vRouters交互，以及如何在vRouter中实现和配置上述功能。
 
 
-### Detailed Packet Processing Logic In a vRouter {#packet-processing}
+## Tungsten Fabric怎么运作 {#how-tf-works}
 
-The logic details for packets flowing from a VM and into a VM are slightly different and described in the following two diagrams and descriptions.
-
-
-
-![](images/TFA_out_packet.png)
-
-When a packet is sent from a VM through a virtual interface, it is received by the forwarder, which first checks if there is an entry matching the packets' 5-tuple (protocol, source and destination IP addresses, source and destination TCP or UDP ports) in the flow table of the VRF that the interface is in. There won't be an entry if this is the first packet in a flow, and the forwarder sends the packet to the agent over the pkt0 interface. The agent determines the action for the flow based on the VRF routing table and access control list, and updates the flow table with the result. The actions can be DROP, FORWARD, NAT or MIRROR. If the packet is to be forwarded, the forwarder checks to see if the destination MAC address is its own MAC address, which will be the case if the VM is sending a packet to the default gateway when the destination is outside the VM's subnet. In that case, the next hop for destination is looked up in the IP forwarding table, otherwise the MAC address is used for lookup. The vRouter is performing the IRB (Integrated Routing and Bridging) function of a physical router here, but within a compute node.
+本节介绍Tungsten Fabric控制器和vRouter的软件体系结构，它在每个主机中转发封包，并描述虚拟机或容器启动时vRouters与Tungsten Fabric控制器之间的交互，然后相互交换封包。
 
 
-![](images/TFA_vm_packet.png)
+### Tungsten Fabric支持Orchestrator {#tf-with-orchestrator}
 
-When a packet arrives from the physical network, the vRouter first checks if the packet has a supported encapsulation or not. If not, the packet is sent to the host operating system. For MPLS over UDP and MPLS over GRE, the label identifies the VM interface directly, but VXLAN requires that the destination MAC address in the inner header be looked up in the VRF identified by the VLAN Network Identifier (VNI). Once the interface is identified, the vRouter can forward the packet immediately if there is no policy flag set for the interface (indicating that all protocols and all TCP/UDP ports are permitted). Otherwise the 5-tuple is used to look up the flow in the flow table and the same logic as described for an outgoing packet is used.
+Tungsten Fabric控制器集成了OpenStack或Kubernetes等云管理系统。 其功能是确保在创建虚拟机（VM）或容器时，根据控制器或协调器中指定的网络和安全策略为其提供网络连接。
 
+Tungsten Fabric由两个主要软件组成
+*   _Tungsten Fabric 控制器_– 一组维护网络和网络策略模型的软件服务，通常在多个服务器上运行以实现高可用性
+*   _Tungsten Fabric vRouter_– 安装在运行工作负载（虚拟机或容器）的每个主机上，vRouter执行封包转发并实施网络和安全策略。
 
-### Packet Flow Between VMs In The Same Subnet {#packet-flow-same-subnet}
+Tungsten Fabric的典型部署如下所示.
 
-The sequence of action that occurs when an application in a VM first sends a packet to another VM is shown in the following diagram. The starting point is that both VMs have booted and the controller has sent L2 (MAC) and L3 (IP) routes to both vRouters to enable communication between the VMs. The sending VM has not previously sent data to the other VM, so has not previously resolved the destination name via DNS.
+![](../images/TFA_private_cloud.png)
 
+Tungsten Fabric控制器通过软件插件与协调器集成，该插件实现了协调器的网络服务。 例如，OpenStack的Tungsten Fabric插件实现了Neutron API，_kube-network-manager_和_CNI_（容器网络接口）组件使用Kubernetes k8s API监听网络相关事件。
 
+Tungsten Fabric vRouter取代Linux桥接器和IP表，或计算主机上的Open vSwitch网络，控制器配置vRouters以实现所需的网络和安全策略。
 
-![](images/TFA_flow.png)
+VM的封包如果要转发到不同主机上，vRouter会加MPLS over UDP / GRE或VXLAN封装，其中外部标头的目标是运行目标VM的主机的IP地址。控制器负责在每个实现网络策略的vRouter的每个VRF中安装路由集。例如：默认情况下，同一网络中的虚拟机可以相互通信，但不能与不同网络中的虚拟机进行通信，除非在网络策略中特别允许。控制器和vRouters之间的通信是通过一种广泛使用且灵活的消息传递协议XMPP实现的。
 
-
-1.  VM1 needs to send a packet to VM2, so first looks up its own DNS cache for the IP address, but since this is the first packet, there is no entry.
-2.  VM1 sends a DNS request to the DNS server address that was supplied in the DHCP response when its interface came up. 
-3.  The vRouter traps the DNS request and forwards it to the DNS server running in the Tungsten Fabric controller.
-4.  The DNS server in the controller responds with the IP address of VM2
-5.  The vRouter sends the DNS response to VM1
-6.  VM1 needs to form an Ethernet frame, so needs the MAC address for VM2. It checks its own ARP cache, but there is no entry, since this is the first packet.
-7.  VM1 sends out an ARP request.
-8.  The vRouter traps the ARP request and looks up the MAC address for IP-VM2 in its own forwarding tables and find the association in the L2/L3 routes that the controller sent it for VM2.
-9.  The vRouter sends an ARP reply to VM1 with the MAC address of VM2
-10.  A TCP timeout occurs in the network stack of VM1
-11.  The network stack of VM1 retries sending the packet, and this time finds the MAC address of VM2 in the ARP cache and can form an Ethernet frame and send it out.
-12.  The vRouter looks up the MAC address for VM2 and finds an encapsulation route. The vRouter builds the outer header and sends the resulting packet to S2.
-13.  The vRouter on S2 decapsulates the packet and looks up the MPLS label to identify the virtual interface to send the original Ethernet frame into. The Ethernet frame is sent into the interface and received by VM2.
+云自动化的一个关键特性是用户可以为其应用程序请求资源，而无需了解如何或甚至在何处提供资源的详细信息。这通常是通过一个门户网站完成的，该门户网站提供了一组服务产品，用户可以从中选择，并将其转换为API调用到底层系统，包括云协调器，以启动具有必要内存，磁盘和CPU的虚拟机或容器满足用户要求的能力。服务产品可以像具有特定内存，分配给它的磁盘和CPU的VM一样简单，也可以包括由多个预配置软件实例组成的整个应用程序堆栈。
 
 
-### Packet Flow Between VMs In Different Subnets {#packet-flow-different-subnet}
+### 和Orchestrator的互动 {#working-with-orchestrator}
 
-The sequence when sending packets to destinations in a different subnet is identical except that the vRouter responds as the default gateway. VM1 will send the packet in an Ethernet frame with the MAC address of the default gateway whose IP address was supplied in the DHCP response that the vRouter supplied when VM1 booted. When VM1 does an ARP request for the gateway IP address, the vRouter responds with its own MAC address. When VM1 sends an Ethernet frame using that gateway MAC address, the vRouter uses the destination IP address of the packet inside the frame to look up the forwarding table in the VRF to find a route, which will be via an encapsulation tunnel to the host that the destination is running on. 
+Tungsten Fabric控制器和vRouter的架构以及与协调器的交互如下所示。
+
+![](../images/TFA_routes.png)
+
+该图显示了一个协调器工作虚拟机管理程序和虚拟机，这和容器协调器的信息流类似，例如Kubernetes（参见XXX [带有Tungsten Fabric的Kubernetes容器]。主机上运行的工作负载的每个接口都连接到VRF包含相应网络的L2和L3转发表，其中包含该接口的IP地址。vRouter实现物理路由器执行的集成桥接和路由（IRB）功能。vRouter仅具有位于该主机上有网络接口的VRF，包括连接到主机物理接口的Fabric VRF。使用VRF可以使不同的虚拟网络具有重叠的IP和MAC地址，不会定义任何网络策略来允许它们之间的流量。Tungsten Fabric虚拟化网络使用封装隧道在不同主机上的VM之间传输封包，以及封装和解封装在Fabric VRF和VM VRF之间发生。这将在下一节中详细解释。
+
+创建新的虚拟工作负载时，会在特定于orchestrator的插件中看到一个事件并将其发送到控制器，然后控制器会向代理发送请求以便在虚拟网络的VRF中安装路由，然后代理将其配置在转发器里。
+
+使用单个接口在新VM上配置网络的逻辑流程如下：
+
+
+
+1.  使用UI，CLI或北向REST API在Orchestrator或Tungsten Fabric中定义网络和网络策略。 网络主要定义为IP地址池，在创建VM时将分配给接口。
+2.   用户请求由协调器启动VM，包括其接口所在的网络。
+3.  协调器选择要运行的新VM的主机，并指示该主机上的计算代理程序获取其映像并启动VM。
+4.  Tungsten Fabric插件从协调器的网络服务接收事件或API调用，指示它为将要启动的新VM的接口设置网络。 这些指令将转换为Tungsten Fabric REST调用并发送到Tungsten Fabric控制器。
+5.  Tungsten Fabric控制器向vRouter代理发送请求，以便将新VM虚拟接口连接到指定的虚拟网络。 vRouter代理指示vRouter转发器将VM接口连接到虚拟网络的VRF。 如果不存在，则创建VRF，并且接口连接到它。
+6.  计算代理启动VM，通常将其配置为使用DHCP为其每个接口请求IP地址。 vRouter代理DHCP请求，然后对接口IP地址，默认网关和DNS服务器地址进行响应。 
+7.  一旦接口启动且具有来自DHCP的IP地址，vRouter安装到VM的IP和MAC地址路由，并将下一跳设为VM虚拟接口。
+8.  vRouter为接口分配标签，并在MPLS表中安装标签路由。 vRouter向控制器发送XMPP消息，该消息包含到新VM的路由。该路由具有运行vRouter的服务器的IP地址的下一跳，并使用刚刚分配的标签指定封装协议。
+9.  在网络策略所允许下，控制器将新VM路由分发到其他vRouters，包含VM位于同一网络和其他网络。
+10.  在网络策略所允许下，控制器将其他VM的路由发送到新VM的vRouter。
+
+在此过程结束时，已更新数据中心中所有vRouter的VRF中的路由已经有新VM的信息。
+
+
+## vRouter架构解说 {#vrouter-details}
+
+本节更详细地介绍了Tungsten Fabric vRouter的体系结构。 Tungsten Fabric vRouter的功能组件的概念视图如下所示。
+
+![](../images/TFA_vrouter.png)
+
+vRouter代理在主机操作系统的用户空间中运行，而转发器可以是内核模块，DPDK时在用户空间，或者在可编程网络接口卡（也称为“智能网卡”）中运行。这些选项在[vRouter的部署选项]部分中有更详细的描述。这里说明了更常用的内核模块模式。
+
+代理与控制器保持会话，并发送有关其所需的VRF，路由和访问控制列表（ACL）的信息。代理将信息存储在自己的数据库中，并使用该信息配置转发器。接口连接到VRF，每个VRF中的转发信息库（FIB）配置转发条目。
+
+每个VRF都有自己的转发表和流表，然而MPLS和VXLAN表在vRouter中是全局的。转发表包含目的地的IP和MAC地址的路由，并且IP到MAC关联用于提供代理ARP功能。当VM接口启动时，vRouter选择MPLS表中的标签值，并且仅对该vRouter本地有意义。 VXLAN网络标识符在Tungsten Fabric域内不同vRouters中的同一虚拟网络的所有VRF中是全局的。
+
+每个虚拟网络都有一个分配给它的默认网关地址，每个虚拟机或容器接口在初始化时获得的DHCP响应中接收该地址。当工作负载将封包发送到其子网外的地址时，它将为与网关IP的IP地址对应的MAC进行ARP，并且vRouter以其自己的MAC地址进行响应。因此，vRouters支持所有虚拟网络的完全分布式默认网关功能。
+
+### 详细的vRouter封包处理逻辑 {#packet-processing}
+
+从VM流入VM并进入VM的封包的逻辑细节略有不同，并在以下两个图和描述中进行了描述。
+
+
+
+![](../images/TFA_out_packet.png)
+
+当从VM通过虚拟接口发送封包时，转发器接收该封包后首先检查接口所在的VRF流表中是否存在与封包的5元组匹配的条目（协议，源和目标IP地址，源和目标TCP或UDP端口）。如果这是流中的第一个封包，则不会有条目，转发器通过pkt0接口将封包发送给代理。代理根据VRF路由表和访问控制列表确定流的操作，并使用结果更新流表。动作可以是DROP，FORWARD，NAT或MIRROR。如果要转发封包，转发器将检查目标MAC地址是否是其自己的MAC地址，如果VM在目标位于VM的子网外时将封包发送到默认网关。在这种情况下，在IP转发表中查找目的地的下一跳，否则MAC地址用于查找。 vRouter在该计算节点内此处执行物理路由器的IRB（集成路由和桥接）功能。
+
+
+![](../images/TFA_vm_packet.png)
+
+当封包从物理网络到达时，vRouter首先检查封包是否具有支持的封装。 如果不是，则将封包发送到主机操作系统。 对于基于UDP的MPLS和基于GRE的MPLS，标签直接标识VM接口，但VXLAN需要由VLAN网络标识符（VNI）标识的VRF中查找内部报头中的目标MAC地址。 一旦识别出接口，如果没有为接口设置策略标志（指示允许所有协议和所有TCP / UDP端口），则vRouter可以立即转发封包。否则，使用5元组来查找流表中的流，并使用与针对传出分组所描述的逻辑相同的逻辑。
+
+
+### 相同子网虚拟机之间封包流 {#packet-flow-same-subnet}
+
+VM中的应用程序首先将封包发送到另一个VM时发生的操作顺序如下图所示。 起点是两个VM都已启动，并且控制器已将L2（MAC）和L3（IP）路由发送到两个vRouters以启用VM之间的通信。 发送VM先前没有将数据发送到另一个VM，因此之前没有通过DNS解析目标名称。
+
+
+
+![](../images/TFA_flow.png)
+
+
+1.  VM1需要向VM2发送封包，因此首先查找自己的DNS缓存以获取IP地址，但由于这是第一个封包，因此没有条目。
+2.  VM1在其接口出现时向DHCP响应中提供的DNS服务器地址发送DNS请求。 
+3.  vRouter捕获DNS请求并将其转发到在Tungsten Fabric控制器中运行的DNS服务器。
+4.  控制器中的DNS服务器以VM2的IP地址响应。
+5.  vRouter将DNS响应发送给VM1。
+6.  VM1需要形成以太网帧，因此需要VM2的MAC地址。 它会检查自己的ARP缓存，但没有条目，因为这是第一个封包。
+7.  VM1发出ARP请求。
+8.  vRouter捕获ARP请求并在其自己的转发表中查找IP-VM2的MAC地址，并在控制器为VM2发送的L2 / L3路由中找到关联。
+9.  vRouter向VM1发送ARP回复，其MAC地址为VM2。
+10.  VM1的网络堆栈中发生TCP超时。
+11.  VM1的网络堆栈重试发送封包，这次在ARP缓存中找到VM2的MAC地址，并可以形成以太网帧并将其发送出去。
+12.  vRouter查找VM2的MAC地址并找到封装路由。 vRouter构建外部头部并将结果封包发送到S2。
+13.  S2上的vRouter解封装封包并查找MPLS标签以识别要将原始以太网帧发送到的虚拟接口。 以太网帧被发送到接口并由VM2接收。
+
+
+### 不同子网虚拟机之间封包流 {#packet-flow-different-subnet}
+
+将封包发送到不同子网中的目标时的顺序是相同的，只是vRouter作为默认网关响应。 VM1将在以太网帧中发送封包，其中包含默认网关的MAC地址，其IP地址是在VM1启动时vRouter提供的DHCP响应中提供的。 当VM1对网关IP地址发出ARP请求时，vRouter将使用自己的MAC地址进行响应。 当VM1使用该网关MAC地址发送以太网帧时，vRouter使用帧内封包的目的IP地址在VRF中查找转发表以查找路由，该路由将通过封装隧道连接到主机 目的地正在运行。
 
 
 ## Service Chains {#service-chains}
@@ -256,7 +255,7 @@ The sequence when sending packets to destinations in a different subnet is ident
 A service chain is formed when a network policy specifies that traffic between two networks has to flow through one or more network services, (e.g. firewall, TCP-proxy, load-balancer, …) , also termed Virtual Network Functions (VNF). The network services are implemented in VMs which are identified in Tungsten Fabric as services which are then included in policies. Tungsten Fabric supports service chains in both OpenStack and VMware vCenter environments. A simplified view of the routes that implement a service chain between two VMs is shown in below (in the actual Tungsten Fabric implementation, special "service" VRFs contain the routes through the service chain).
 
 
-![](images/TFA_service_chain.png)
+![](../images/TFA_service_chain.png)
 
 
 When a VM is configured in the controller to be a service instance (VNF), and the service is included in a network policy that is applied to networks the policy refers to, the controller installs routes in the VRFs of the "Left" and "Right" interfaces of the VNF that direct traffic through the VNF. When encapsulation routes are advertised by the VNF vRouter back to the controller, the routes are distributed to other vRouters that have Red and Green VRFs and the end result is a set of routes that direct traffic flowing between the Red and Green network to pass through the service instance. The labels "Left" and "Right" are used to identify interfaces based on the order that they become active when the VNF is booted. The VNF has to have a configuration that will process packets appropriately based on the interfaces that they will arrive on.
@@ -272,7 +271,7 @@ Services (VNFs) can be of three types:
 Various service chain scenarios are illustrated below, and a brief explanation each follows. 
 
 
-![](images/TFA_chain_options.png)
+![](../images/TFA_chain_options.png)
 
 
 ### Basic Service Chain {#basic-service-chain}
@@ -307,7 +306,7 @@ Active-standby configuration is achieved in two steps in Tungsten Fabric. First 
 
 Conventional firewall policies contain rules based on individual IP addresses or subnet ranges. In data centers of any size this leads to a proliferation of firewall rules which are difficult to manage when being created and difficult to understand when troubleshooting. This is because the IP address of server or VM doesn't relate to the application, application owner, location or any other property. For instance, consider an enterprise that has two data centers and deploys a three tier application in development and production, as shown below.
 
-![](images/TFA_workloads.png)
+![](../images/TFA_workloads.png)
 
 
 It is a requirement in this enterprise that the layers of each instance of an application can only communicate with the next layer in the same instance. This requires a separate policy for each of the application instances, as shown. When troubleshooting an issue, the admin must know the relation between IP addresses and application instances, and each time a new instance is deployed, a new firewall rule must be written.
@@ -389,7 +388,7 @@ Application policies contain rules based on tag values and service groups, which
 
 
 
-![](images/TFA_model.png)
+![](../images/TFA_model.png)
 
 In this example, the application is tagged _FinancePortal _and the tiers are tagged _web, app _and _db._Service groups have been created for the traffic flows into the application stack and between each layer. The security administrator then creates an application policy, called _Portal-3-Tier _containing rules that will allow just the required traffic flows. An application policy set is then associated with the application tag _FinancePortal_ and contains the application policy _Portal-3-Tier. _At this point the an application stack can be launched and the tags applied to the various VMs in the Tungsten Fabric controller. This causes the controller to calculate which routes need to be sent to each vRouter to enforce the application policy set, and these are sent to each vRouter. If there is one instance of each software component, the routing tables in each vRouter would be as follows:
 
@@ -483,12 +482,12 @@ Having successfully created an application stack, let's look at what happens whe
 
 
 
-![](images/TFA_basic_policy.png)
+![](../images/TFA_basic_policy.png)
 
 There is nothing in the original policy that prevents traffic flowing between a layer in one deployment into a layer in a different deployment. This behavior can be modified by tagging each component of each stack with a _deployment _tag, and by adding a _match _condition in the application policy to allow traffic to flow between tiers only when the deployment tags match. The updated policy is shown in below.
 
 
-![](images/TFA_deployment.png)
+![](../images/TFA_deployment.png)
 
 Now the traffic flows conform to the strict requirements that traffic only flows between components within the same stack.
 
@@ -499,13 +498,13 @@ Applying tags of different types allows the security policies to be applied in m
 
 
 
-![](images/TFA_label.png)
+![](../images/TFA_label.png)
 
 
 If multiple stacks are deployed within the same combination of sites and deployments, a custom tag for the instance name could be created and a match condition on the instance tag could be used to create the required restriction, as seen in the diagram, below.
 
 
-![](images/TFA_instances.png)
+![](../images/TFA_instances.png)
 
 
 The application policy features in Tungsten Fabric provide a very powerful enforcement framework, while simultaneously enabling dramatic simplification of policies, and reduction in their number.
@@ -524,7 +523,7 @@ There are several deployment options for vRouter that offer different benefits a
 
 These options are illustrated below.
 
-![](images/TFA_accelerated.png)
+![](../images/TFA_accelerated.png)
 
 The features and benefits of each option are described below.
 
@@ -565,7 +564,7 @@ Tungsten Fabric collects information from the cloud infrastructure (compute, net
 
 The architecture for analytics collection is shown in the figure below.
 
-![](images/TFA_analytics.png)
+![](../images/TFA_analytics.png)
 
 The data sources can be configured with the IP address of a destination collector, or there can be a load balancer for the collectors. The responsibility for SNMP polling is distributed across nodes by Zookeeper. The analytic nodes normalize incoming data to a common data format, then send it into a Cassandra database via the Kafka service. The API URL may be load-balanced using ha-proxy or some other load-balancer. The responsibility for collecting the data for UVEs is distributed among the Analytics nodes using Zookeeper, so API queries for UVE data are replicated by the receiving node to the other Analytics nodes, and the one(s) that hold data relating to the request will respond back to the original node, which will collate the responses into the payload that the requestor will receive. Responsibility for alarm generation is also distributed across nodes, so the Alarm Generation function subscribes to the Kafka buses in Analyticsdb nodes in order to observe the data needed to calculate if an alarm condition is met, since this data may be collected by other nodes. The UVEs are hashed across a number of Kafka topics, which are distributed among Alarm Gen functions in order to spread the load effectively.
 
@@ -575,7 +574,7 @@ The data sources can be configured with the IP address of a destination collecto
 The latest versions of Tungsten Fabric (5.0 and later) use a microservices architecture based on Docker containers. The microservices are grouped into _pods_, which correspond to roles that are assigned to servers during deployment. The relationship of microservices to pods is shown in the diagram, below.
 
 
-![](images/TFA_microservices.png)
+![](../images/TFA_microservices.png)
 
 
 The architecture is composable, meaning that each Tungsten Fabric role can be separately scaled using multiple pods running on different servers to support the resilience and performance requirements of a particular deployment. Due to the nature of the algorithm in Zookeeper for choosing the active node, the number of pods deployed in the Controller and Analytic nodes must be an odd number, but this can vary between pod types. The nodes are logical groupings whose pods may be deployed on different servers, and a server can run pods from different node types. 
@@ -686,7 +685,7 @@ Tungsten Fabric can provide seamless networking between VMs and Docker container
 In the diagram below, it can be seen that the Tungsten Fabric plug-in for OpenStack provides a mapping from the Neutron networking API to Tungsten Fabric API calls that are performed in the Tungsten Fabric controller.
 
 
-![](images/TFA_API.png)
+![](../images/TFA_API.png)
 
 
 Tungsten Fabric supports definition of networks and subnetworks, plus OpenStack network policies and security groups. These entities can be created in either OpenStack or Tungsten Fabric and any changes are synchronized between the two systems. Additionally, Tungsten Fabric supports the OpenStack LBaaS v2 API. However, since Tungsten Fabric provides a rich superset of networking features over OpenStack, many networking features are only available via the Tungsten Fabric API or GUI. These include assigning route targets to enable connectivity to external routers, service chaining, configuring BGP route policies and application policies. 
@@ -701,7 +700,7 @@ Additionally, Tungsten Fabric supports a set of resources for networking and sec
 Containers allow multiple processes to run on the same operating system kernel, but with each having access to its own tools, libraries and configuration files. Containers require less compute overhead than virtual machines where each VM runs its own complete guest operating system. Applications running in containers will generally start up much faster, and perform better than the same application running in a VM, and this is one of the reasons why there is growing interest in using containers in datacenters and for NFV.  Docker is a software layer that enables containers to be portable across operating system versions and is the typical Container Runtime Interface used by Kubernetes deployments as a shim layer to manage creation and destruction of containers on servers.
 
 
-![](images/TFA_k8s.png)
+![](../images/TFA_k8s.png)
 
 
 As seen in the diagram, above, Kubernetes manages groups of containers, that together perform some function, and are called _pods._The containers in a pod run on the same server and share an IP address. Sets of identical pods (generally running on different servers) form _services _and network traffic destined for a service has to be directed to a specific pod within a service. In the stock Kubernetes networking implementation, selection of a specific pod is performed either by the application itself using a native Kubernetes API in the sending pod, or, for non-native applications, by a load-balancing proxy using a virtual IP address implemented in Linux iptables on the sending server. The majority of applications are non-native, since they are ports of existing code that was not developed with Kubernetes in mind, and therefore the load-balancing proxy is used.
@@ -713,7 +712,7 @@ Tungsten Fabric virtual networking can be integrated in a Kubernetes environment
 This configuration of Tungsten Fabric with Kubernetes is shown below.
 
 
- ![](images/TFA_k8s_contrail.png)
+ ![](../images/TFA_k8s_contrail.png)
 
 
 The architecture for Tungsten Fabric with Kubernetes orchestration and Docker containers is similar to OpenStack and KVM/QEMU, with the vRouter running in the host Linux OS and containing VRFs with virtual network forwarding tables. All containers in a pod share a networking stack with a single IP address (IP-1, IP-2 in the diagram), but listen on different TCP or UDP ports, and the interface of each networking stack is connected to a VRF at the vRouter. A process called _kube-network-manager _listens for network-related messages using the Kubernetes _k8s _API and sends these into the Tungsten Fabric API. When a pod is created on a server, there is communication between the local _kubelet _and the vRouter agent via the Container Network Interface (CNI) to connect the new interfaces into the correct VRFs. Each pod in a service is allocated a unique IP addresses within a virtual network, and also a floating IP address which is the same for all the pods in a service. The service address is used to send traffic into the service from pods in other services, or from external clients or servers. When traffic is sent from a pod to a service IP, the vRouter attached to that pod performs ECMP load-balancing using the routes to the service IP address that resolve to the interfaces of the individual pods that form the destination service. 
@@ -793,7 +792,7 @@ The architecture for Tungsten Fabric working with VMware vCenter is shown in the
 
 
 
-![](images/TFA_vmware.png)
+![](../images/TFA_vmware.png)
 
 
 Virtual networks and policies are created in Tungsten Fabric, either directly, or using TF tasks in vRO/vRA workflows. 
@@ -810,7 +809,7 @@ In the previous section, the it was assumed that the KVM hosts where the contain
 
 
 
-![](images/TFA_nested.png)
+![](../images/TFA_nested.png)
 
 
 The orchestrator (OpenStack or vCenter), Kubernetes Master and Tungsten Fabric are running in a set of servers or VMs. The orchestrator is configured to manage the compute cluster with Tungsten Fabric, so there are vRouters on each server. VMs can be spun up and configured to run Kubelet and the CNI plugin for Tungsten Fabric. These VMs become available for the Kubernetes master to run containers in, with networking managed by Tungsten Fabric. Since the same Tungsten Fabric is managing the networks for both the orchestrator and Kubernetes, seamless networking is possible between VMs, between containers, and between VMs and containers.
@@ -838,7 +837,7 @@ The methods of connection to external networks are described in the following se
 One way of achieving external connectivity is to create a virtual network using a range of externally routable IP addresses, and to extend the network to a gateway router. When the gateway router is a Juniper MX router, the configuration on the device can be done automatically by Tungsten Fabric. This is illustrated below.
 
 
- ![](images/TFA_gateway.png)
+ ![](../images/TFA_gateway.png)
 
 Network A is defined in Tungsten Fabric, and contains a subnet of publicly addressable IP addresses. This public virtual network is configured in Tungsten Fabric to extend to the gateway router, which, when using Tungsten Fabric Device Manager results in automatic creation of a VRF on the gateway with route target matching that of the virtual network (e.g. VRF labeled A). Tungsten Fabric configures this VRF with a default route that causes route lookup for traffic arriving in the VRF from the Tungsten Fabric cluster to occur in the main inet.0 routing table (which will contain routes to public destinations in the Internet). A forwarding filter is installed, which causes traffic arriving at the gateway with destinations in the Network A to be looked up in the VRF that Tungsten Fabric created. The router advertises a default route via the VRF to the Tungsten Fabric controller.
 
