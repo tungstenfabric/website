@@ -116,7 +116,7 @@ _[和Orchestrator的互动](#working-with-orchestrator)_
 
 ### Tungsten Fabric主要特点 {#key-features}
 
-Tungsten Fabric使用OpenStack和Kubernetes协调器在云环境中管理和实施虚拟网络。 Tungsten Fabric在每台主机上运行的vRouters之间使用覆盖网络。 它基于成熟的和标准的网络技术，如今支持世界主要服务提供商的广域网，但重新用于数据中心的虚拟化工作负载和云自动化，范围从大型企业数据中心到 较小的电信公司POPs。 它在协调器的本机网络实现上提供了许多增强功能，包括：
+Tungsten Fabric使用OpenStack和Kubernetes协调器在云环境中管理和实施虚拟网络。 Tungsten Fabric在每台主机上运行的vRouters之间使用覆盖网络。它基于成熟的和标准的网络技术，如今支持世界主要服务提供商的广域网，但重新用于数据中心的虚拟化工作负载和云自动化，范围从大型企业数据中心到 较小的电信公司POPs。 它在协调器的本机网络实现上提供了许多增强功能，包括：
 
 
 
@@ -201,7 +201,7 @@ vRouter代理在主机操作系统的用户空间中运行，而转发器可以�
 
 代理与控制器保持会话，并发送有关其所需的VRF，路由和访问控制列表（ACL）的信息。代理将信息存储在自己的数据库中，并使用该信息配置转发器。接口连接到VRF，每个VRF中的转发信息库（FIB）配置转发条目。
 
-每个VRF都有自己的转发表和流表，然而MPLS和VXLAN表在vRouter中是全局的。转发表包含目的地的IP和MAC地址的路由，并且IP到MAC关联用于提供代理ARP功能。当VM接口启动时，vRouter选择MPLS表中的标签值，并且仅对该vRouter本地有意义。 VXLAN网络标识符在Tungsten Fabric域内不同vRouters中的同一虚拟网络的所有VRF中是全局的。
+每个VRF都有自己的转发表和流表，然而MPLS和VXLAN表在vRouter中是全局的。转发表包含目的地的IP和MAC地址的路由，并且IP到MAC关联用于提供代理ARP功能。当VM接口启动时，vRouter选择MPLS表中的标签值，并且仅对该vRouter本地有意义。VXLAN网络标识符在Tungsten Fabric域内不同vRouters中的同一虚拟网络的所有VRF中是全局的。
 
 每个虚拟网络都有一个分配给它的默认网关地址，每个虚拟机或容器接口在初始化时获得的DHCP响应中接收该地址。当工作负载将封包发送到其子网外的地址时，它将为与网关IP的IP地址对应的MAC进行ARP，并且vRouter以其自己的MAC地址进行响应。因此，vRouters支持所有虚拟网络的完全分布式默认网关功能。
 
@@ -218,12 +218,12 @@ vRouter代理在主机操作系统的用户空间中运行，而转发器可以�
 
 ![](../images/TFA_vm_packet.png)
 
-当封包从物理网络到达时，vRouter首先检查封包是否具有支持的封装。 如果不是，则将封包发送到主机操作系统。 对于基于UDP的MPLS和基于GRE的MPLS，标签直接标识VM接口，但VXLAN需要由VLAN网络标识符（VNI）标识的VRF中查找内部报头中的目标MAC地址。 一旦识别出接口，如果没有为接口设置策略标志（指示允许所有协议和所有TCP / UDP端口），则vRouter可以立即转发封包。否则，使用5元组来查找流表中的流，并使用与针对传出分组所描述的逻辑相同的逻辑。
+当封包从物理网络到达时，vRouter首先检查封包是否具有支持的封装。如果不是，则将封包发送到主机操作系统。对于基于UDP的MPLS和基于GRE的MPLS，标签直接标识VM接口，但VXLAN需要由VLAN网络标识符（VNI）标识的VRF中查找内部报头中的目标MAC地址。 一旦识别出接口，如果没有为接口设置策略标志（指示允许所有协议和所有TCP / UDP端口），则vRouter可以立即转发封包。否则，使用5元组来查找流表中的流，并使用与针对传出分组所描述的逻辑相同的逻辑。
 
 
 ### 相同子网虚拟机之间封包流 {#packet-flow-same-subnet}
 
-VM中的应用程序首先将封包发送到另一个VM时发生的操作顺序如下图所示。 起点是两个VM都已启动，并且控制器已将L2（MAC）和L3（IP）路由发送到两个vRouters以启用VM之间的通信。 发送VM先前没有将数据发送到另一个VM，因此之前没有通过DNS解析目标名称。
+VM中的应用程序首先将封包发送到另一个VM时发生的操作顺序如下图所示。 起点是两个VM都已启动，并且控制器已将L2（MAC）和L3（IP）路由发送到两个vRouters以启用VM之间的通信。发送VM先前没有将数据发送到另一个VM，因此之前没有通过DNS解析目标名称。
 
 
 
@@ -247,7 +247,7 @@ VM中的应用程序首先将封包发送到另一个VM时发生的操作顺序�
 
 ### 不同子网虚拟机之间封包流 {#packet-flow-different-subnet}
 
-将封包发送到不同子网中的目标时的顺序是相同的，只是vRouter作为默认网关响应。 VM1将在以太网帧中发送封包，其中包含默认网关的MAC地址，其IP地址是在VM1启动时vRouter提供的DHCP响应中提供的。 当VM1对网关IP地址发出ARP请求时，vRouter将使用自己的MAC地址进行响应。 当VM1使用该网关MAC地址发送以太网帧时，vRouter使用帧内封包的目的IP地址在VRF中查找转发表以查找路由，该路由将通过封装隧道连接到主机 目的地正在运行。
+将封包发送到不同子网中的目标时的顺序是相同的，只是vRouter作为默认网关响应。VM1将在以太网帧中发送封包，其中包含默认网关的MAC地址，其IP地址是在VM1启动时vRouter提供的DHCP响应中提供的。当VM1对网关IP地址发出ARP请求时，vRouter将使用自己的MAC地址进行响应。当VM1使用该网关MAC地址发送以太网帧时，vRouter使用帧内封包的目的IP地址在VRF中查找转发表以查找路由，该路由将通过封装隧道连接到主机 目的地正在运行。
 
 
 ## 服务链 {#service-chains}
@@ -282,27 +282,26 @@ VM中的应用程序首先将封包发送到另一个VM时发生的操作顺序�
 
 当单个VM没有处理服务链流量要求的能力时，可以在服务中包含多个相同类型的VM，如第二个面板所示。 完成此操作后，使用ECMP在两端服务链的入口接口对流量进行负载均衡，并在不同服务实例之间进行负载均衡。
 
-可以根据需要在Tungsten Fabric中添加新的服务实例，虽然传统的ECMP哈希算法实现通常会在目标数量发生变化时将大多数会话移动到其他路径，但在Tungsten Fabric中，这仅适用于新流，因为现有路径 流量是根据vRouter中的详细处理逻辑章节中描述的流表确定的。 此行为对于必须查看流中的所有数据包的有状态服务至关重要，否则流将被阻止，从而导致用户会话中断。
+可以根据需要在Tungsten Fabric中添加新的服务实例，虽然传统的ECMP哈希算法实现通常会在目标数量发生变化时将大多数会话移动到其他路径，但在Tungsten Fabric中，这仅适用于新流，因为现有路径流量是根据vRouter中的详细处理逻辑章节中描述的流表确定的。 此行为对于必须查看流中的所有数据包的有状态服务至关重要，否则流将被阻止，从而导致用户会话中断。
 
 还填充了反向流表，以确保流中反向的流量通过它来自的相同服务实例。
 
-互联网草案https://datatracker.ietf.org/doc/draft-ietf-bess-service-chaining
-上包含有关具有状态服务的扩展服务链的更多详细信息。
+互联网草案 https://datatracker.ietf.org/doc/draft-ietf-bess-service-chaining 上包含有关具有状态服务的扩展服务链的更多详细信息。
 
 ### 基于策略指导 {#policy-based-steering}
 
-有些情况下，不同类型的流量需要传递到不同的服务链中。 这可以通过在网络或安全策略中包含多条子策略来在Tungsten Fabric中实现。 在图中的示例中，端口80和8080上的流量必须通过防火墙（FW-1）和DPI，而所有其他流量仅通过防火墙（FW-2），其可能具有与防火墙FW-1不同的配置。
+有些情况下，不同类型的流量需要传递到不同的服务链中。 这可以通过在网络或安全策略中包含多条子策略来在Tungsten Fabric中实现。在图中的示例中，端口80和8080上的流量必须通过防火墙（FW-1）和DPI，而所有其他流量仅通过防火墙（FW-2），其可能具有与防火墙FW-1不同的配置。
 
 ### 主-备服务链{#active-standby}
 
 在某些情况下，流量通常需要通过某个特定的服务链，但如果检测到该链存在问题，则应将流量切换为备份。 这可能是备用服务链位于不太有利的地理位置的情况。
 
-在Tungsten Fabric中，主-备机制配置分两步完成。 首先，将路由策略应用于每个服务链的入口，为优选的活动链入口指定较高的本地优先级值。 其次，每个链上都附有一个运行状况检查，可以测试服务实例是否可达，或者是否可以到达链的另一侧的目的地。 如果运行状况检查失败，则撤消到正常活动服务链的路由，并且流量将流经备用服务链。
+在Tungsten Fabric中，主-备机制配置分两步完成。 首先，将路由策略应用于每个服务链的入口，为优选的活动链入口指定较高的本地优先级值。 其次，每个链上都附有一个运行状况检查，可以测试服务实例是否可达，或者是否可以到达链的另一侧的目的地。如果运行状况检查失败，则撤消到正常活动服务链的路由，并且流量将流经备用服务链。
 
 
 ## 基于应用的安全策略 {#application-policies}
 
-常规防火墙策略包含基于单个IP地址或子网范围的规则。 在任何规模的数据中心中，这会导致防火墙规则的激增，这些规则在创建时难以管理，在故障排除时难以理解。 这是因为服务器或VM的IP地址与应用程序，应用程序所有者，位置或任何其他属性无关。 例如，考虑一个拥有两个数据中心并在开发和生产中部署三层应用程序的企业，如下所示。
+常规防火墙策略包含基于单个IP地址或子网范围的规则。 在任何规模的数据中心中，这会导致防火墙规则的激增，这些规则在创建时难以管理，在故障排除时难以理解。 这是因为服务器或VM的IP地址与应用程序，应用程序所有者，位置或任何其他属性无关。例如，考虑一个拥有两个数据中心并在开发和生产中部署三层应用程序的企业，如下所示。
 
 ![](../images/TFA_workloads.png)
 
@@ -312,7 +311,7 @@ VM中的应用程序首先将封包发送到另一个VM时发生的操作顺序�
 
 ### 应用标签 {#tags}
 
-Tungsten Fabric控制器支持基于标签的安全策略，可应用于项目，网络，vRouters，VM和接口。 标签在对象模型中传播到应用标签的对象中包含的所有对象，并且在包含层次结构的较低级别应用的标签优先于在较高级别应用的标签。 标签有名称和值。 许多标签名称作为Tungsten Fabric发布版本的一部分。 标签类型的典型用途如下表所示：
+Tungsten Fabric控制器支持基于标签的安全策略，可应用于项目，网络，vRouters，VM和接口。 标签在对象模型中传播到应用标签的对象中包含的所有对象，并且在包含层次结构的较低级别应用的标签优先于在较高级别应用的标签。 标签有名称和值。许多标签名称作为Tungsten Fabric发布版本的一部分。 标签类型的典型用途如下表所示：
 
 
 <table>
@@ -388,7 +387,7 @@ Tungsten Fabric控制器支持基于标签的安全策略，可应用于项目�
 
 ![](../images/TFA_model.png)
 
-在此示例中，已为流量进入应用程序堆栈和每个层之间创建应用程序标记为_FinancePortal _并且层标记为_web，app _和_db._Service组。 然后，安全性管理员创建一个名为_Portal-3-Tier _containing规则的应用程序策略，该规则将仅允许所需的流量。 然后，应用程序策略集与应用程序标记FinancePortal关联，并包含应用程序策略_Portal-3-Tier。 _此时，可以启动应用程序堆栈，并将标签应用于Tungsten Fabric控制器中的各个VM。 这会导致控制器计算需要将哪些路由发送到每个vRouter以强制执行应用程序策略集，并将这些路由发送到每个vRouter。 如果每个软件组件都有一个实例，则每个vRouter中的路由表如下：
+在此示例中，已为流量进入应用程序堆栈和每个层之间创建应用程序标记为_FinancePortal _并且层标记为_web，app _和_db._Service组。 然后，安全性管理员创建一个名为_Portal-3-Tier _containing规则的应用程序策略，该规则将仅允许所需的流量。然后，应用程序策略集与应用程序标记FinancePortal关联，并包含应用程序策略_Portal-3-Tier。 _此时，可以启动应用程序堆栈，并将标签应用于Tungsten Fabric控制器中的各个VM。这会导致控制器计算需要将哪些路由发送到每个vRouter以强制执行应用程序策略集，并将这些路由发送到每个vRouter。 如果每个软件组件都有一个实例，则每个vRouter中的路由表如下：
 
 
 <table>
@@ -525,7 +524,7 @@ vRouter有多种部署选项，可提供不同的好处和易用性：
 
 ### 内核模块vRouter {#kernel-module-vrouter}
 
-今天的默认部署选项是vRouter转发器在Linux内核中运行的模块的方式。 vRouter实现了网络功能，否则将使用iptables或Open vSwitch来执行。 在内核中运行使转发器在通过KVM的网络堆栈时可以直接访问网络流量，并且与转发器作为用户空间中的进程运行时相比，可以实现显着的性能提升。 已实施的优化包括：
+今天的默认部署选项是vRouter转发器在Linux内核中运行的模块的方式。 vRouter实现了网络功能，否则将使用iptables或Open vSwitch来执行。在内核中运行使转发器在通过KVM的网络堆栈时可以直接访问网络流量，并且与转发器作为用户空间中的进程运行时相比，可以实现显着的性能提升。 已实施的优化包括：
 
 *   TCP分片卸载
 *   大量接收卸载
@@ -543,7 +542,7 @@ DPDK vRouter通过将CPU内核专用于数据包转发来工作，该数据包�
 
 ### SR-IOV (Single Root – 输入/输出虚拟化) {#sriov-vrouter}
 
-SR-IOV不是vRouter本身的严格部署选项，但在某些应用程序中可以与vRouter一起使用。 SR-IOV允许NIC的硬件资源在多个客户端之间共享，就好像每个客户端都具有唯一访问权限一样，就像管理程序对CPU一样。 它使VM接口可以直接访问NIC，因此数据路径会绕过虚拟机管理程序网络堆栈，从而提高性能。 当VM在物理网络和虚拟网络之间执行网关功能时，SR-IOV非常有用，但由于SR-IOV涉及绕过vRouter，因此接口不参与Tungsten Fabric虚拟网络而,并且不参与网络 策略和网络服务。
+SR-IOV不是vRouter本身的严格部署选项，但在某些应用程序中可以与vRouter一起使用。 SR-IOV允许NIC的硬件资源在多个客户端之间共享，就好像每个客户端都具有唯一访问权限一样，就像管理程序对CPU一样。它使VM接口可以直接访问NIC，因此数据路径会绕过虚拟机管理程序网络堆栈，从而提高性能。当VM在物理网络和虚拟网络之间执行网关功能时，SR-IOV非常有用，但由于SR-IOV涉及绕过vRouter，因此接口不参与Tungsten Fabric虚拟网络而,并且不参与网络 策略和网络服务。
 
 
 ### 智能 NIC vRouter {#smartnic-vrouter}
@@ -555,13 +554,13 @@ SR-IOV不是vRouter本身的严格部署选项，但在某些应用程序中可�
 
 ## Tungsten Fabric 收集和分析 {#tf-analytics}
 
-Tungsten Fabric从云基础架构（计算，网络和存储）及其上运行的工作负载收集信息，以便于运营监控，故障排除和容量规划。 数据以各种格式收集，例如系统日志，结构化消息（称为Sandesh），Ipfix，Sflow和SNMP。 诸如vRouters，物理主机，虚拟机，接口，虚拟网络和策略之类的对象被建模为用户可见实体（UVE），并且UVE的属性可以来自不同格式的各种源。
+Tungsten Fabric从云基础架构（计算，网络和存储）及其上运行的工作负载收集信息，以便于运营监控，故障排除和容量规划。 数据以各种格式收集，例如系统日志，结构化消息（称为Sandesh），Ipfix，Sflow和SNMP。诸如vRouters，物理主机，虚拟机，接口，虚拟网络和策略之类的对象被建模为用户可见实体（UVE），并且UVE的属性可以来自不同格式的各种源。
 
 分析收集的体系结构如下图所示。
 
 ![](../images/TFA_analytics.png)
 
-为数据源可以配置目标收集器的IP地址，或者为收集器配置的负载均衡器。SNMP轮询的责任由Zookeeper分布在不同的节点上。分析节点将传入的数据格式化为通用数据格式，然后通过Kafka服务将其发送到Cassandra数据库。API URL可以使用ha-proxy或其他一些负载均衡器进行负载平衡。收集UVE数据的责任使用Zookeeper在Analytics节点之间分配，因此UVE数据的API查询由接收节点复制到其他Analytics节点，并且保存与请求相关的数据的那些查询将响应返回到原始节点，该节点将核对响应并整理到请求者将接收的回复中。警报生成的责任也分布在节点之间，因此警报生成功能订阅Analyticsdb节点中的Kafka总线，以便观察计算是否满足警报条件所需的数据，因为此数据可能由其他节点收集。 UVE在多个Kafka主题中进行了散列，这些主题分布在Alarm Gen功能中，以便有效地分散负载。
+为数据源可以配置目标收集器的IP地址，或者为收集器配置的负载均衡器。SNMP轮询的责任由Zookeeper分布在不同的节点上。分析节点将传入的数据格式化为通用数据格式，然后通过Kafka服务将其发送到Cassandra数据库。API URL可以使用ha-proxy或其他一些负载均衡器进行负载平衡。收集UVE数据的责任使用Zookeeper在Analytics节点之间分配，因此UVE数据的API查询由接收节点复制到其他Analytics节点，并且保存与请求相关的数据的那些查询将响应返回到原始节点，该节点将核对响应并整理到请求者将接收的回复中。警报生成的责任也分布在节点之间，因此警报生成功能订阅Analyticsdb节点中的Kafka总线，以便观察计算是否满足警报条件所需的数据，因为此数据可能由其他节点收集。UVE在多个Kafka主题中进行了散列，这些主题分布在Alarm Gen功能中，以便有效地分散负载。
 
 ## Tungsten Fabric 部署 {#tf-deployment}
 
@@ -571,46 +570,44 @@ Tungsten Fabric从云基础架构（计算，网络和存储）及其上运行�
 ![](../images/TFA_microservices.png)
 
 
-The architecture is composable, meaning that each Tungsten Fabric role can be separately scaled using multiple pods running on different servers to support the resilience and performance requirements of a particular deployment. Due to the nature of the algorithm in Zookeeper for choosing the active node, the number of pods deployed in the Controller and Analytic nodes must be an odd number, but this can vary between pod types. The nodes are logical groupings whose pods may be deployed on different servers, and a server can run pods from different node types.
+该体系结构是可组合的，这意味着可以使用在不同服务器上运行的多个pod单独扩展每个Tungsten Fabric角色，以支持特定部署的弹性和性能要求。由于Zookeeper中用于选择活动节点的算法的性质，在Controller和Analytic节点中部署的pod的数量必须是奇数，但是在pod类型之间可能会有所不同。 节点是逻辑分组，其pod可以部署在不同的服务器上，服务器可以运行来自不同节点类型的pod。
 
-The API and Web GUI services are accessed through a load balancer that is deployed during Contrail installation, or through a third-party load balancer has been configured for this purpose. Use of a third-party load balancer can allow pods to be in different subnets, which is a common scenario when pods need to be placed in different racks in a datacenter for resilience.
+可以通过在Contrail安装期间部署的负载平衡器或第三方负载平衡器来访问API和Web GUI服务。 使用第三方负载均衡器可以允许pod位于不同的子网中，这是将pod需要放置在数据中心的不同机架中以实现弹性的常见方案。
 
-The Control pods are scaled according to the number of compute nodes in the cluster with a maximum of 1000 nodes per control node. Additional control nodes may be deployed in certain use cases where compute nodes are deployed in points-of-presence remotely from the controller nodes.
+控制pod可以根据群集中的计算节点数量进行增减，每个控制节点最多有1000个节点。 可以在特定使用情况下部署增加控制节点，其中控制器节点可以远程地部署管理计算节点。
 
-The number of compute nodes is scaled according the the needs of the workloads that are anticipated to be deployed by the orchestrator. Within a compute node, the Forwarder function is not implemented as a container (see XXX [Deployment Options for vRouter]
+计算节点的数量根据预期由编排器部署的工作负载的需求进行调整。 在计算节点内，转发器功能未在容器里实现（请参阅XXX [vRouter的部署选项]
 
-The layout of Tungsten Fabric services across servers is controlled by configuration files that are read by the deployment tool, which can be Ansible (using playbooks) or Helm (using charts). Example playbooks and charts are available that cover simple all-in-one deployments where all the services run in the same VM, to high-availability examples involving multiple VMs or bare metal servers. Examples are also provided where the orchestrator and Tungsten Fabric are running in a public cloud (e.g. Amazon Web Services, Google Cloud Engine, Microsoft Azure) and the workloads are also running there.
+跨服务器的Tungsten Fabric服务的布局由部署工具读取的配置文件控制，可以是Ansible（使用playbooks）或Helm（使用图表）。示例手册和图表可用于涵盖所有服务在同一VM中运行的简单一体化部署，以及涉及多个VM或裸机服务器的高可用性示例。同时提供了示例， orchestrator和Tungsten Fabric在公有云（例如Amazon Web Services，Google Cloud Engine，Microsoft Azure）中运行，并且工作负载也在那里运行。
 
-More details on deployment tools and how to use them can be found at the Tungsten Fabric website ([www.tungsten.io](http://www.tungsten.io/)).
-
+有关部署工具及其使用方法的更多详细信息，请访问Tungsten Fabric网站 ([www.tungsten.io](http://www.tungsten.io/))。
 
 ## Tungsten Fabric APIs {#tf-apis}
 
-Tungsten Fabric supports the following APIs:
+Tungsten Fabric 支持以下 APIs:
 
 
 
-*   REST API for controller configuration
-*   Python bindings that map to the REST configuration API
-*   REST API for access to analytics data
+*用于控制器配置的REST API
+*映射到REST配置API的Python绑定
+* REST API，用于访问分析数据
 
-This are described in more detail in the following sections.
-
-
-### Controller Configuration REST API {#tf-rest-apis}
-
-All configuration for a Tungsten Fabric cluster is available through a REST API that is accessed on port 8082 of the Tungsten Fabric external virtual IP address. Users can use HTTP GET calls to retrieve lists of resources or the details of their properties. Data is returned as a JSON object.
-
-Changes can be made to the Tungsten Fabric object model (e.g. add virtual network, create service chain) by sending HTTP POST commands that contain a JSON representation of the attributes of the new object.
-
-The REST API is automatically generated from the data model schema file when Tungsten Fabric is compiled and built.
+以下各节将对此进行更详细的描述。
 
 
-### Python Bindings {#tf-python}
+### 用于控制器配置的REST API {#tf-rest-apis}
 
-Also generated automatically during compilation are a set of Python bindings that map to the REST API.
+可以通过在Tungsten Fabric外部虚拟IP地址的端口8082上访问的REST API获得Tungsten Fabric群集的所有配置。 用户可以使用HTTP GET调用来检索资源列表或其属性的详细信息。 数据作为JSON对象返回。
 
-In a Python session or script, a session is opened as follows:
+可以通过发送包含新对象属性的JSON来表示HTTP POST命令，对Tungsten Fabric对象模型（例如，添加虚拟网络，创建服务链）进行更改。
+
+在编译和构建Tungsten Fabric时，将自动从数据模型模式文件生成REST API。
+
+### Python 绑定 {#tf-python}
+
+在编译期间自动生成的是一组映射到REST API的Python绑定。
+
+在Python会话或脚本中，会话打开如下：
 
 `from vnc_api import vnc_api \
  \
@@ -641,221 +638,210 @@ vnc.virtual_network_create(vn)
 ```
 
 
-The Python binding is generally easier to use than the REST API, since it does not require usage of a JSON payload.
+Python绑定通常比REST API更容易使用，因为它不需要使用JSON有效负载。
 
 
-### Analytics REST API {#tf-analytics-rest-api}
+### 分析 REST API {#tf-analytics-rest-api}
 
-The analytics data collected in Tungsten Fabric can be accessed through a REST API on port 8082 of the Tungsten Fabric external virtual IP address. Configuration and operational information is organized in objects known as _User Visible Entities_ (UVEs) which can contain attributes that are aggregated from a number of Tungsten Fabric components. For instance, the operational information for a virtual network might have come from vRouters, configuration pods and control pods. Output from the Analytics API is in the form of JSON payloads. UVE data is retrieved with a direct URL to the location of the data.
+可以通过Tungsten Fabric外部虚拟IP地址的端口8082上的REST API访问Tungsten Fabric中收集的分析数据。配置和操作信息在称为用户可见实体（UVE）的对象中进行组织，这些对象可以包含从多个Tungsten Fabric组件聚合的属性。例如，虚拟网络的操作信息可能来自vRouters，配置pods和控制pods。 Analytics API的输出采用JSON有效负载的形式。使用指向数据位置的直接URL检索UVE数据。
 
-HTTP GET queries are used to retrieve lists of tables within the analytics database and to obtain their APIs and schemas.
+HTTP GET查询用于检索分析数据库中的列表并获取其API和schemas。
 
-HTTP POST queries are used to retrieve time series data stored in a table. The POST queries include a JSON formatted version of an SQL query that specifies the table, fields and _where_ condition to match against. The Analytics API includes an additional feature allowing the specification of a start time and end time for retrieved data.
+HTTP POST查询用于检索存储在表中的时间序列数据。 POST查询包括SQL查询的JSON格式版本，该版本指定表、字段以及要匹配的条件。 Analytics API包含一个附加功能，允许指定检索数据的开始时间和结束时间。
 
-The Analytics API can be used to configure and retrieve alarms based on threshold crossing events for any time series stored in the analytics database.
+Analytics API可用于根据存储在分析数据库中的任何时间序列的阈值交叉事件来配置和检索警报。
 
-Server-sent event (SSE) streams can be configured for for any UVE or alarm in the analytics database.
+可以为分析数据库中的任何UVE或警报配置服务器发送事件（SSE）流。
 
+## 编排器 {#tf-orchestrators}
 
-## Orchestrators {#tf-orchestrators}
-
-The following section describe how Tungsten Fabric provides virtual networking for a variety of orchestrators:
-
-
+以下部分描述了Tungsten Fabric如何为各种编排器提供虚拟网络：
 
 *   OpenStack
 *   Kubernetes
 *   VMware vCenter
 
+### OpenStack和Tungsten Fabric集成 {#tf-openstack}
 
-### OpenStack with Tungsten Fabric {#tf-openstack}
+OpenStack是虚拟机和容器的领先开源编排系统。 Tungsten Fabric提供了Neutron网络服务的实现，并提供了许多附加功能。在OpenStack中，用户组被分配到“项目”，其中诸如VM和网络之类的资源是私有的，并且其他项目中的用户无法看到（除非特别启用）。在vRouters中使用VRF且每个网络都有路由表，可以直接在网络层中实施项目隔离，因为只有到允许目的地的路由才会分发到计算节点上的vRouters中的VRF，并且不会发生泛洪vRouter执行的代理服务。
 
-OpenStack is the leading open-source orchestration system for virtual machines and containers. Tungsten Fabric provides an implementation of its Neutron networking service, and provides many additional capabilities as well. In OpenStack, groups of users are assigned to "projects" within which resources such as VMs and networks are private and can't be seen by users in other projects (unless this is specifically enabled). The use of VRFs in vRouters, with their per-network routing tables, makes the enforcement of project isolation in the network layer straight-forward, since only routes to allowed destinations are distributed to VRFs in vRouters on compute nodes and no flooding occurs due to the proxy services that vRouter performs.
+在XXX的图中，网络服务是Neutron，计算代理是Nova（OpenStack计算服务）。
 
-In the diagram in XXX, the networking service is Neutron and the compute agent is Nova (the OpenStack compute service).
+当两者都部署在OpenStack环境中时，Tungsten Fabric可以在VM和Docker容器之间提供无缝网络。
 
-Tungsten Fabric can provide seamless networking between VMs and Docker containers when both are deployed in an OpenStack environment.
-
-In the diagram below, it can be seen that the Tungsten Fabric plug-in for OpenStack provides a mapping from the Neutron networking API to Tungsten Fabric API calls that are performed in the Tungsten Fabric controller.
+在下图中，可以看到OpenStack的Tungsten Fabric插件提供了从Neutron网络API到在Tungsten Fabric控制器中执行的Tungsten Fabric API调用的映射。
 
 
 ![](../images/TFA_API.png)
 
 
-Tungsten Fabric supports definition of networks and subnetworks, plus OpenStack network policies and security groups. These entities can be created in either OpenStack or Tungsten Fabric and any changes are synchronized between the two systems. Additionally, Tungsten Fabric supports the OpenStack LBaaS v2 API. However, since Tungsten Fabric provides a rich superset of networking features over OpenStack, many networking features are only available via the Tungsten Fabric API or GUI. These include assigning route targets to enable connectivity to external routers, service chaining, configuring BGP route policies and application policies.
+Tungsten Fabric支持网络和子网的策略，以及OpenStack网络策略和安全组。可以在OpenStack或Tungsten Fabric中创建这些实体，并且在两个系统之间同步任何更改。此外，Tungsten Fabric还支持OpenStack LBaaS v2 API。但是，由于Tungsten Fabric通过OpenStack提供了丰富的网络功能超集，因此许多网络功能仅通过Tungsten Fabric API或GUI提供。这些包括指定route target以实现与外部路由器的连接、服务链、配置BGP路由策略和应用程序策略。
 
-Application security, as described in the section XXX, is fully supported when OpenStack uses Tungsten Fabric networking. Tungsten Fabric tags can be applied at the project, network, host, VM or interface levels, and propagate to be applied to all entities that are contained in the object that a tag is applied to.
+当OpenStack使用Tungsten Fabric网络时，完全支持应用程序安全性，如第XXX节所述。可以在项目，网络，主机，VM或接口级别应用Tungsten Fabric标记，并应用于应用标记的对象中包含的所有实体。
 
-Additionally, Tungsten Fabric supports a set of resources for networking and security that can be controlled using OpenStack Heat templates.
+此外，Tungsten Fabric还支持用于网络和安全性的资源，可以使用OpenStack Heat模板进行控制。
 
 
-### Kubernetes Containers with Tungsten Fabric {#tf-kubernetes}
+### Kubernetes容器和Tungsten Fabric集成 {#tf-kubernetes}
 
-Containers allow multiple processes to run on the same operating system kernel, but with each having access to its own tools, libraries and configuration files. Containers require less compute overhead than virtual machines where each VM runs its own complete guest operating system. Applications running in containers will generally start up much faster, and perform better than the same application running in a VM, and this is one of the reasons why there is growing interest in using containers in datacenters and for NFV.  Docker is a software layer that enables containers to be portable across operating system versions and is the typical Container Runtime Interface used by Kubernetes deployments as a shim layer to manage creation and destruction of containers on servers.
+容器允许多个进程在同一操作系统内核上运行，但每个进程都可以访问自己的工具，库和配置文件。与每个VM运行其自己的完整客户机操作系统的虚拟机相比，容器需要更少的计算开销。在容器中运行的应用程序通常启动速度更快，并且比在VM中运行的相同应用程序执行得更好，这也是为什么人们越来越关注在数据中心和NFV中使用容器的原因之一。 Docker是一个软件层，它使容器可以跨操作系统版本移植，并且Kubernetes作为部署容器的典型接口，管理服务器上容器创建和销毁。
 
 
 ![](../images/TFA_k8s.png)
 
 
-As seen in the diagram, above, Kubernetes manages groups of containers, that together perform some function, and are called _pods._The containers in a pod run on the same server and share an IP address. Sets of identical pods (generally running on different servers) form _services _and network traffic destined for a service has to be directed to a specific pod within a service. In the stock Kubernetes networking implementation, selection of a specific pod is performed either by the application itself using a native Kubernetes API in the sending pod, or, for non-native applications, by a load-balancing proxy using a virtual IP address implemented in Linux iptables on the sending server. The majority of applications are non-native, since they are ports of existing code that was not developed with Kubernetes in mind, and therefore the load-balancing proxy is used.
+如上图所示，Kubernetes管理容器组，它们共同执行某些功能，称为_pods. pod中的容器在同一服务器上运行并共享IP地址。一组相同的pod（通常在不同的服务器上运行）形成_services_，并且必须将指向服务的网络流量定向到服务中的特定pod。在Kubernetes网络实现中，特定pod的选择由应用程序本身使用发送pod中的本机Kubernetes API执行，或者对于非本机应用程序，由使用在其中实现的虚拟IP地址的负载平衡代理执行发送服务器上的Linux iptables。大多数应用程序都是非本机的，因为它们是未考虑Kubernetes开发的现有代码的端口，因此使用了负载平衡代理。
 
-The standard networking in a Kubernetes environment is effectively flat, with any pod able to communicate with any other pod. Communication from a pod in one namespace (similar to a _project _in OpenStack) to a pod in another namespace is not prevented if the name of target pod, or its IP address is known. While this model is appropriate in hyperscale data centers belonging to a single company, it is unsuitable for service providers whose data centers are shared among many end-customers, or in enterprises where traffic for different groups must be isolated from each other.
+Kubernetes环境中的标准网络实际上是扁平的，任何pod都可以与任何其他pod进行通信。如果目标pod的名称或其IP地址已知，则不会阻止从一个命名空间（类似于_project _in OpenStack）中的pod到另一个命名空间中的pod的通信。虽然此模型适用于属于单个公司的超大规模数据中心，但它不适合数据中心在许多最终客户之间共享的服务提供商，或者不适合不同组的流量必须彼此隔离的企业。
 
-Tungsten Fabric virtual networking can be integrated in a Kubernetes environment to provide a range of multi-tenant networking features in similar fashion as with OpenStack.
+Tungsten Fabric虚拟网络可以集成在Kubernetes环境中，以与OpenStack类似的方式提供一系列多租户网络功能。
 
-This configuration of Tungsten Fabric with Kubernetes is shown below.
+具有Kubernetes的Tungsten Fabric 的这种配置如下所示。
 
 
  ![](../images/TFA_k8s_contrail.png)
 
 
-The architecture for Tungsten Fabric with Kubernetes orchestration and Docker containers is similar to OpenStack and KVM/QEMU, with the vRouter running in the host Linux OS and containing VRFs with virtual network forwarding tables. All containers in a pod share a networking stack with a single IP address (IP-1, IP-2 in the diagram), but listen on different TCP or UDP ports, and the interface of each networking stack is connected to a VRF at the vRouter. A process called _kube-network-manager _listens for network-related messages using the Kubernetes _k8s _API and sends these into the Tungsten Fabric API. When a pod is created on a server, there is communication between the local _kubelet _and the vRouter agent via the Container Network Interface (CNI) to connect the new interfaces into the correct VRFs. Each pod in a service is allocated a unique IP addresses within a virtual network, and also a floating IP address which is the same for all the pods in a service. The service address is used to send traffic into the service from pods in other services, or from external clients or servers. When traffic is sent from a pod to a service IP, the vRouter attached to that pod performs ECMP load-balancing using the routes to the service IP address that resolve to the interfaces of the individual pods that form the destination service.
+使用Kubernetes orchestration和Docker容器的Tungsten Fabric架构类似于OpenStack和KVM / QEMU，vRouter在主机Linux OS中运行，并包含带有虚拟网络转发表的VRF。pod中的所有容器共享一个具有单个IP地址的网络堆栈（图中的IP-1，IP-2），但是侦听不同的TCP或UDP端口，并且每个网络堆栈的接口连接到vRouter的VRF。使用Kubernetes _k8s_API为网络相关消息调用_kube-network-manager _listens的进程，并将这些消息发送到Tungsten Fabric API。在服务器上创建pod时，本地_kubelet _和vRouter代理之间通过Container Network Interface（CNI）进行通信，以将新接口连接到正确的VRF。服务中的每个容器在虚拟网络中分配唯一的IP地址，并且还为服务中的所有容器分配浮动IP地址。服务地址用于从其他服务中的pod或外部客户端或服务器将流量发送到服务。当流量从容器发送到服务IP时，连接到该容器的vRouter将使用到服务IP地址的路由执行ECMP负载平衡，该服务IP地址将解析为构成目标服务的各个容器的接口。
 
-When traffic needs to sent to a service IP from outside the Kubernetes cluster, Tungsten Fabric can be configured to create a pair (for redundancy) of _ha-proxy_ load balancers which can perform URL-based routing to Kubernetes services, preferably using floating IP addresses to avoid exposing the internal IP addresses of the cluster. These externally visible service addresses resolve to ECMP load balanced routes to pods of the service. Kubernetes proxy load-balancing is not needed when Tungsten Fabric virtual networking is used in a Kubernetes cluster.
+当流量需要从Kubernetes集群外部发送到服务IP时，可以将Tungsten Fabric配置为创建一对（用于冗余）_ha-proxy_负载均衡器，它可以执行基于URL的路由到Kubernetes服务，最好使用浮动IP地址 避免暴露集群的内部IP地址。这些外部可见的服务地址解析为ECMP加载到服务的pod的平衡路由。 在Kubernetes集群中使用Tungsten Fabric虚拟网络时，不需要Kubernetes代理负载均衡。
 
-Other alternatives for providing external access include: using a floating IP address which is associated with a load balancer object, or using a floating IP address associated with the service.
+提供外部访问的其他替代方法包括：使用与负载均衡器对象关联的浮动IP地址，或使用与服务关联的浮动IP地址。
 
-When services and pods are created or deleted in Kubernetes, the kube-network-manager process detects corresponding events in the k8s API, and it uses the Tungsten Fabric API to apply network policy according to the network mode that has been configured for the Kubernetes cluster. The various options are summarized in the following table.
+在Kubernetes中创建或删除服务和pod时，kube-network-manager进程会检测k8s API中的相应事件，并使用Tungsten Fabric API根据为Kubernetes群集配置的网络模式应用网络策略。 各种选项总结在下表中。
 
 
 <table>
   <tr>
-   <td><strong>Networking Mode</strong>
+   <td><strong>网络模式</strong>
    </td>
-   <td><strong>Network Policy</strong>
+   <td><strong>网络策略</strong>
    </td>
-   <td><strong>Effect</strong>
-   </td>
-  </tr>
-  <tr>
-   <td>Kubernetes default
-   </td>
-   <td>Any-to-any, no tenant isolation
-   </td>
-   <td>Any container can talk to any other container or service
+   <td><strong>效果</strong>
    </td>
   </tr>
   <tr>
-   <td>Namespace isolation
+   <td>Kubernetes 默认
    </td>
-   <td>Kubernetes <em>namespaces </em>map to <em>projects</em> in Tungsten Fabric
+   <td>任意互访, 没有租户隔离
    </td>
-   <td>Containers within a namespace can communicate with each other
-   </td>
-  </tr>
-  <tr>
-   <td>Service isolation
-   </td>
-   <td>Each pod is in its own virtual network and security policy is applied so that only the service IP address is accessible from outside the pod
-   </td>
-   <td>Communication within a pod is enabled, but only the service IP address is accessible from outside a pod
+   <td>任何容器都可以与任何其他容器或服务通信
    </td>
   </tr>
   <tr>
-   <td>Container isolation
+   <td>命名空间隔离
    </td>
-   <td>Zero-trust between containers in the same pod.
+   <td>Kubernetes命名空间映射到Tungsten Fabric中的项目
    </td>
-   <td>Only specifically allowed communications between containers are enabled, even within a pod. Only specific pod to specific services may be enabled.
+   <td>命名空间中的容器可以相互通信
+   </td>
+  </tr>
+  <tr>
+   <td>服务隔离
+   </td>
+   <td>每个pod都在其自己的虚拟网络中，并应用安全策略，以便只能从Pod外部访问服务IP地址
+   </td>
+   <td>已Pod中的启用通信，但只能从Pod外部访问服务IP地址
+   </td>
+  </tr>
+  <tr>
+   <td>容器隔离
+   </td>
+   <td>同一个pod中容器之间的零信任。
+   </td>
+   <td>即使在pod中，也只允许特定容器之间的通信。 在特定的pod中启用特定服务。
    </td>
   </tr>
 </table>
 
 
+Tungsten Fabric为Kubernetes世界带来了许多强大的网络功能，与OpenStack的功能相同，包括：
 
-
-Tungsten Fabric brings many powerful networking features to the Kubernetes world, in the same way that it does for OpenStack, including:
-
-
-
-*   IP address management
+*   IP地址管理
 *   DHCP
 *   DNS
-*   Load balancing
-*   Network address translation (1:1 floating IPs and N:1 SNAT)
-*   Access control lists
-*   Application-based security
+*   负载均衡
+*   网络地址转换（1：1浮动IP和N：1 SNAT）
+*   访问控制列表
+*   基于应用程序的安全性
 
 
-### Tungsten Fabric and VMware vCenter {#tf-vcenter}
+### Tungsten Fabric 和 VMware vCenter 集成{#tf-vcenter}
 
-VMware vCenter is in widespread use as a virtualization platform, but requires manual configuration of a network gateway in order to achieve networking between virtual machines that are in different subnets and with destinations external to a vCenter cluster. Tungsten Fabric virtual networking can be deployed in an existing vCenter environment to provide all the networking features that were listed previously, while preserving the workflows that users may have come to rely on to create and managed virtual machines using the vCenter GUI and API. Additionally, support has been implemented for Tungsten Fabric in vRealize Orchestrator and vRealize Automation so that common tasks in Tungsten Fabric such as creation of virtual networks and network policies can be included in workflows implemented in those tools.
+VMware vCenter广泛用作虚拟化平台，但需要手动配置网络网关，以实现位于不同子网中的虚拟机与vCenter群集外部目标之间的网络连接。 可以在现有vCenter环境中部署Tungsten Fabric虚拟网络，以提供先前列出的所有网络功能，同时保留用户可能依赖的工作流，以使用vCenter GUI和API创建和管理虚拟机。 此外，还在vRealize Orchestrator和vRealize Automation中为Tungsten Fabric实施了支持，以便Tungsten Fabric中的常见任务（如创建虚拟网络和网络策略）可以包含在这些工具中实现的工作流中。
 
-The architecture for Tungsten Fabric working with VMware vCenter is shown in the diagram, below.
+使用VMware vCenter的Tungsten Fabric架构如下图所示。
 
 
 
 
 ![](../images/TFA_vmware.png)
 
+虚拟网络和策略是在Tungsten Fabric中直接创建的，或者使用vRO / vRA工作流中的TF任务创建。
 
-Virtual networks and policies are created in Tungsten Fabric, either directly, or using TF tasks in vRO/vRA workflows.
+当vCenter使用其GUI或vRO / vRA创建VM时，Tungsten Fabric的vCenter插件将在vCenter消息总线上看到相应的消息，这是Tungsten Fabric在服务器上配置vRouter的触发器将创建VM。每个VM的每个接口都连接到一个端口组，该端口组对应于该接口所在的虚拟网络。端口组具有与之关联的VLAN，由Tungsten Fabric控制器使用vCenter中的“VLAN覆盖”选项设置，并且端口组的所有VLAN都通过中继端口组发送到vRouter。 Tungsten Fabric控制器将接口的VLAN映射到包含该子网的虚拟网络的VRF。剥离VLAN标记，并按照XXX部分中的描述执行VRF中的路由查找
 
-When a VM is created by vCenter, using its GUI or via vRO/vRA, the vCenter plugin for Tungsten Fabric will see a corresponding message on the vCenter message bus, and this is the trigger for Tungsten Fabric to configure the vRouter on the server that the VM will be created on. Each interface of each VM is connected to a port group that corresponds to the virtual network that the interface is in. The port group has a VLAN associated with it that is set by the Tungsten Fabric controller using the "VLAN override" option in vCenter, and all the VLANs for the port groups are sent through a trunked port group into the vRouter. The Tungsten Fabric controller maps between the VLAN of a interface to the VRF of the virtual network that contains that subnet. The VLAN tag is stripped, and route look up in the VRF is performed as described in the section XXX
-
-
-Using Tungsten Fabric with vCenter gives users access to the full range of network and security services that Tungsten Fabric offers as described in earlier in this document, including zero-trust micro-segmentation, proxy DHCP, DNS and DHCP which avoids network flooding, easy service chaining, almost unlimited scale, and seamless interconnection with physical networks.
+通过将Tungsten Fabric与vCenter配合使用，用户可以访问Tungsten Fabric提供的全部网络和安全服务，如本文档前面所述，包括零信任微分段，代理DHCP，DNS和DHCP，可避免网络泛滥，服务链，几乎无限的规模，以及与物理网络的无缝互连。
 
 
-### Nested Kubernetes with OpenStack or vCenter {#tf-nested-kubernetes}
+###嵌套的Kubernetes与OpenStack或vCenter {#tf-nested-kubernetes}
 
-In the previous section, the it was assumed that the KVM hosts where the containers run had been provisioned beforehand by some means. An alternative is to use OpenStack or vCenter to provision VMs in which the containers run, and for Tungsten Fabric to manage virtual networking between VMs created by OpenStack or vCenter and containers created by Kubernetes. This is illustrated below.
+在上一节中，假设已经通过某种方式预先配置了运行容器的KVM主机。 另一种方法是使用OpenStack或vCenter来配置容器运行的VM，以及Tungsten Fabric管理OpenStack或vCenter创建的VM与Kubernetes创建的容器之间的虚拟网络。 这如下图所示。
 
 
 
 ![](../images/TFA_nested.png)
 
 
-The orchestrator (OpenStack or vCenter), Kubernetes Master and Tungsten Fabric are running in a set of servers or VMs. The orchestrator is configured to manage the compute cluster with Tungsten Fabric, so there are vRouters on each server. VMs can be spun up and configured to run Kubelet and the CNI plugin for Tungsten Fabric. These VMs become available for the Kubernetes master to run containers in, with networking managed by Tungsten Fabric. Since the same Tungsten Fabric is managing the networks for both the orchestrator and Kubernetes, seamless networking is possible between VMs, between containers, and between VMs and containers.
+编排器（OpenStack或vCenter），Kubernetes Master和Tungsten Fabric在一组服务器或VM中运行。 Orchestrator配置为使用Tungsten Fabric管理计算群集，因此每台服务器上都有vRouters。 虚拟机可以配置Kubelet和Tungsten Fabric的CNI插件。这些虚拟机可供Kubernetes主机运行，由Tungsten Fabric管理网络。 由于同一个Tungsten Fabric正在管理orchestrator和Kubernetes的网络，因此可以在VM之间，容器之间以及VM和容器之间实现无缝联网。
 
-In the nested configuration, Tungsten Fabric delivers the same levels of isolation as described previously, and it is possible for multiple Kubernetes Masters to co-exist and for multiple VMs running Kubelet to run on the same host. This allows a multi-tenant Kubernetes container service to be offered.
-
-
-## Connecting to Physical Networks {#tf-physical}
-
-In any datacenter, there is a need for some VMs to access external IP addresses, and for users outside the datacenter to access some VMs via public IP addresses. Tungsten Fabric provides several ways to achieve this:
+在嵌套场景中，Tungsten Fabric提供与前面所述相同的隔离级别，并且多个Kubernetes Masters可以共存，并且运行Kubelet的多个VM可以在同一主机上运行。 这允许提供多租户Kubernetes容器服务。
 
 
+## 连接物理网络 {#tf-physical}
 
-*   VPN connection to a BGP-enabled gateway
-*   Source NAT in the vRouter
-*   Local gateway in the vRouter to the underlay fabric
-
-Each of these is applicable in different use cases, and have varying dependencies on configuration of external devices and networks.
-
-The methods of connection to external networks are described in the following sections.
+在任何数据中心中，都需要一些VM访问外部IP地址，并且数据中心外的用户需要通过公共IP地址访问某些VM。 Tungsten Fabric提供了几种实现此目的的方法：
 
 
-### BGP-Enabled Gateway {#tf-bgp-gateway}
 
-One way of achieving external connectivity is to create a virtual network using a range of externally routable IP addresses, and to extend the network to a gateway router. When the gateway router is a Juniper MX router, the configuration on the device can be done automatically by Tungsten Fabric. This is illustrated below.
+* VPN连接到启用BGP的网关
+* vRouter中的SNAT
+* vRouter中的底层结构中的本地网关
 
+这些中的每一个都适用于不同的用例，并且对外部设备和网络的配置具有不同的依赖性。
+
+以下各节介绍了连接外部网络的方法。
+
+
+### 启用BGP的网关 {#tf-bgp-gateway}
+
+实现外部连接的一种方法是使用一系列可外部路由的IP地址创建虚拟网络，并将网络扩展到网关路由器。 当网关路由器是Juniper MX路由器时，设备上的配置可以由Tungsten Fabric自动完成。 这如下图所示。
 
  ![](../images/TFA_gateway.png)
 
-Network A is defined in Tungsten Fabric, and contains a subnet of publicly addressable IP addresses. This public virtual network is configured in Tungsten Fabric to extend to the gateway router, which, when using Tungsten Fabric Device Manager results in automatic creation of a VRF on the gateway with route target matching that of the virtual network (e.g. VRF labeled A). Tungsten Fabric configures this VRF with a default route that causes route lookup for traffic arriving in the VRF from the Tungsten Fabric cluster to occur in the main inet.0 routing table (which will contain routes to public destinations in the Internet). A forwarding filter is installed, which causes traffic arriving at the gateway with destinations in the Network A to be looked up in the VRF that Tungsten Fabric created. The router advertises a default route via the VRF to the Tungsten Fabric controller.
+在Tungsten Fabric中定义网络A，包含可公开寻址的IP地址的子网。此公共虚拟网络在Tungsten Fabric中配置为扩展到网关路由器，当使用Tungsten Fabric Device Manager时，会在网关上自动创建VRF，路由目标与虚拟网络的路径目标匹配（例如，标记为VR的VRF）。 Tungsten Fabric使用默认路由配置此VRF，从Tungsten Fabric群集到达VRF的流量的路由查找发生在主inet.0路由表（其将包含到Internet中的公共目的地的路由）中。通过转发过滤器，可以使到达网关A中目的地的流量在Tungsten Fabric创建的VRF中查找。路由器通过VRF将默认路由通告给Tungsten Fabric控制器。
 
-Network A is configured to be a floating IP address pool in Tungsten Fabric, and when such an address is assigned to an existing VM interface, an additional VRF (e.g. for Network A) is created in the vRouter for the VM, and the interface is connected to the new, public VRF, in addition to being connected to the original VRF (green or red in Figure 6). VRFs for floating IP addresses perform 1:1 NAT between the floating IP address and the IP address configured on the VM. The VM is unaware of this additional connection and continues to send and receive traffic using the address for its original virtual network that it received via DHCP. The vRouter advertises a route to the floating IP address to the controller, and this route is sent to the gateway via BGP and it is installed in the public VRF (e.g. VRF A). The Tungsten Fabric controller sends the vRouter a default route via the VRF on the physical router and this is installed in vRouter's public VRF.
+网络A被配置为Tungsten Fabric中的浮动IP地址池，并且当将这样的地址分配给现有VM接口时，在VM的vRouter中创建额外的VRF（例如，用于网络A），并且接口是连接到新的公共VRF，除了连接到原始VRF（图6中的绿色或红色）。浮动IP地址的VRF在浮动IP地址和VM上配置的IP地址之间执行1：1 NAT。 VM不知道此附加连接，并继续使用通过DHCP接收的原始虚拟网络的地址发送和接收流量。 vRouter将浮动IP地址通告到控制器的路由，并且该路由通过BGP发送到网关，并且安装在公共VRF（例如VRF A）中。 Tungsten Fabric控制器通过物理路由器上的VRF向vRouter发送默认路由，并将其安装在vRouter的公共VRF中。
 
-The result of these actions is that the public VRFs on vRouters contain a route to a floating IP address via a local interface of a VM, and a default route via a VRF on the router. The VRFs on the gateway have a default route (implemented using filter-based forwarding) via the inet.0 route table, and have host routes to each allocated floating IP address. The inet.0 route table has routes to each floating IP network via the corresponding VRF.
+这些操作的结果是vRouters上的公共VRF包含通过VM的本地接口到浮动IP地址的路由，以及通过路由器上的VRF的默认路由。网关上的VRF通过inet.0路由表具有默认路由（使用基于过滤器的转发实现），并具有到每个分配的浮动IP地址的主机路由。inet.0路由表具有通过相应VRF到每个浮动IP网络的路由。
 
-Multiple separate public subnets can be used as separate floating IP address pools with their own VRFs when tenants own their own public IP address ranges (as shown in the diagram), and conversely, one floating IP address pool can be shared among multiple tenants (not shown).
+当租户拥有自己的公共IP地址范围时，可以将多个独立的公共子网用作具有自己的VRF的独立浮动IP地址池（如图所示），相反，可以在多个租户之间共享一个浮动IP地址池（图中未显示）。
 
-In cases where a non-Juniper device is used, or Tungsten Fabric is not permitted to make configuration changes on the gateway, a BGP session, public network prefix and static routes can be set up on the gateway manually, or by a configuration tool. This method is used when the router is combining a provider edge (PE) router role for enterprise VPNs with a datacenter gateway role. Generally, in this case, the VRFs will created by a VPN management system. A virtual network in the Tungsten Fabric cluster will be connected into an enterprise VPN when a matching route target is configured in the virtual network, and routes are exchanged between the controller and the gateway/PE.
-
-
-### Source NAT {#tf-source-nat}
-
-Tungsten Fabric enables networks to be connected via  a Source-based NAT service which allows multiple VMs or containers to share the same external IP address. Source NAT is implemented as a distributed service in each vRouter. The next hop for traffic being sent from a VM to the Internet will be the SNAT service in the same vRouter, and it will forward to the gateway of the underlay network without encapsulation, with source address modified to that of the vRouter host and setting source port to be specific to the sending VM. The vRouter uses the destination port in returning packets to map back to the originating VM.
-
-This option is useful for providing internet access for workloads where the actual IP address of the source does not need to be known by the destination (which is usually the case).
+如果使用非Juniper设备，或者不允许Tungsten Fabric在网关上进行配置更改，则可以手动或通过配置工具在网关上设置BGP会话，公共网络前缀和静态路由。当路由器将企业VPN的提供商边缘（PE）路由器角色与数据中心网关角色组合时，使用此方法。通常，在这种情况下，VRF将由VPN管理系统创建。当在虚拟网络中配置匹配的路由目标时，Tungsten Fabric集群中的虚拟网络将连接到企业VPN，并且在控制器和网关/ PE之间交换路由。
 
 
-### Routing in Underlay {#tf-underlay-routing}
+### 源地址 NAT {#tf-source-nat}
 
-Tungsten Fabric allows networks to be created that use the underlay for connectivity. In the case that the underlay is a routed IP fabric, the Tungsten Fabric controller is configured to exchange routes with the underlay switches. This allows virtual workloads to connect to any destination reachable from the underlay network and provides a much simpler way than a physical gateway to connect virtual workloads to external networks. Care must be taken that overlapping IP address are not connected into the fabric, so this feature is more useful for enterprises connecting cloud to legacy resources rather than multi-tenant service providers.
+Tungsten Fabric使网络能够通过基于源的NAT服务进行连接，该服务允许多个VM或容器共享相同的外部IP地址。源NAT在每个vRouter中实现为分布式服务。从VM发送到Internet的流量的下一跳将是同一vRouter中的SNAT服务，它将转发到底层网络的网关而不进行封装，源地址被修改为vRouter主机并且根据特定的发送VM设置源端口。vRouter使用目标端口返回数据包以映射回原始VM。
 
-Note that the traffic flowing to and from the underlay network is subject to network and security policy enforcement just as it is for traffic between workloads using virtual networks.
+此选项对于为工作负载提供Internet访问非常有用，其中目标不需要知道源的实际IP地址（通常是这种情况）。
+
+
+### 在Underlay中路由 {#tf-underlay-routing}
+
+Tungsten Fabric允许创建使用底层连接的网络。 在底层是路由IP fabric的情况下，Tungsten Fabric控制器可以配置为与底层交换机交换路由。这允许虚拟工作负载连接到可从底层网络到达的任何目标，并提供比物理网关更简单的方式将虚拟工作负载连接到外部网络。 必须注意重叠的IP地址不要连接到IP fabric中，因此此功能对于将云连接到传统资源很有用而非多租户服务提供商的企业。
+
+请注意，流入和来自底层网络的流量受网络和安全策略的约束，就像使用虚拟网络的工作负载之间的流量一样。
 
 
 <!-- GD2md-html version 1.0β13 -->
