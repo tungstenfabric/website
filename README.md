@@ -31,6 +31,8 @@ Tungsten Fabric is a part of the [Linux Foundation Networking Fund], a project o
 
 [Tungsten Fabric Detailed Architecture Document]
 
+[Tungsten Fabric Detailed Architecture Document (Simplified Chinese)](L10N/Tungsten-Fabric-Architecture-CN.md)
+
 ## Becoming a contributor
 
 Whether you want to fix a typo in comments or introduce a brand new feature,
