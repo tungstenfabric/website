@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+
+  <head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-120516132-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-120516132-1');
+    </script>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,maximum-scale=2">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+
+{% seo %}
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto%3A100%2C200%2C300%2C400%2C500%2C600%2C700%2C800%2C900%2C100i%2C200i%2C300i%2C400i%2C500i%2C600i%2C700i%2C800i%2C900i&amp;subset=latin&amp;ver=4.9.6" type="text/css" media="all">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <title>Tungsten Fabric</title>
+  </head>
+  <body>
+
+    <!-- HEADER -->
+    <header>
+      <div id="lf_header">
+        <div class="container"><a id="lf-header" href="https://www.linuxfoundation.org/projects" target="_blank" rel="noopener"><img class="header_image" style="padding-top:1px" src="https://tungsten.io/wp-content/themes/salient-child/images/logo_lf_projects_horizontal_2018.png" width="500" height="28"/></a></div>
+        </div><div id="tungsten_header" style="text-align:right;">
+        <div class="container">
+          <!-- #site-logo -->
+          <div style="position:absolute; left 0px;">
+          <a href="https://tungsten.io/" rel="noopener"><img class="header_image" style="padding-top:6px" height="58" src="https://github.com/tungstenfabric/website/raw/master/TungstenFabric_Gradient_RGB-DarkBG.png"/></a></div>
+          <!-- #site-navigation -->
+          <nav style="float:right; padding-top:20px;">
+            <ul class="menu">
+              <li class="menu"><a href="https://tungsten.io/start/" class="menu-item">Get Started</a></li>
+              <li class="menu"><a href="https://tungsten.io/community/" class="menu-item">Community</a></li>
+              <li class="menu"><a href="https://tungstenfabric.github.io/website/" class="menu-item">Documentation</a></li>
+              <li class="menu"><a href="https://tungsten.io/blog/" class="menu-item">Blog</a></li>
+              <li class="menu"><a href="https://tungsten.io/wp-content/uploads/2018/03/Tungsten-Fabric-Project-Technical-Charter-3-13-2018-Final.pdf" class="menu-item">Charter</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <div id="main_content_wrap" class="outer">
+      <section id="main_content" class="inner">
+        {{ content }}
+      </section>
+    </div>
+
+    <!-- FOOTER  -->
+    <footer id="site-footer">
+      <div>
+        <div id="footer-widgets">
+          <div class="container">
+
+            <div class="col col-1">
+              <div class="footer-menu">
+                <p class="footer_heading">MENU</p>
+                <ul class="footer-menu">
+                  <li class="footer-menu-item"><a href="https://tungsten.io/start/">Get Started</a></li>
+                  <li class="footer-menu-item"><a href="https://tungsten.io/community/">Community</a></li>
+                  <li class="footer-menu-item"><a target="_blank" href="https://tungstenfabric.github.io/website/">Documentation</a></li>
+                  <li class="footer-menu-item"><a href="https://tungsten.io/blog/">Blog</a></li>
+                  <li class="footer-menu-item"><a href="/wp-content/uploads/2018/03/Tungsten-Fabric-Project-Technical-Charter-3-13-2018-Final.pdf">Charter</a></li>
+                </ul>
+              </div>
+              <div><a href="https://tungsten.io"><img class="header_image" width="20" height="17" src="https://i1.wp.com/tungstenfabric.io/wp-content/uploads/2018/03/TungstenFabric_White_logoonly.png"></a></div>
+            </div>
+
+            <div class="col col-2">
+              <div class="footer-menu">
+                <p class="footer_heading">Engage</p>
+                <ul class="footer-menu">
+                  <li class="no-label footer-menu-item"><a href="https://github.com/tungstenfabric/" target="_blank" title="Visit Tungsten Fabric on GitHub"><span class="fab fa-2x fa-github"></span></a></li>
+                  <li class="no-label footer-menu-item"><a href="https://join.slack.com/t/tungstenfabric/shared_invite/enQtMzM0MjMyMDIzMzk3LTZjM2JmMWZlOGMyM2RlZDAxM2RiYjE0YWZlMTAyYWIzYmNmYmY4MTc5MzIzNjk5YWY2N2JmNzIzNzJlZmMzMzU" target="_blank" title="Visit Tungsten Fabric on Slack"><span class="fab fa-2x fa-slack"></span></a></li>
+                  <li class="no-label footer-menu-item"><a href="https://twitter.com/tungstenfabric" target="_blank" title="Visit Tungsten Fabric on Twitter"><span class="fab fa-2x fa-twitter"></span></a></li>
+                  <li class="no-label footer-menu-item"><a href="https://www.facebook.com/tungstenfabric/" target="_blank" title="Visit Tungsten Fabric on Facebook"><span class="fab fa-2x fa-facebook"></span></a></li>
+                  <li class="no-label footer-menu-item"><a href="https://www.linkedin.com/groups/6517760" target="_blank" title="Visit Tungsten Fabric on LinkedIn"><span class="fab fa-2x fa-linkedin"></span></a></li>
+                </ul>
+              </div>
+              <div>
+                <div>
+                  <ul class="footer-menu">
+                    <li class="footer-menu-item"><a target="_blank" href="https://groups.google.com/forum/#!forum/tungsten-users">Mailing List: User Forum</a></li>
+                    <li class="footer-menu-item"><a target="_blank" href="https://groups.google.com/forum/#!forum/tungsten-dev">Mailing List: Developer Forum</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="col col-3 ">
+              <div class="footer-menu">
+                <p class="footer_heading">RESOURCES</p>
+                <ul class="footer-menu">
+                  <li class="footer-menu-item"><a target="_blank" href="https://github.com/tungstenfabric/">Code on GitHub</a></li>
+                  <li class="footer-menu-item"><a target="_blank" href="https://hub.docker.com/u/tungstenfabric/">Packages on DockerHub</a></li>
+                  <li class="footer-menu-item"><a target="_blank" href="https://drive.google.com/drive/folders/0AM-bGoKiRBuTUk9PVA">Community Google Drive</a></li>
+                  <li class="footer-menu-item"><a target="_blank" href="https://calendar.google.com/calendar?cid=ZW1xMjBjZmJyNmZ0NWIwcjNrdjZraG9udnNAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ">Community Calendar</a></li>
+                  <li class="footer-menu-item"><a target="_blank" href="https://www.youtube.com/channel/UCHX_THOp9d0vclXBMNp2g6g/">Community Videos</a></li>
+                </ul>
+              </div>
+            </div>
+
+          </div>  <!-- .container -->
+        </div>
+        <!-- #footer-widgets -->
+
+        <div id="footer-bottom">
+          <div class="container">
+            <div>
+              Copyright © 2018 Tungsten Fabric a Series of LF Projects, LLC For web site terms of use, trademark policy and general project policies please see <a href="https://lfprojects.org" target="_blank" rel="noopener">https://lfprojects.org</a>.</div>
+            <!-- #copyright -->
+          </div>
+          <!-- #footer-bottom-inner -->
+        </div>
+        <!-- #footer-bottom -->
+
+      </div>
+      <!-- #footer-inner -->
+    </footer>
+
+    {% if site.google_analytics %}
+      <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', '{{ site.google_analytics }}', 'auto');
+        ga('send', 'pageview');
+      </script>
+    {% endif %}
+  </body>
+</html>
