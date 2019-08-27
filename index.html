@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="None">
+        
+        
+        <link rel="shortcut icon" href="img/favicon.ico">
+        <title>Tungsten Fabric Carbide Evaluation Guide</title>
+        <link href="css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="css/font-awesome.min.css" rel="stylesheet">
+        <link href="css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <script src="js/jquery-1.10.2.min.js" defer></script>
+        <script src="js/bootstrap-3.0.3.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/bash.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/text.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
+    </head>
+
+    <body class="homepage">
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+            <div class="container">
+
+                <!-- Collapsed navigation -->
+                <div class="navbar-header">
+                    <!-- Expander button -->
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href=".">Tungsten Fabric Carbide Evaluation Guide</a>
+                </div>
+
+                <!-- Expanded navigation -->
+                <div class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="active">
+                                <a href=".">Home</a>
+                            </li>
+                            <li >
+                                <a href="use_case_1/">Use case 1</a>
+                            </li>
+                            <li >
+                                <a href="use_case_2/">Use case 2</a>
+                            </li>
+                            <li >
+                                <a href="use_case_3/">Use case 3</a>
+                            </li>
+                            <li >
+                                <a href="use_case_4/">Use case 4</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="disabled">
+                                <a rel="next" >
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li >
+                                <a rel="prev" href="use_case_1/">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+        <li class="main active"><a href="#what-is-this-guide-for">What is this Guide for?</a></li>
+        <li class="main "><a href="#prerequisites">Prerequisites</a></li>
+        <li class="main "><a href="#introduction-to-our-sample-app">Introduction to our sample app</a></li>
+        <li class="main "><a href="#getting-ready">Getting ready</a></li>
+            <li><a href="#access-our-kubernetes-cluster">Access our Kubernetes cluster</a></li>
+            <li><a href="#get-a-copy-of-yelb-application">Get a copy of yelb application</a></li>
+            <li><a href="#whats-next">What's next</a></li>
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h2 id="what-is-this-guide-for">What is this Guide for?</h2>
+<p>This guide is designed for application developer or a compute infrastructure platform engineer considering their options for Kubernetes networking, with specific focus on <a href="https://tungsten.io/start/">Tungsten Fabric Carbide</a>.</p>
+<p><a href="https://kubernetes.io/docs/concepts/cluster-administration/networking/">Kubernetes Cluster Networking</a> functions are central to applications running on top of Kubernetes. These functions include:</p>
+<ul>
+<li><a href="https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/">Network communications between Pods</a> through Services;</li>
+<li>Network communications <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">between the outside world and externally-facing Services</a>; and</li>
+<li><a href="https://kubernetes.io/docs/concepts/services-networking/network-policies/">Network policies</a> that provide fine-grained control over what network communication flows are allowed.</li>
+</ul>
+<p>To do the above, Kubernetes cluster must have a Container Network Interface ("CNI") plugin installed. Kubernetes documentation web site lists <a href="https://kubernetes.io/docs/concepts/cluster-administration/networking/#how-to-implement-the-kubernetes-networking-model">a number of options</a>, Tungsten Fabric being the one we cover in this document.</p>
+<p>We will use a sample 3-tier application to go through the three main function areas listed above, and explain what Tungsten Fabric does in each of the cases. Where Tungsten Fabric provides extra functionality beyond Kubernetes baseline, we will also say so.</p>
+<p>To follow along with our use cases, you should deploy your own copy of a <a href="https://tungstenfabric.github.io/website/Tungsten-Fabric-15-minute-deployment-with-k8s-on-AWS.html">Quick Start of Tungsten Fabric ("TF") Carbide with Kubernetes ("K8s") on AWS</a>.</p>
+<h2 id="prerequisites">Prerequisites</h2>
+<p>This guide assumes that you are comfortable with how to:</p>
+<ul>
+<li>Deploy a CloudFormation template into your AWS account;</li>
+<li>Connect to an EC2 instance in AWS with an SSH client and SSH private key;</li>
+<li>Deploy applications to Kubernetes using <code>kubectl</code> CLI tool;</li>
+<li>Use Linux CLI/terminal tools, like <code>less</code> and <code>nano</code>.</li>
+</ul>
+<h2 id="introduction-to-our-sample-app">Introduction to our sample app</h2>
+<p>To demonstrate how Tungsten Fabric can help us get an application running, accessible from the Internet, and then secured, we will use the mock application called "<a href="https://github.com/mreferre/yelb">yelb</a>". It was written and is maintained by one of the Developer Advocates at AWS. The reason for choosing this application is that it is simple, <a href="https://github.com/mreferre/yelb#yelb-architecture">well-documented</a>, and is <a href="https://github.com/mreferre/yelb/tree/master/deployments/platformdeployment/Kubernetes">ready to run on Kubernetes</a>.</p>
+<p>Please see the "<a href="https://github.com/mreferre/yelb#yelb-architecture">Yelb Architecture</a>" link for more detail, but at the high level it looks like this:</p>
+<p><img alt="alt_text" src="images/image1.png" title="image_tooltip" /></p>
+<p>(Original image URL: <a href="https://github.com/mreferre/yelb/raw/master/yelb-architecture.png">https://github.com/mreferre/yelb/raw/master/yelb-architecture.png</a>)</p>
+<p>The application is made of four Deployments:<code>yelb-ui</code>, <code>yelb-appserver</code>, <code>yelb-db</code> and <code>yelb-cache</code>. Each Deployment is fronted by a respective Kubernetes Service. The <code>yelb-ui</code> Service can also be fronted by Kubernetes Ingress, providing you with L7 HTTP routing.</p>
+<h2 id="getting-ready">Getting ready</h2>
+<p>For our exercises, we will need to have the following in place:</p>
+<ul>
+<li>Access to our Kubernetes cluster with Tungsten Fabric through Kubernetes' <code>kubectl</code> CLI tool; and</li>
+<li>A copy of yelb</li>
+</ul>
+<h3 id="access-our-kubernetes-cluster">Access our Kubernetes cluster</h3>
+<p>If you followed the steps in <a href="https://tungstenfabric.github.io/website/Tungsten-Fabric-15-minute-deployment-with-k8s-on-AWS.html">Tungsten Fabric Carbide Quick Start on AWS guide</a>, you should be able to log in into your QuickStart sandbox control node as described in the <code>Accessing the Cluster</code> section of the guide. To find out the public DNS host name of your sandbox control node, look in the Outputs tab of the AWS CloudFormation UI for the template you used to deploy Kubernetes with Tungsten Fabric Carbide:</p>
+<p><img alt="alt_text" src="images/image10.png" title="image_tooltip" /></p>
+<p>Once on the sandbox control node, run:</p>
+<pre><code class="bash">sudo -s
+kubectl get nodes
+</code></pre>
+
+<p>which should display output similar to:</p>
+<pre><code class="text">NAME                                         STATUS     ROLES     AGE       VERSION
+ip-172-25-1-105.us-west-1.compute.internal   NotReady   master    1m        v1.9.2
+ip-172-25-1-146.us-west-1.compute.internal   Ready      &lt;none&gt;    1m        v1.9.2
+ip-172-25-1-202.us-west-1.compute.internal   Ready      &lt;none&gt;    1m        v1.9.2
+</code></pre>
+
+<h3 id="get-a-copy-of-yelb-application">Get a copy of yelb application</h3>
+<p>After you've successfully connected to the sandbox control node and verified that your <code>kubectl</code> works correctly, use the following commands to get a copy of <code>yelb</code> and change your working directory to the one with its Kubernetes manifests (while running as root):</p>
+<pre><code class="bash"># Install git
+yum -y install git
+
+# Clone the Yelb repo and checkout the branch we used for this guide
+git clone https://github.com/mreferre/yelb
+cd yelb
+git checkout 9cba442 # to make sure our examples keep working as yelb evolves
+
+# Change to the manifests directory
+cd deployments/platformdeployment/Kubernetes/yaml/
+</code></pre>
+
+<h3 id="whats-next">What's next</h3>
+<p>At this point, you have a functional sandbox Kubernetes cluster with 2 compute nodes and an application that you can use to play around. The rest of this document will walk you through examples of how to deal with a few common scenarios around networking and network security that you can encounter when developing and operating an application that runs on Kubernetes.</p>
+<p>Each use case is stand-alone, and does not require you to complete any other use cases in this document.</p>
+<p>Feel free to jump to any one as you see fit:</p>
+<ol>
+<li><a href="use_case_1">Basic app connectivity through Kubernetes' Services</a></li>
+<li><a href="use_case_2">Advanced external app connectivity through Kubernetes' Ingress</a></li>
+<li><a href="use_case_3">Coarse application isolation through Kubernetes Namespaces</a></li>
+<li><a href="use_case_4">Application micro-segmentation through Kubernetes Network Policies</a></li>
+</ol>
+<!-- Backup of the rest
+
+5. Application traffic flow visibility
+6. Application security with Network Intrusion Detection
+7. Application connectivity across multiple Kubernetes clusters
+
+
+
+
+## Use case 5: Application traffic flow visibility
+
+[This is a bonus - idea is to show how to do remote "tcpdump"; this may not work in our QuickStart as TF needs a special Analyzer VM image that needs to be deployed to handle traffic that's been mirrored. I opened [https://jira.tungsten.io/browse/TFP-87](https://jira.tungsten.io/browse/TFP-87) to add this into the QuickStart.
+
+**Further notes**:
+
+*   It is possible to configure an arbitrary Pod as a destination for the mirrored traffic, without the need for the Analyzer VM. This is done in Configure -> Network -> Policies. Create a new policy or edit an existing one and add "Mirror" option with "Analyzer IP". Specify IP and MAC of the Pod that will receive traffic, and set "Juniper Header" to "Enabled" and "Next Hop Mode" to "Dynamic".
+*   Mirrored will be forwarded to the selected Pod. I tested with a Pod that's connected to the same Pod network as our sample app's Pods.
+*   One small snag: `tcpdump` doesn't have a dissector for Juniper Header, and it's not practical to just cut it off with something like `editcap -C <xxx>` since the `xxx` here is of variable size. One solution would be to have a Pod with `tshark` in it, but I couldn't find any official wireshark/tshark images. I'm guessing we're back to the Analyzer VM option.
+
+More info on "Juniper Header": https://kb.juniper.net/InfoCenter/index?page=content&id=KB33131
+
+]
+
+ Common situations where traffic visibility is helpful are:
+
+*   When you're designing your policy and not entirely sure what should be able to talk to what;
+*   When your application is misbehaving
+
+## Advanced use case 6: Application security with Network Intrusion Detection
+
+[This would be an advanced use case: walk through how to create an in-line NIPS based on OSS Snort ([http://sublimerobots.com/2016/02/snort-ips-inline-mode-on-ubuntu/](http://sublimerobots.com/2016/02/snort-ips-inline-mode-on-ubuntu/)), register it as a Service in TF, and then adding it to a Namespace as a transparent Network IPS service.
+
+Would need to figure how/where it could be inserted for application flows, as in service chaining materials I've seen VFNs are inserted between actual Pods, which doesn't match how the app works in the sense that Pods talk to Services, not to other Pods.
+
+I think this would be valuable since no other CNIs support this AFAIK
+
+**Alternative:** we're launching cSRX soon; if there will be a public Docker image for it, we could do a cSRX in front of our sample app]
+
+## Advanced use case 7: Application connectivity across multiple Kubernetes clusters
+
+[I'm not sure if this can be fit into a reasonable form factor, but this is another area where TF is ahead of some of competition: use one TF instance to provide CNI to 2 or more K8s clusters, with Pods in different clusters being able to talk to each other directly]
+--></div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script>
+            var base_url = ".",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="js/base.js" defer></script>
+        <script src="search/main.js" defer></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    From here you can search these documents. Enter
+                    your search terms below.
+                </p>
+                <form role="form">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
+
+<!--
+MkDocs version : 1.0.4
+Build Date UTC : 2019-08-27 01:18:23
+-->
