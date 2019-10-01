@@ -133,7 +133,7 @@ under discussion.
 [Tungsten Fabric Detailed Architecture Document]: Tungsten-Fabric-Architecture.md
 [tungsten-dev@googlegroups.com]: https://groups.google.com/forum/#!forum/tungsten-dev
 [dev@lists.tungsten.io]: https://lists.tungsten.io/g/dev
-[Join Slack]: https://tungsten.io/slack
+[Join Slack]: https://join.slack.com/t/tungstenfabric/shared_invite/enQtMzM0MjMyMDIzMzk3LTZmY2FmY2JlZmRjN2YxMzgyOTNkNDZiNTRiYWU0NTRmNzI3N2RjMDIwY2UxZDlkODgzZDE0YzQ3MTlhNTg0N2I
 [contrail-specs]: https://github.com/Juniper/contrail-specs
 [GitHub]: http://github.com/tungstenfabric
 [git-review extension]: https://docs.openstack.org/infra/git-review/
