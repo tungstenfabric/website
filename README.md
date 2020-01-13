@@ -1,4 +1,4 @@
-<img src="https://github.com/tungstenfabric/website/raw/master/TungstenFabric_Gradient_RGB-03.png" height="75">
+<img src="https://github.com/tungstenfabric/website/raw/master/TungstenFabric_Gradient_RGB-03.png" height="75" alt="Tungsten Logo Gradient">
 
 ----
 
