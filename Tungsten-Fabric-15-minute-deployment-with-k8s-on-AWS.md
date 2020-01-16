@@ -8,6 +8,8 @@ This document contains instructions how to deploy a sandbox with Tungsten Fabric
 
 It is necessary to subscribe to the official image of CentOS 7 x86_64 HVM before you start using the sandbox.
 
+Selected Region must have at least two Availability Zones.
+
 Once you have signed into the AWS console, go to the following URL: <a href="https://aws.amazon.com/marketplace/pp/B00O7WM7QW/" target="_blank">AWS Marketplace</a>
 
 Press "Continue to Subscribe", then "Accept Terms".
