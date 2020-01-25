@@ -24,7 +24,7 @@ This wiki will describe the most simplest of all: **A single yaml based install*
 
 {% raw %}
 ```
-K8S_MASTER_IP=x.x.x.x; CONTRAIL_REPO="docker.io\/opencontrailnightly"; CONTRAIL_RELEASE="latest"; mkdir -pm 777 /var/lib/contrail/kafka-logs; curl https://raw.githubusercontent.com/Juniper/contrail-kubernetes-docs/master/install/kubernetes/templates/contrail-single-step-cni-install-centos.yaml | sed "s/{{ K8S_MASTER_IP }}/$K8S_MASTER_IP/g; s/{{ CONTRAIL_REPO }}/$CONTRAIL_REPO/g; s/{{ CONTRAIL_RELEASE }}/$CONTRAIL_RELEASE/g" | kubectl apply -f -
+export MASTER_IP="x.x.x.x" ; mkdir /root/tf ; git clone https://github.com/Juniper/contrail-container-builder /root/tf/contrail-container-builder ; mv /root/tf/contrail-container-builder/kubernetes/sample_config_files/common.env.kubernetes /root/tf/contrail-container-builder/common.env ; sed -i "s/10.84.13.54/$MASTER_IP/" /root/tf/contrail-container-builder/common.env ; /root/tf/contrail-container-builder/kubernetes/manifests/./resolve-manifest.sh /root/tf/contrail-container-builder/kubernetes/manifests/contrail-standalone-kubernetes.yaml > /root/tf/tf.yml ; /root/tf/contrail-container-builder/kubernetes/manifests/./set-node-labels.sh ; kubectl apply -f /root/tf/tf.yml
 ```
 {% endraw %}
 
