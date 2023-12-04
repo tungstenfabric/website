@@ -30,7 +30,7 @@ K8S_MASTER_IP=x.x.x.x; CONTRAIL_REPO="docker.io\/opencontrailnightly"; CONTRAIL_
 
 **Hurray! Welcome to Tungsten Fabric.**
 
-1. You installed Tungsten Fabric CNI in your Kubernetes node. If new compute nodes are added to your Kubernetes cluster, Tungsten Fabric CNI will be propogated to them auto-magically as it is backed by a Kubernetes DaemaonSet.
+1. You installed Tungsten Fabric CNI in your Kubernetes node. If new compute nodes are added to your Kubernetes cluster, Tungsten Fabric CNI will be propogated to them auto-magically as it is backed by a Kubernetes DaemonSet.
 
 2. You installed entire Tungsten Fabric Networking suite with rich Networking, Analytics, Security, Visualization functions, to name a few.
 
